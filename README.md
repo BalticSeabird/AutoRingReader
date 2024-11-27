@@ -1,2 +1,4 @@
 # AutoRingReader
-Repo for deep learning based reading of bird bands/rings
+A repo for deep learning based reading of bird bands/rings
+
+![alt text](https://github.com/[hentatisundberg]/[AutoRingReader]/blob/[branch]/image.jpg?raw=true)
