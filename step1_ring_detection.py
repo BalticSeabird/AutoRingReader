@@ -65,132 +65,122 @@ def _process_frame_batch(batch_frames, batch_indices, detector, conf_threshold):
     return results
 
 
-def _crop_to_roi(frame: np.ndarray, roi_bbox: Tuple[float, float, float, float]) -> Tuple[np.ndarray, np.ndarray]:
+def _detection_in_roi(bbox: Dict, frame_height: int, frame_width: int, roi_bbox: Tuple[float, float, float, float]) -> bool:
     """
-    Crop frame to ROI bounding box.
+    Check if a normalized detection bbox overlaps with the ROI bounding box.
 
     Args:
-        frame: Input frame
-        roi_bbox: ROI bbox as (xmin, ymin, xmax, ymax) in pixel coordinates
+        bbox: Normalized bbox dict with x_norm, y_norm, w_norm, h_norm
+        frame_height: Height of frame in pixels
+        frame_width: Width of frame in pixels
+        roi_bbox: ROI bounding box as (xmin, ymin, xmax, ymax) in pixel coordinates
 
     Returns:
-        Tuple of (cropped_frame, transform_matrix) where transform_matrix can be used
-        to offset detections from cropped frame back to full frame coordinates
+        True if detection center is within ROI bbox, False otherwise
     """
-    xmin, ymin, xmax, ymax = [int(x) for x in roi_bbox]
-    height, width = frame.shape[:2]
-
-    # Clamp to frame boundaries
-    xmin = max(0, xmin)
-    ymin = max(0, ymin)
-    xmax = min(width, xmax)
-    ymax = min(height, ymax)
-
-    cropped_frame = frame[ymin:ymax, xmin:xmax]
-
-    return cropped_frame, np.array([xmin, ymin])
-
-
-def _offset_detections_from_crop(result, offset: np.ndarray, crop_shape: Tuple[int, int],
-                                  full_frame_shape: Tuple[int, int]):
-    """
-    Offset YOLO detections from cropped frame back to full frame coordinates.
-
-    Args:
-        result: YOLO result object
-        offset: [xmin, ymin] offset to apply
-        crop_shape: (height, width) of cropped frame
-        full_frame_shape: (height, width) of full frame
-
-    Returns:
-        Modified result with coordinates transformed to full frame
-    """
-    if not hasattr(result, 'boxes') or len(result.boxes) == 0:
-        return result
-
-    xmin_offset, ymin_offset = offset
-    crop_height, crop_width = crop_shape
-    full_height, full_width = full_frame_shape
-
-    for box in result.boxes:
-        # Get normalized coordinates from cropped frame (xywhn is already normalized to crop)
-        x_norm_crop, y_norm_crop, w_norm, h_norm = box.xywhn[0]
-
-        # Convert to pixel coords in cropped frame, then offset to full frame
-        x_pixel_crop = x_norm_crop * crop_width
-        y_pixel_crop = y_norm_crop * crop_height
-
-        x_pixel_full = x_pixel_crop + xmin_offset
-        y_pixel_full = y_pixel_crop + ymin_offset
-
-        # Convert back to normalized coords for full frame
-        x_norm_full = x_pixel_full / full_width
-        y_norm_full = y_pixel_full / full_height
-
-        # Update the normalized coordinates in-place
-        box.xywhn[0][0] = x_norm_full
-        box.xywhn[0][1] = y_norm_full
-
-    return result
-
-
-def _process_frame_batch_with_roi(batch_frames, batch_indices, detector, conf_threshold,
-                                   roi_bbox: Optional[Tuple[float, float, float, float]] = None,
-                                   full_frame_shape: Tuple[int, int] = (1080, 1920)):
-    """
-    Process a batch of frames through YOLO inference, optionally cropping to ROI first.
-
-    Args:
-        batch_frames: List of frames (BGR)
-        batch_indices: Frame indices
-        detector: RingDetector instance
-        conf_threshold: Confidence threshold
-        roi_bbox: Optional ROI bbox as (xmin, ymin, xmax, ymax) to crop before YOLO
-        full_frame_shape: (height, width) of full frame for coordinate transformation
-
-    Returns:
-        List of (frame_idx, result, frame) tuples where frame is the FULL (uncropped) frame
-    """
-    results = []
     try:
-        if roi_bbox:
-            # Crop frames to ROI before YOLO (more efficient - less pixel data to process)
-            cropped_frames = []
-            crop_offsets = []
-            crop_shapes = []
+        # Convert normalized coords to pixel coords
+        x_center_px = bbox['x_norm'] * frame_width
+        y_center_px = bbox['y_norm'] * frame_height
 
-            for frame in batch_frames:
-                cropped_frame, offset = _crop_to_roi(frame, roi_bbox)
-                cropped_frames.append(cropped_frame)
-                crop_offsets.append(offset)
-                crop_shapes.append(cropped_frame.shape[:2])
-
-            # Convert to RGB for YOLO
-            frames_rgb = [cv.cvtColor(f, cv.COLOR_BGR2RGB) for f in cropped_frames]
-
-            # Run YOLO inference on cropped frames
-            batch_results = detector.model.predict(frames_rgb, verbose=False)
-
-            # Offset detections back to full frame coordinates
-            for i, (frame_idx, result, offset, crop_shape) in enumerate(
-                zip(batch_indices, batch_results, crop_offsets, crop_shapes)
-            ):
-                result = _offset_detections_from_crop(result, offset, crop_shape, full_frame_shape)
-                full_frame = batch_frames[i]
-                results.append((frame_idx, result, full_frame))
-
-        else:
-            # No ROI - process full frames (original behavior)
-            frames_rgb = [cv.cvtColor(f, cv.COLOR_BGR2RGB) for f in batch_frames]
-            batch_results = detector.model.predict(frames_rgb, verbose=False)
-
-            for frame_idx, result, frame in zip(batch_indices, batch_results, batch_frames):
-                results.append((frame_idx, result, frame))
+        # Check if center is within ROI bbox
+        roi_xmin, roi_ymin, roi_xmax, roi_ymax = roi_bbox
+        return (roi_xmin <= x_center_px <= roi_xmax and
+                roi_ymin <= y_center_px <= roi_ymax)
 
     except Exception as e:
-        logger.error(f"Error processing frame batch: {e}")
+        logger.debug(f"Error checking detection in ROI: {e}")
+        return False
 
-    return results
+
+
+def _process_batch_with_crops(batch_frames: list, batch_indices: list, batch_frames_raw: list,
+                              detector, conf_threshold: float, output_dir: Path,
+                              frame_dims: Dict, roi_bbox: Optional[Tuple],
+                              crop_save_executor, pending_saves: list,
+                              video_year: Optional[int] = None) -> Tuple[list, int, int]:
+    """
+    Process one batch: Run YOLO inference and immediately generate/queue crops.
+
+    This interleaves GPU inference (on next batch) with CPU crop generation/saving (current batch).
+
+    Args:
+        batch_frames: Preprocessed BGR frames for YOLO
+        batch_indices: Frame indices corresponding to batch_frames
+        batch_frames_raw: Raw original frames (for crop extraction)
+        detector: RingDetector instance
+        conf_threshold: Confidence threshold
+        output_dir: Output directory for crops
+        frame_dims: Dict with frame height/width
+        roi_bbox: Optional ROI bounding box for filtering
+        crop_save_executor: ThreadPoolExecutor for async saves
+        pending_saves: List to accumulate futures for tracking
+        video_year: Video year for logging
+
+    Returns:
+        Tuple of (detections list, crop_count, filtered_count)
+    """
+    detections = []
+    crop_count = 0
+    filtered_count = 0
+
+    # Run YOLO inference on batch
+    batch_results = _process_frame_batch(batch_frames, batch_indices, detector, conf_threshold)
+
+    # Immediately process results: generate crops while GPU is ready for next batch
+    for (frame_idx_batch, result, _), frame_raw in zip(batch_results, batch_frames_raw):
+        detected = hasattr(result, 'boxes') and len(result.boxes) > 0
+
+        bbox = None
+        confidence = 0.0
+        if detected:
+            box = result.boxes[0]
+            x_norm, y_norm, w_norm, h_norm = box.xywhn[0]
+            confidence = float(box.conf[0])
+            bbox = {
+                'x_norm': float(x_norm),
+                'y_norm': float(y_norm),
+                'w_norm': float(w_norm),
+                'h_norm': float(h_norm),
+            }
+
+        detections.append({
+            'frame_idx': frame_idx_batch,
+            'detected': detected,
+            'bbox': bbox,
+            'confidence': confidence,
+        })
+
+        # Skip filtering if confidence too low
+        if confidence < conf_threshold:
+            continue
+
+        # Check ROI if configured
+        if roi_bbox and bbox:
+            x_center_px = bbox['x_norm'] * frame_dims['width']
+            y_center_px = bbox['y_norm'] * frame_dims['height']
+            roi_xmin, roi_ymin, roi_xmax, roi_ymax = roi_bbox
+
+            if not (roi_xmin <= x_center_px <= roi_xmax and
+                    roi_ymin <= y_center_px <= roi_ymax):
+                filtered_count += 1
+                continue
+        elif not bbox:
+            continue
+
+        # Generate and queue crop save (async)
+        if bbox is not None:
+            try:
+                crop = crop_ring_from_frame(frame_raw, bbox, crop_size=224)
+                if crop is not None:
+                    crop_path = output_dir / f"{frame_idx_batch:06d}_ring.png"
+                    future = crop_save_executor.submit(_save_crop_image, crop, crop_path)
+                    pending_saves.append(future)
+                    crop_count += 1
+            except Exception as e:
+                logger.debug(f"Failed to queue crop save for frame {frame_idx_batch}: {e}")
+
+    return detections, crop_count, filtered_count
 
 
 def process_video_with_yolo(video_path: str, camera: str, model_path: str,
@@ -199,11 +189,15 @@ def process_video_with_yolo(video_path: str, camera: str, model_path: str,
                             roi_config: Optional[ROIConfig] = None,
                             save_crops: bool = True) -> Dict[str, Any]:
     """
-    GPU worker: Process single video with YOLO inference AND save ring crops (async).
+    GPU worker: Interleaved YOLO inference and crop generation.
 
-    Extracts and processes frames in batches to manage memory efficiently.
-    If ROI is available for the camera, crops frames to ROI before YOLO inference (more efficient).
-    Saves crops asynchronously to avoid blocking GPU inference.
+    Processes video in batches where YOLO inference and crop generation happen concurrently:
+    1. Load batch of raw frames
+    2. Run YOLO inference on batch
+    3. Generate crops and queue async saves for this batch
+    4. While I/O is happening, load next batch and repeat
+
+    This parallelizes GPU inference with CPU crop generation + I/O for better throughput.
 
     Args:
         video_path: Path to video file
@@ -215,7 +209,7 @@ def process_video_with_yolo(video_path: str, camera: str, model_path: str,
         batch_size: Number of frames to process per YOLO batch (default 16)
         device_id: GPU device ID to use (default 0)
         roi_config: ROI configuration for masking detections to specific regions
-        save_crops: Whether to save crop images to disk (default True for backward compat)
+        save_crops: Whether to save crop images to disk (default True)
     """
     video_stem = Path(video_path).stem
     video_year = _extract_video_year(video_path, video_stem)
@@ -224,24 +218,15 @@ def process_video_with_yolo(video_path: str, camera: str, model_path: str,
     try:
         # Get video info
         video_info = get_video_info(video_path)
+        frame_height = video_info.get('height', 1080)
+        frame_width = video_info.get('width', 1920)
         total_frames = video_info.get('frame_count', 0)
 
-        # Load ROI for this camera if available
-        roi_polygon = None
-        roi_bbox = None
-        if roi_config:
-            roi_polygon = roi_config.get_roi_for_camera(camera, year=video_year)
-            roi_bbox = roi_config.get_roi_bbox(camera, year=video_year)
-            if roi_bbox:
-                if video_year:
-                    logger.info(f"[{camera}/{video_stem}] Using ROI for {video_year}: {roi_bbox}")
-                else:
-                    logger.info(f"[{camera}/{video_stem}] Using default ROI: {roi_bbox}")
-            else:
-                logger.info(f"[{camera}/{video_stem}] No ROI configured for year {video_year or 'default'}")
+        logger.info(f"[{camera}/{video_stem}] Starting interleaved YOLO+crop processing: {total_frames} frames")
 
-        logger.info(f"[{camera}/{video_stem}] Starting: {total_frames} frames on GPU {device_id}")
-
+        # Create output directory for crops and detections
+        output_dir = get_video_output_dir(output_root, camera, video_stem, step=1)
+        frame_dims = {'height': frame_height, 'width': frame_width}
 
         # Initialize detector with device_id
         detector = RingDetector(
@@ -252,151 +237,114 @@ def process_video_with_yolo(video_path: str, camera: str, model_path: str,
             device_id=device_id,
         )
 
-        # Create output directory for crops
-        output_dir = get_video_output_dir(output_root, camera, video_stem, step=1)
+        # Get ROI bbox if available
+        roi_bbox = None
+        if roi_config:
+            roi_bbox = roi_config.get_roi_bbox(camera, year=video_year)
+            if roi_bbox:
+                logger.info(f"Using ROI bbox: {roi_bbox}")
 
-        # Thread pool for async crop saving (don't block GPU inference)
-        crop_save_executor = ThreadPoolExecutor(max_workers=2) if save_crops else None
+        # Thread pool for async crop saving (6 workers)
+        crop_save_executor = ThreadPoolExecutor(max_workers=6)
         pending_saves = []
 
-        # Process video: extract frames, run inference, save crops
-        detections = []
-        conf_values = []
-        frame_count = 0
-        detected_count = 0
+        # Collect frames in batches with both raw and RGB versions for efficient processing
+        all_detections = []
         crop_count = 0
-
-        # Process frames in batches to manage memory
-        batch_frames = []
+        filtered_count = 0
+        batch_frames_rgb = []
+        batch_frames_raw = []
         batch_indices = []
 
-        for frame_idx, frame in sample_frames_from_video(video_path, frame_sample_rate):
-            batch_frames.append(frame)
+        for frame_idx, frame in sample_frames_from_video(video_path, sample_rate=frame_sample_rate):
+            # Store both raw (for crop) and RGB (for YOLO)
+            batch_frames_raw.append(frame)
+            batch_frames_rgb.append(cv.cvtColor(frame, cv.COLOR_BGR2RGB))
             batch_indices.append(frame_idx)
 
-            # Process batch when it reaches batch_size or at end of video
-            if len(batch_frames) >= batch_size:
-                batch_results = _process_frame_batch_with_roi(
-                    batch_frames, batch_indices, detector, conf_threshold,
-                    roi_bbox=roi_bbox, full_frame_shape=(video_info.get('height', 1080), video_info.get('width', 1920))
+            # Process batch when full or at end of stream
+            if len(batch_frames_rgb) >= batch_size:
+                # Process this batch: YOLO inference + immediate crop generation (interleaved)
+                detections, batch_crop_count, batch_filtered_count = _process_batch_with_crops(
+                    batch_frames_rgb, batch_indices, batch_frames_raw,
+                    detector, conf_threshold, output_dir,
+                    frame_dims, roi_bbox,
+                    crop_save_executor, pending_saves,
+                    video_year
                 )
+                all_detections.extend(detections)
+                crop_count += batch_crop_count
+                filtered_count += batch_filtered_count
 
-                # Process and save results IMMEDIATELY (don't accumulate in memory)
-                for frame_idx_batch, result, frame in batch_results:
-                    frame_count += 1
-                    detected = False
-                    bbox = None
-                    confidence = 0.0
-
-                    # Extract detection from YOLO result
-                    if hasattr(result, 'boxes') and len(result.boxes) > 0:
-                        box = result.boxes[0]
-                        x_norm, y_norm, w_norm, h_norm = box.xywhn[0]
-                        confidence = float(box.conf[0])
-
-                        detected = True
-                        bbox = {
-                            'x_norm': float(x_norm),
-                            'y_norm': float(y_norm),
-                            'w_norm': float(w_norm),
-                            'h_norm': float(h_norm),
-                        }
-
-                        if confidence >= conf_threshold:
-                            detected_count += 1
-                            conf_values.append(confidence)
-
-                            # Save crop image ASYNC (don't block GPU inference)
-                            if save_crops:
-                                try:
-                                    crop = crop_ring_from_frame(frame, bbox, crop_size=224)
-                                    if crop is not None:
-                                        crop_path = output_dir / f"{frame_idx_batch:06d}_ring.jpg"
-                                        # Submit save task to thread pool
-                                        future = crop_save_executor.submit(_save_crop_image, crop, crop_path)
-                                        pending_saves.append(future)
-                                        crop_count += 1
-                                except Exception as e:
-                                    logger.debug(f"Failed to queue crop save for frame {frame_idx_batch}: {e}")
-
-                    detections.append({
-                        'frame_idx': frame_idx_batch,
-                        'detected': detected,
-                        'bbox': bbox,
-                        'confidence': confidence,
-                    })
-
-                # Clear batch and GPU memory immediately
-                batch_frames.clear()
+                batch_frames_rgb.clear()
+                batch_frames_raw.clear()
                 batch_indices.clear()
                 torch.cuda.empty_cache()
 
         # Process remaining frames
-        if batch_frames:
-            batch_results = _process_frame_batch_with_roi(
-                batch_frames, batch_indices, detector, conf_threshold,
-                roi_bbox=roi_bbox, full_frame_shape=(video_info.get('height', 1080), video_info.get('width', 1920))
+        if batch_frames_rgb:
+            detections, batch_crop_count, batch_filtered_count = _process_batch_with_crops(
+                batch_frames_rgb, batch_indices, batch_frames_raw,
+                detector, conf_threshold, output_dir,
+                frame_dims, roi_bbox,
+                crop_save_executor, pending_saves,
+                video_year
             )
-
-            # Process and save remaining results IMMEDIATELY
-            for frame_idx_batch, result, frame in batch_results:
-                frame_count += 1
-                detected = False
-                bbox = None
-                confidence = 0.0
-
-                # Extract detection from YOLO result
-                if hasattr(result, 'boxes') and len(result.boxes) > 0:
-                    box = result.boxes[0]
-                    x_norm, y_norm, w_norm, h_norm = box.xywhn[0]
-                    confidence = float(box.conf[0])
-
-                    detected = True
-                    bbox = {
-                        'x_norm': float(x_norm),
-                        'y_norm': float(y_norm),
-                        'w_norm': float(w_norm),
-                        'h_norm': float(h_norm),
-                    }
-
-                    if confidence >= conf_threshold:
-                        detected_count += 1
-                        conf_values.append(confidence)
-
-                        # Save crop image ASYNC
-                        if save_crops:
-                            try:
-                                crop = crop_ring_from_frame(frame, bbox, crop_size=224)
-                                if crop is not None:
-                                    crop_path = output_dir / f"{frame_idx_batch:06d}_ring.jpg"
-                                    future = crop_save_executor.submit(_save_crop_image, crop, crop_path)
-                                    pending_saves.append(future)
-                                    crop_count += 1
-                            except Exception as e:
-                                logger.debug(f"Failed to queue crop save for frame {frame_idx_batch}: {e}")
-
-                detections.append({
-                    'frame_idx': frame_idx_batch,
-                    'detected': detected,
-                    'bbox': bbox,
-                    'confidence': confidence,
-                })
+            all_detections.extend(detections)
+            crop_count += batch_crop_count
+            filtered_count += batch_filtered_count
 
             torch.cuda.empty_cache()
 
-        # Wait for all pending crop saves to complete
-        if crop_save_executor and pending_saves:
-            logger.debug(f"Waiting for {len(pending_saves)} pending crop saves...")
-            for future in pending_saves:
+        # Wait for all crop saves to complete
+        if pending_saves:
+            logger.debug(f"Waiting for {len(pending_saves)} crop saves to complete...")
+            completed = 0
+            failed = 0
+            for i, future in enumerate(pending_saves):
                 try:
-                    future.result(timeout=30)  # 30s timeout per save
+                    future.result(timeout=10)
+                    completed += 1
                 except Exception as e:
-                    logger.debug(f"Crop save task failed: {e}")
+                    logger.debug(f"Crop save task {i+1}/{len(pending_saves)} failed: {e}")
+                    failed += 1
+                if (i + 1) % 100 == 0:
+                    logger.debug(f"  Progress: {i + 1}/{len(pending_saves)} saves completed")
+
             crop_save_executor.shutdown(wait=True)
+            if failed > 0:
+                logger.warning(f"  {failed}/{len(pending_saves)} crop saves failed (but processing complete)")
+
+        # Count detections above confidence threshold for stats
+        detected_count = sum(1 for d in all_detections if d['detected'] and d['confidence'] >= conf_threshold)
+        conf_values = [d['confidence'] for d in all_detections if d['confidence'] > 0]
 
         elapsed = time.time() - start_time
 
-        logger.info(f"[{camera}/{video_stem}] Complete: {detected_count}/{frame_count} frames, {crop_count} crops saved in {elapsed:.1f}s")
+        # Log summary
+        logger.info(f"[{camera}/{video_stem}] Complete in {elapsed:.1f}s")
+        logger.info(f"[{camera}/{video_stem}] Results: {detected_count} detections, {crop_count} crops saved ({filtered_count} filtered by ROI)")
+
+        # Save filtered metadata for compatibility
+        filtered_detections = [d for d in all_detections if d['detected'] and d['confidence'] >= conf_threshold]
+        if roi_bbox:
+            # If ROI filtering was applied, also save that info
+            filtered_detections = [
+                d for d in filtered_detections
+                if d['bbox'] and _detection_in_roi(d['bbox'], frame_dims['height'], frame_dims['width'], roi_bbox)
+            ]
+
+        metadata = {
+            'video_path': video_path,
+            'camera': camera,
+            'detections': filtered_detections,
+            'ring_detect_count': detected_count,
+            'frames_total': total_frames,
+            'frames_processed': len(all_detections),
+        }
+        metadata_path = output_dir / "_metadata.json"
+        with open(metadata_path, 'w') as f:
+            json.dump(metadata, f, indent=2)
 
         return {
             'video_path': video_path,
@@ -404,10 +352,12 @@ def process_video_with_yolo(video_path: str, camera: str, model_path: str,
             'camera': camera,
             'status': 'success',
             'error': None,
-            'detections': detections,
+            'detections': all_detections,
             'frames_total': total_frames,
-            'frames_processed': frame_count,
+            'frames_processed': len(all_detections),
             'ring_detect_count': detected_count,
+            'ring_crop_count': crop_count,
+            'ring_filtered_count': filtered_count,
             'ring_conf_mean': float(np.mean(conf_values)) if conf_values else 0.0,
             'ring_conf_max': float(np.max(conf_values)) if conf_values else 0.0,
             'processing_seconds': elapsed,
@@ -416,6 +366,7 @@ def process_video_with_yolo(video_path: str, camera: str, model_path: str,
     except Exception as e:
         elapsed = time.time() - start_time
         logger.error(f"[{camera}/{video_stem}] ERROR: {e}")
+        logger.error(traceback.format_exc())
         return {
             'video_path': video_path,
             'video_stem': video_stem,
@@ -426,6 +377,8 @@ def process_video_with_yolo(video_path: str, camera: str, model_path: str,
             'frames_total': 0,
             'frames_processed': 0,
             'ring_detect_count': 0,
+            'ring_crop_count': 0,
+            'ring_filtered_count': 0,
             'ring_conf_mean': 0.0,
             'ring_conf_max': 0.0,
             'processing_seconds': elapsed,
@@ -447,20 +400,25 @@ def crop_ring_from_frame(frame: np.ndarray, bbox: Dict, crop_size: int = 224) ->
     try:
         height, width = frame.shape[:2]
 
-        # Convert normalized coords to pixel coords
-        x_center = int(bbox['x_norm'] * width)
-        y_center = int(bbox['y_norm'] * height)
+        # Convert normalized coords to pixel coords with proper rounding
+        # Use round() for consistent center positioning, not int() which truncates
+        x_center = round(bbox['x_norm'] * width)
+        y_center = round(bbox['y_norm'] * height)
 
-        # Extract square crop centered on ring
-        x1 = max(0, x_center - crop_size // 2)
-        y1 = max(0, y_center - crop_size // 2)
-        x2 = min(width, x1 + crop_size)
-        y2 = min(height, y1 + crop_size)
+        # Clamp center to frame bounds
+        x_center = max(crop_size // 2, min(width - crop_size // 2, x_center))
+        y_center = max(crop_size // 2, min(height - crop_size // 2, y_center))
+
+        # Extract square crop centered on ring (now guaranteed to be within bounds)
+        x1 = x_center - crop_size // 2
+        y1 = y_center - crop_size // 2
+        x2 = x1 + crop_size
+        y2 = y1 + crop_size
 
         crop = frame[y1:y2, x1:x2]
 
-        # Pad if necessary
-        if crop.shape[0] < crop_size or crop.shape[1] < crop_size:
+        # Validate crop is correct size (should be guaranteed by clamping above)
+        if crop.shape[0] != crop_size or crop.shape[1] != crop_size:
             padded = np.zeros((crop_size, crop_size, 3), dtype=frame.dtype)
             padded[:crop.shape[0], :crop.shape[1]] = crop
             crop = padded
@@ -575,6 +533,8 @@ def run_step1_ring_detection(config: PipelineConfig, db_logger: PipelineLogger, 
                         'frames_total': result['frames_total'],
                         'frames_processed': result['frames_processed'],
                         'ring_detect_count': result['ring_detect_count'],
+                        'ring_crop_count': result['ring_crop_count'],
+                        'ring_filtered_count': result['ring_filtered_count'],
                         'ring_detect_rate': result['ring_detect_count'] / max(1, result['frames_processed']),
                         'ring_conf_mean': result['ring_conf_mean'],
                         'ring_conf_max': result['ring_conf_max'],
@@ -583,7 +543,12 @@ def run_step1_ring_detection(config: PipelineConfig, db_logger: PipelineLogger, 
                     }
 
                     db_logger.log_step1_result(video_path, camera, db_stats)
-                    logger.info(f"✓ [{task_idx}/{len(tasks)}] {video_stem}: {result['ring_detect_count']} rings in {result['frames_processed']} frames")
+
+                    # Log with ROI filtering info if applicable
+                    if result['ring_filtered_count'] > 0:
+                        logger.info(f"✓ [{task_idx}/{len(tasks)}] {video_stem}: {result['ring_crop_count']} crops saved from {result['ring_detect_count']} detections ({result['ring_filtered_count']} filtered by ROI)")
+                    else:
+                        logger.info(f"✓ [{task_idx}/{len(tasks)}] {video_stem}: {result['ring_crop_count']} crops in {result['frames_processed']} frames")
 
                 else:
                     # Log error to database

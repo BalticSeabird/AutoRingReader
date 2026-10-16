@@ -1,0 +1,12 @@
+{
+  "video_path": "../../../../../mnt/BSP_NAS2_work/ring_reader/eventvids_test/FAR3_SCALE_2025-06-17_10_109.mp4",
+  "frames_total": 118,
+  "frames_processed": 112,
+  "ring_detect_count": 103,
+  "detection_rate": 0.9196428571428571,
+  "crops_saved": 103,
+  "confidence_threshold": 0.5,
+  "conf_mean": 0.7222586777603742,
+  "conf_max": 0.8349002003669739,
+  "conf_min": 0.5030663013458252
+}

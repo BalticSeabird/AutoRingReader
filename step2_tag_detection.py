@@ -374,7 +374,10 @@ def discover_ring_crop_events(output_root: str, camera: str) -> List[Tuple[str, 
         return events
 
     for event_dir in sorted(path for path in ring_dir.iterdir() if path.is_dir()):
-        crop_paths = sorted(str(crop_file) for crop_file in event_dir.glob("*_ring.jpg"))
+        crop_paths = sorted(str(crop_file) for crop_file in event_dir.glob("*_ring.png"))
+        if not crop_paths:
+            # Also check for JPG files for backward compatibility
+            crop_paths = sorted(str(crop_file) for crop_file in event_dir.glob("*_ring.jpg"))
         if not crop_paths:
             logger.info(f"Skipping empty event folder for camera {camera}: {event_dir.name}")
             continue

@@ -2,13 +2,17 @@
 Step 3: Text Recognition - Recognize ring IDs from tag crops.
 
 This step:
-1. Groups tag crop images by ring (tag_0, tag_1 together)
-2. Uses CLIP4STR model for OCR character recognition
-3. Applies pattern matching and majority voting
-4. Aggregates to final ring ID per video
-5. Logs results to database and saves YAML output
+1. Discovers tag crop events (one per camera/video_stem folder)
+2. Processes each event independently (event-by-event architecture)
+3. Groups tag crop images by ring (tag_0, tag_1 together) within each event
+4. Uses CLIP4STR model for OCR character recognition
+5. Applies pattern matching and majority voting
+6. Aggregates to final ring ID per video
+7. Logs results to database immediately (enables resume)
+8. Saves YAML output
 
 Uses batched processing and optional multi-GPU support via multiprocessing.
+Processes ONE EVENT AT A TIME to keep memory bounded (~500MB per event, not 30GB).
 """
 
 import logging
@@ -17,7 +21,7 @@ import time
 import sys
 from pathlib import Path
 from collections import defaultdict, Counter
-from multiprocessing import Manager, get_context, Process
+from multiprocessing import Manager, get_context
 from typing import Dict, Tuple, List, Optional
 import numpy as np
 import cv2 as cv
@@ -33,27 +37,69 @@ from text_recognition import TextRecognition
 logger = logging.getLogger(__name__)
 
 
-def group_tag_crops_by_ring(output_root: str) -> Dict[Tuple[str, str, str], List[str]]:
+def discover_tag_crop_events(output_root: str, camera: str) -> List[Tuple[str, List[str]]]:
     """
-    Group tag crops by ring (camera, video_stem, frame_id).
+    Discover Step 2 tag crop event folders for one camera.
 
-    File structure: step2_tag_crops/{camera}/{video_stem}/{frame_id}_ring_tag_{idx}.jpg
-    Groups files by (camera, video_stem, frame_id) so tag_0, tag_1 are together.
+    Expected layout:
+        step2_tag_crops/{camera}/{video_stem}/{frame_id}_ring_tag_{idx}.jpg
+
+    This only inspects immediate subfolders under the camera directory and uses
+    non-recursive glob, so we don't walk the full tree (unlike the old group_tag_crops_by_ring).
 
     Args:
         output_root: Root output directory
+        camera: Camera name to filter
+
+    Returns:
+        List of (video_stem, crop_paths) tuples, one per event folder.
+    """
+    tag_dir = Path(output_root) / "step2_tag_crops" / camera
+    events: List[Tuple[str, List[str]]] = []
+
+    if not tag_dir.exists():
+        logger.info(f"No Step 2 tag crop directory found for camera {camera}: {tag_dir}")
+        return events
+
+    # Iterate immediate subdirectories (one per video_stem)
+    for event_dir in sorted(path for path in tag_dir.iterdir() if path.is_dir()):
+        video_stem = event_dir.name
+
+        # Collect tag crop files for this event
+        crop_paths = sorted(str(crop_file) for crop_file in event_dir.glob("*_ring_tag_*.jpg"))
+
+        if not crop_paths:
+            logger.debug(f"Skipping empty event folder for camera {camera}: {video_stem}")
+            continue
+
+        logger.info(
+            f"Discovered tag crop event for camera {camera}: {video_stem} with {len(crop_paths)} tag crops"
+        )
+        events.append((video_stem, crop_paths))
+
+    return events
+
+
+def group_tag_crops_by_ring_for_event(crop_paths: List[str]) -> Dict[Tuple[str, str, str], List[str]]:
+    """
+    Group tag crops by ring for a SINGLE EVENT.
+
+    File structure: {crop_path} = .../step2_tag_crops/{camera}/{video_stem}/{frame_id}_ring_tag_{idx}.jpg
+    Groups files by (camera, video_stem, frame_id) so tag_0, tag_1 are together.
+
+    Args:
+        crop_paths: List of crop file paths (only from one video_stem)
 
     Returns:
         Dict mapping (camera, video_stem, frame_id) to list of sorted crop paths
     """
-    tag_dir = Path(output_root) / "step2_tag_crops"
     groups = defaultdict(list)
 
-    if not tag_dir.exists():
-        return groups
-
-    for crop_file in sorted(tag_dir.rglob("*.jpg")):
+    for crop_file_str in crop_paths:
+        crop_file = Path(crop_file_str)
         parts = crop_file.parts
+
+        # Extract camera and video_stem from path structure
         camera = parts[-3] if len(parts) >= 3 else "UNKNOWN"
         video_stem = parts[-2] if len(parts) >= 2 else "unknown"
 
@@ -113,7 +159,6 @@ def gpu_text_recognition_worker(device_id: int, batch_queue, result_queue,
 
                 if batch_item is None:  # Sentinel value
                     logger_.info(f"GPU {device_id}: Received sentinel, shutting down")
-                    # Send sentinel to result_queue to signal main process
                     result_queue.put(None)
                     break
 
@@ -154,25 +199,45 @@ def gpu_text_recognition_worker(device_id: int, batch_queue, result_queue,
         logger_.info(f"GPU {device_id}: Worker process exiting")
 
 
-def _run_step3_single_gpu(config: PipelineConfig, db_logger: PipelineLogger,
-                         tag_groups: Dict, model: TextRecognition) -> Tuple[List[Dict], Dict]:
+def _run_step3_single_gpu(
+    config: PipelineConfig,
+    camera: str,
+    video_stem: str,
+    crop_paths: List[str],
+    model: TextRecognition
+) -> Dict:
     """
-    Process tag groups using single GPU with batched inference.
+    Process one event's tag groups using single GPU with batched inference.
+
+    Args:
+        config: Pipeline configuration
+        camera: Camera name for this event
+        video_stem: Video stem for this event
+        crop_paths: List of crop file paths (only from this event)
+        model: TextRecognition model instance
 
     Returns:
-        Tuple of (all_results, video_results)
+        Dict with keys: 'final_tag', 'letters', 'numbers', 'detection_count',
+                        'letters_confidence', 'numbers_confidence'
     """
+    tag_groups = group_tag_crops_by_ring_for_event(crop_paths)
     total_groups = len(tag_groups)
-    all_results = []
-    video_results = defaultdict(lambda: {
+
+    if total_groups == 0:
+        logger.info(f"No tag groups found for {camera}/{video_stem}")
+        return {}
+
+    logger.info(f"Processing {total_groups} tag groups for {camera}/{video_stem} with single GPU")
+
+    video_results = {
         'frames': [],
         'letters': [],
         'numbers': [],
         'letters_confs': [],
         'numbers_confs': [],
-    })
+    }
 
-    batch_size = 32
+    batch_size = config.step3.batch_size
     group_batch = []
     group_batch_keys = []
     group_batch_images = []
@@ -182,13 +247,13 @@ def _run_step3_single_gpu(config: PipelineConfig, db_logger: PipelineLogger,
     last_progress_time = time.time()
     progress_interval = 5.0
 
-    for i, (group_key, crop_paths) in enumerate(tag_groups.items()):
-        camera, video_stem, frame_id = group_key
+    for i, (group_key, group_crop_paths) in enumerate(tag_groups.items()):
+        frame_id = group_key[2]
 
         # Load images for this group
         images = []
         try:
-            for crop_path in crop_paths:
+            for crop_path in group_crop_paths:
                 img = cv.imread(str(crop_path))
                 if img is not None:
                     img_rgb = cv.cvtColor(img, cv.COLOR_BGR2RGB)
@@ -219,7 +284,7 @@ def _run_step3_single_gpu(config: PipelineConfig, db_logger: PipelineLogger,
                 # Map predictions back to groups, combining letters+numbers per ring
                 pred_idx = 0
                 for group_idx, group_key in enumerate(group_batch_keys):
-                    camera, video_stem, frame_id = group_key
+                    cam, vstem, fid = group_key
                     images_in_group = group_image_counts[group_idx]
 
                     # Collect all predictions for this group
@@ -241,22 +306,11 @@ def _run_step3_single_gpu(config: PipelineConfig, db_logger: PipelineLogger,
                         letters_conf = float(np.mean(group_predictions['letters']['pred']))
                         numbers_conf = float(np.mean(group_predictions['numbers']['pred']))
 
-                        all_results.append({
-                            'group_key': group_key,
-                            'camera': camera,
-                            'video_stem': video_stem,
-                            'frame_id': frame_id,
-                            'letters': letters,
-                            'numbers': numbers,
-                            'letters_conf': letters_conf,
-                            'numbers_conf': numbers_conf,
-                        })
-
-                        video_results[video_stem]['frames'].append(frame_id)
-                        video_results[video_stem]['letters'].append(letters)
-                        video_results[video_stem]['numbers'].append(numbers)
-                        video_results[video_stem]['letters_confs'].append(letters_conf)
-                        video_results[video_stem]['numbers_confs'].append(numbers_conf)
+                        video_results['frames'].append(fid)
+                        video_results['letters'].append(letters)
+                        video_results['numbers'].append(numbers)
+                        video_results['letters_confs'].append(letters_conf)
+                        video_results['numbers_confs'].append(numbers_conf)
 
             except Exception as e:
                 logger.error(f"Batch OCR failed for batch {processed_batches}: {e}")
@@ -267,7 +321,7 @@ def _run_step3_single_gpu(config: PipelineConfig, db_logger: PipelineLogger,
             current_time = time.time()
             if current_time - last_progress_time >= progress_interval:
                 percent_done = (i + 1) / total_groups * 100
-                logger.info(f"Progress: {i + 1}/{total_groups} groups ({percent_done:.1f}%) | {processed_batches} batches")
+                logger.info(f"  Progress: {i + 1}/{total_groups} groups ({percent_done:.1f}%) | {processed_batches} batches")
                 last_progress_time = current_time
 
             # Reset batch
@@ -276,37 +330,75 @@ def _run_step3_single_gpu(config: PipelineConfig, db_logger: PipelineLogger,
             group_batch_images = []
             group_image_counts = []
 
-    logger.info(f"✓ OCR complete with single GPU: {len(all_results)} results from {processed_batches} batches")
-    return all_results, dict(video_results)
+    logger.info(f"✓ OCR complete for {camera}/{video_stem}: {len(video_results['letters'])} results from {processed_batches} batches")
+
+    # Aggregate per video via majority voting
+    if not video_results['letters']:
+        return {}
+
+    letters_counter = Counter(video_results['letters'])
+    numbers_counter = Counter(video_results['numbers'])
+
+    final_letters = letters_counter.most_common(1)[0][0]
+    final_numbers = numbers_counter.most_common(1)[0][0]
+    final_tag = f"{final_letters}{final_numbers}"
+
+    return {
+        'final_tag': final_tag,
+        'letters': final_letters,
+        'numbers': final_numbers,
+        'detection_count': len(video_results['frames']),
+        'letters_confidence': float(np.mean(video_results['letters_confs'])),
+        'numbers_confidence': float(np.mean(video_results['numbers_confs'])),
+    }
 
 
-def _run_step3_multi_gpu(config: PipelineConfig, db_logger: PipelineLogger,
-                        tag_groups: Dict, model_path: str) -> Tuple[List[Dict], Dict]:
+def _run_step3_multi_gpu(
+    config: PipelineConfig,
+    camera: str,
+    video_stem: str,
+    crop_paths: List[str],
+    model_path: str
+) -> Dict:
     """
-    Process tag groups using multiple GPUs with multiprocessing.
+    Process one event's tag groups using multiple GPUs with multiprocessing.
+
+    Args:
+        config: Pipeline configuration
+        camera: Camera name for this event
+        video_stem: Video stem for this event
+        crop_paths: List of crop file paths (only from this event)
+        model_path: Path to text recognition model
 
     Returns:
-        Tuple of (all_results, video_results)
+        Dict with keys: 'final_tag', 'letters', 'numbers', 'detection_count',
+                        'letters_confidence', 'numbers_confidence'
     """
+    tag_groups = group_tag_crops_by_ring_for_event(crop_paths)
     total_groups = len(tag_groups)
-    all_results = []
-    video_results = defaultdict(lambda: {
+
+    if total_groups == 0:
+        logger.info(f"No tag groups found for {camera}/{video_stem}")
+        return {}
+
+    logger.info(f"Processing {total_groups} tag groups for {camera}/{video_stem} with multi-GPU")
+
+    video_results = {
         'frames': [],
         'letters': [],
         'numbers': [],
         'letters_confs': [],
         'numbers_confs': [],
-    })
+    }
 
-    batch_size = 32
+    batch_size = config.step3.batch_size
     num_gpus = len(config.step3.gpu_devices)
 
-    logger.info(f"Starting multi-GPU processing with {num_gpus} GPUs")
+    logger.info(f"Starting multi-GPU processing with {num_gpus} GPUs (batch_size={batch_size})")
 
     with Manager() as manager:
-        # Larger queue sizes to avoid producer blocking
-        # With 10K+ groups, need room for many batches in queue
-        queue_size = max(256, len(tag_groups) // 10)  # Generous buffer
+        # Queue sizes based on groups in this event (not millions)
+        queue_size = max(64, total_groups // 5)
         batch_queue = manager.Queue(maxsize=queue_size)
         result_queue = manager.Queue(maxsize=queue_size)
 
@@ -323,7 +415,7 @@ def _run_step3_multi_gpu(config: PipelineConfig, db_logger: PipelineLogger,
                 )
                 gpu_workers.append(task)
 
-            logger.info(f"Started {num_gpus} GPU workers")
+            logger.info(f"Started {num_gpus} GPU workers for {camera}/{video_stem}")
 
             # Producer: Accumulate and submit batches
             batch_idx = 0
@@ -331,13 +423,13 @@ def _run_step3_multi_gpu(config: PipelineConfig, db_logger: PipelineLogger,
             group_batch_keys = []
             group_image_counts = []
 
-            for i, (group_key, crop_paths) in enumerate(tag_groups.items()):
-                camera, video_stem, frame_id = group_key
+            for i, (group_key, group_crop_paths) in enumerate(tag_groups.items()):
+                frame_id = group_key[2]
 
                 # Load images for this group
                 images = []
                 try:
-                    for crop_path in crop_paths:
+                    for crop_path in group_crop_paths:
                         img = cv.imread(str(crop_path))
                         if img is not None:
                             img_rgb = cv.cvtColor(img, cv.COLOR_BGR2RGB)
@@ -375,13 +467,13 @@ def _run_step3_multi_gpu(config: PipelineConfig, db_logger: PipelineLogger,
             last_result_time = time.time()
             result_interval = 5.0
             timeout_count = 0
-            max_consecutive_timeouts = 120  # 20 minutes of timeouts = stuck
+            max_consecutive_timeouts = 120
 
             logger.info("Collecting results from GPU workers")
             while sentinel_count < num_gpus:
                 try:
                     result = result_queue.get(timeout=10.0)
-                    timeout_count = 0  # Reset timeout counter on success
+                    timeout_count = 0
 
                     if result is None:
                         sentinel_count += 1
@@ -399,7 +491,7 @@ def _run_step3_multi_gpu(config: PipelineConfig, db_logger: PipelineLogger,
                                 percent_done = len(results_received) / batch_idx * 100
                             else:
                                 percent_done = 0
-                            logger.info(f"Results: {len(results_received)}/{batch_idx} batches ({percent_done:.1f}%)")
+                            logger.info(f"  Results: {len(results_received)}/{batch_idx} batches ({percent_done:.1f}%)")
                             last_result_time = current_time
 
                     else:
@@ -408,8 +500,8 @@ def _run_step3_multi_gpu(config: PipelineConfig, db_logger: PipelineLogger,
 
                 except Exception as e:
                     timeout_count += 1
-                    if timeout_count % 10 == 0:  # Log every 10 timeouts (100 seconds)
-                        logger.info(f"Waiting for results ({timeout_count}x timeout, {len(results_received)} results so far)...")
+                    if timeout_count % 10 == 0:
+                        logger.info(f"  Waiting for results ({timeout_count}x timeout, {len(results_received)} results so far)...")
                     if timeout_count > max_consecutive_timeouts:
                         logger.error(f"Too many consecutive timeouts ({timeout_count}), assuming workers are stuck")
                         raise
@@ -426,7 +518,7 @@ def _run_step3_multi_gpu(config: PipelineConfig, db_logger: PipelineLogger,
                 # Map predictions back to groups, combining letters+numbers per ring
                 pred_idx = 0
                 for group_idx, group_key in enumerate(group_keys):
-                    camera, video_stem, frame_id = group_key
+                    cam, vstem, fid = group_key
                     images_in_group = group_image_counts[group_idx]
 
                     # Collect all predictions for this group
@@ -448,42 +540,51 @@ def _run_step3_multi_gpu(config: PipelineConfig, db_logger: PipelineLogger,
                         letters_conf = float(np.mean(group_predictions['letters']['pred']))
                         numbers_conf = float(np.mean(group_predictions['numbers']['pred']))
 
-                        all_results.append({
-                            'group_key': group_key,
-                            'camera': camera,
-                            'video_stem': video_stem,
-                            'frame_id': frame_id,
-                            'letters': letters,
-                            'numbers': numbers,
-                            'letters_conf': letters_conf,
-                            'numbers_conf': numbers_conf,
-                        })
-
-                        video_results[video_stem]['frames'].append(frame_id)
-                        video_results[video_stem]['letters'].append(letters)
-                        video_results[video_stem]['numbers'].append(numbers)
-                        video_results[video_stem]['letters_confs'].append(letters_conf)
-                        video_results[video_stem]['numbers_confs'].append(numbers_conf)
+                        video_results['frames'].append(fid)
+                        video_results['letters'].append(letters)
+                        video_results['numbers'].append(numbers)
+                        video_results['letters_confs'].append(letters_conf)
+                        video_results['numbers_confs'].append(numbers_conf)
 
             # Wait for GPU workers to finish
             logger.info("Waiting for GPU workers to complete")
             for task in gpu_workers:
                 task.get(timeout=3600)
 
-            logger.info(f"✓ OCR complete with {num_gpus} GPUs: {len(all_results)} results")
-            return all_results, dict(video_results)
+            logger.info(f"✓ OCR complete for {camera}/{video_stem}: {len(video_results['letters'])} results")
 
         finally:
             gpu_pool.close()
             gpu_pool.join()
 
+    # Aggregate per video via majority voting
+    if not video_results['letters']:
+        return {}
+
+    letters_counter = Counter(video_results['letters'])
+    numbers_counter = Counter(video_results['numbers'])
+
+    final_letters = letters_counter.most_common(1)[0][0]
+    final_numbers = numbers_counter.most_common(1)[0][0]
+    final_tag = f"{final_letters}{final_numbers}"
+
+    return {
+        'final_tag': final_tag,
+        'letters': final_letters,
+        'numbers': final_numbers,
+        'detection_count': len(video_results['frames']),
+        'letters_confidence': float(np.mean(video_results['letters_confs'])),
+        'numbers_confidence': float(np.mean(video_results['numbers_confs'])),
+    }
+
 
 def run_step3_text_recognition(config: PipelineConfig, db_logger: PipelineLogger, force_reprocess: bool = False) -> bool:
     """
-    Execute Step 3: Text Recognition on all tag crops with batched OCR processing.
+    Execute Step 3: Text Recognition on all tag crops with EVENT-BY-EVENT processing.
 
-    Supports both single-GPU (faster for setup) and multi-GPU modes.
-    Uses batches of 32 tag groups for optimized inference.
+    This processes tag crops one event (camera/video_stem folder) at a time, keeping
+    memory bounded (~500MB per event, not 30GB). Each event is logged to the database
+    immediately after completion, enabling resume support.
 
     Args:
         config: Pipeline configuration
@@ -493,123 +594,166 @@ def run_step3_text_recognition(config: PipelineConfig, db_logger: PipelineLogger
     Returns:
         True if successful, False otherwise
     """
-    logger.info("Starting Step 3: Text Recognition")
+    logger.info("=" * 80)
+    logger.info("Starting Step 3: Text Recognition (EVENT-BY-EVENT PROCESSING)")
+    logger.info("=" * 80)
     step_start_time = time.time()
+    total_events_processed = 0
+    total_events_failed = 0
 
     try:
-        # Group crops by ring tags
-        tag_groups = group_tag_crops_by_ring(config.output_root_path)
-
-        if not tag_groups:
-            logger.warning("No tag crop groups found from Step 2")
-            return True
-
-        total_groups = len(tag_groups)
         num_gpus = len(config.step3.gpu_devices)
-        logger.info(f"Processing {total_groups} ring tag groups with {num_gpus} GPU(s)")
-
-        # Decide whether to use single or multi-GPU
         use_multi_gpu = num_gpus > 1
+        logger.info(f"Using {num_gpus} GPU(s), multi_gpu={use_multi_gpu}")
 
-        if use_multi_gpu:
-            logger.info("Using multi-GPU mode with Manager and Pools")
-            try:
+        # Load model once (reuse across all events)
+        try:
+            if use_multi_gpu:
+                model = None
                 model_path = str(config.models.text_recognition.get_model_path())
-                all_results, video_results = _run_step3_multi_gpu(config, db_logger, tag_groups, model_path)
-            except Exception as e:
-                logger.warning(f"Multi-GPU mode failed, falling back to single-GPU: {e}")
-                logger.info("Loading model for single-GPU fallback...")
-                try:
-                    model = TextRecognition(
-                        config.models.text_recognition.get_model_path(),
-                        device="cuda:0"
-                    )
-                    all_results, video_results = _run_step3_single_gpu(config, db_logger, tag_groups, model)
-                except Exception as e2:
-                    logger.error(f"Single-GPU fallback also failed: {e2}")
-                    return False
-        else:
-            logger.info("Using single-GPU mode with batched inference")
-            try:
+            else:
+                logger.info("Loading TextRecognition model for single-GPU mode...")
                 model = TextRecognition(
                     config.models.text_recognition.get_model_path(),
                     device="cuda:0"
                 )
                 logger.info("✓ Model loaded")
-                all_results, video_results = _run_step3_single_gpu(config, db_logger, tag_groups, model)
-            except Exception as e:
-                logger.error(f"Single-GPU mode failed: {e}")
-                return False
+                model_path = None
+        except Exception as e:
+            logger.error(f"Failed to load model: {e}")
+            return False
 
-        # Aggregate per video via majority voting
-        final_tags = {}
-        for video_stem, data in video_results.items():
-            if not data['letters']:
+        # Get completed videos for resume
+        completed_videos = set()
+        if not force_reprocess:
+            completed_videos = set(db_logger.get_completed_videos(step="step3"))
+            logger.info(f"Resuming: {len(completed_videos)} videos already completed in step3")
+        else:
+            logger.info("Force reprocess: Reprocessing all videos")
+
+        # Iterate through each camera
+        for camera in config.input.cameras:
+            logger.info(f"\nProcessing camera: {camera}")
+
+            # Discover events for this camera
+            events = discover_tag_crop_events(config.output_root_path, camera)
+
+            if not events:
+                logger.info(f"No tag crops found for camera {camera}")
                 continue
 
-            letters_counter = Counter(data['letters'])
-            numbers_counter = Counter(data['numbers'])
+            logger.info(f"Found {len(events)} events for camera {camera}")
 
-            final_letters = letters_counter.most_common(1)[0][0]
-            final_numbers = numbers_counter.most_common(1)[0][0]
-            final_tag = f"{final_letters}{final_numbers}"
+            # Process each event independently
+            for event_idx, (video_stem, crop_paths) in enumerate(events):
+                # Check if already completed
+                if video_stem in completed_videos:
+                    logger.info(f"[{event_idx + 1}/{len(events)}] Skipping completed: {camera}/{video_stem}")
+                    continue
 
-            final_tags[video_stem] = {
-                'tag': final_tag,
-                'letters': final_letters,
-                'numbers': final_numbers,
-                'detection_count': len(data['frames']),
-                'letters_confidence': float(np.mean(data['letters_confs'])),
-                'numbers_confidence': float(np.mean(data['numbers_confs'])),
-            }
+                event_start_time = time.time()
+                logger.info(f"[{event_idx + 1}/{len(events)}] Processing: {camera}/{video_stem} ({len(crop_paths)} crops)")
 
-        # Save results
-        for video_stem, tag_data in final_tags.items():
-            try:
-                # Extract camera from all_results for this video
-                camera = "UNKNOWN"
-                for result in all_results:
-                    if result['video_stem'] == video_stem:
-                        camera = result['camera']
-                        break
+                try:
+                    # Process this event
+                    if use_multi_gpu:
+                        video_result = _run_step3_multi_gpu(
+                            config, camera, video_stem, crop_paths, model_path
+                        )
+                    else:
+                        video_result = _run_step3_single_gpu(
+                            config, camera, video_stem, crop_paths, model
+                        )
 
-                output_dir = get_video_output_dir(config.output_root_path, camera, video_stem, step=3)
+                    # Handle case where no results were produced
+                    if not video_result:
+                        logger.warning(f"No OCR results for {camera}/{video_stem}")
+                        db_logger.log_step3_result(video_stem, camera, {
+                            'status': 'success',
+                            'processing_seconds': time.time() - event_start_time,
+                            'tags_processed': 0,
+                            'ocr_matches_count': 0,
+                            'ocr_success_rate': 0.0,
+                            'letters_conf_min_mean': 0.0,
+                            'numbers_conf_min_mean': 0.0,
+                            'output_path': '',
+                        })
+                        total_events_processed += 1
+                        continue
 
-                summary_path = output_dir / f"{video_stem}.yaml"
-                with open(summary_path, 'w') as f:
-                    yaml.dump({
-                        'video_stem': video_stem,
-                        'final_tag': tag_data['tag'],
-                        'letters': tag_data['letters'],
-                        'numbers': tag_data['numbers'],
-                        'detection_count': tag_data['detection_count'],
-                        'letters_confidence': tag_data['letters_confidence'],
-                        'numbers_confidence': tag_data['numbers_confidence'],
-                    }, f)
+                    # Save results for this video
+                    try:
+                        output_dir = get_video_output_dir(config.output_root_path, camera, video_stem, step=3)
+                        output_dir.mkdir(parents=True, exist_ok=True)
 
-                # Log to database if available
-                if db_logger:
-                    db_stats = {
-                        'status': 'success',
-                        'processing_seconds': 0,
-                        'tags_processed': tag_data['detection_count'],
-                        'ocr_matches_count': 1,
-                        'ocr_success_rate': 1.0,
-                        'letters_conf_min_mean': tag_data['letters_confidence'],
-                        'numbers_conf_min_mean': tag_data['numbers_confidence'],
-                        'letters_ema_min_mean': tag_data['letters_confidence'],
-                        'numbers_ema_min_mean': tag_data['numbers_confidence'],
-                        'output_path': str(summary_path),
-                    }
-                    db_logger.log_step3_result(video_stem, camera, db_stats)
+                        summary_path = output_dir / f"{video_stem}.yaml"
+                        with open(summary_path, 'w') as f:
+                            yaml.dump({
+                                'video_stem': video_stem,
+                                'final_tag': video_result['final_tag'],
+                                'letters': video_result['letters'],
+                                'numbers': video_result['numbers'],
+                                'detection_count': video_result['detection_count'],
+                                'letters_confidence': video_result['letters_confidence'],
+                                'numbers_confidence': video_result['numbers_confidence'],
+                            }, f)
 
-                logger.info(f"✓ Saved OCR result: {video_stem} → {tag_data['tag']} (camera: {camera})")
+                        logger.info(f"✓ Saved: {video_stem} → {video_result['final_tag']}")
 
-            except Exception as e:
-                logger.error(f"Error saving OCR results for {video_stem}: {e}")
+                    except Exception as e:
+                        logger.error(f"Error saving results for {video_stem}: {e}")
+                        db_logger.log_step3_result(video_stem, camera, {
+                            'status': 'error',
+                            'error_message': f"Save error: {str(e)}",
+                        })
+                        total_events_failed += 1
+                        continue
+
+                    # Log to database IMMEDIATELY (enables resume)
+                    elapsed = time.time() - event_start_time
+                    try:
+                        db_logger.log_step3_result(video_stem, camera, {
+                            'status': 'success',
+                            'processing_seconds': elapsed,
+                            'tags_processed': video_result['detection_count'],
+                            'ocr_matches_count': 1,
+                            'ocr_success_rate': 1.0,
+                            'letters_conf_min_mean': video_result['letters_confidence'],
+                            'numbers_conf_min_mean': video_result['numbers_confidence'],
+                            'letters_ema_min_mean': video_result['letters_confidence'],
+                            'numbers_ema_min_mean': video_result['numbers_confidence'],
+                            'output_path': str(summary_path),
+                        })
+                        logger.info(f"✓ Logged to database: {camera}/{video_stem}")
+                    except Exception as e:
+                        logger.error(f"Error logging to database for {video_stem}: {e}")
+                        total_events_failed += 1
+                        continue
+
+                    total_events_processed += 1
+
+                except Exception as e:
+                    logger.error(f"✗ Failed to process {camera}/{video_stem}: {e}")
+                    logger.error(traceback.format_exc())
+
+                    # Log error to database
+                    try:
+                        db_logger.log_step3_result(video_stem, camera, {
+                            'status': 'error',
+                            'error_message': str(e),
+                            'processing_seconds': time.time() - event_start_time,
+                        })
+                    except Exception as log_e:
+                        logger.error(f"Failed to log error to database: {log_e}")
+
+                    total_events_failed += 1
 
         elapsed = time.time() - step_start_time
-        logger.info(f"✓ Step 3 completed in {elapsed:.1f} seconds ({len(final_tags)} videos processed)")
+        logger.info("\n" + "=" * 80)
+        logger.info(f"✓ Step 3 completed in {elapsed:.1f} seconds")
+        logger.info(f"  Events processed: {total_events_processed}")
+        logger.info(f"  Events failed: {total_events_failed}")
+        logger.info("=" * 80)
         return True
 
     except Exception as e:

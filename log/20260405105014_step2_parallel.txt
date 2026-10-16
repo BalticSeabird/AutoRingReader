@@ -1,3 +1,0 @@
-2026-04-05 10:50:14,780 - __main__ - INFO - Starting Step 2 (Tag Detection) with GPU 1
-2026-04-05 10:50:14,789 - __main__ - INFO - Step 2 GPU devices set to: [1]
-2026-04-05 10:50:15,965 - step2_tag_detection - INFO - Starting Step 2: Tag Detection

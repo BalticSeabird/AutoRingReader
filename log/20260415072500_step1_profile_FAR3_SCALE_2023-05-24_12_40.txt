@@ -1,0 +1,147 @@
+2026-04-15 07:25:00,372 - INFO - Performance profiling started: FAR3_SCALE_2023-05-24_12_40
+2026-04-15 07:25:00,372 - INFO - Log file: log/20260415072500_step1_profile_FAR3_SCALE_2023-05-24_12_40.txt
+2026-04-15 07:25:00,372 - INFO - ================================================================================
+2026-04-15 07:25:00,373 - INFO - PASS 1: YOLO INFERENCE PROFILING
+2026-04-15 07:25:00,373 - INFO - ================================================================================
+2026-04-15 07:25:00,384 - INFO - Video: FAR3_SCALE_2023-05-24_12_40
+2026-04-15 07:25:00,384 - INFO -   Dimensions: 2592x1520
+2026-04-15 07:25:00,384 - INFO -   Total frames: 10351
+2026-04-15 07:25:00,384 - INFO -   Batch size: 64, Sample rate: 1
+2026-04-15 07:25:00,384 - INFO - 
+Initializing RingDetector on GPU 0...
+2026-04-15 07:25:00,384 - INFO - pid: 3819811 | Generate ring detection model models/ring_detection_best_1318.pt on GPU 0
+2026-04-15 07:25:00,422 - DEBUG - Starting new HTTPS connection (1): api.github.com:443
+2026-04-15 07:25:00,679 - DEBUG - https://api.github.com:443 "GET /repos/ultralytics/assets/releases/tags/v8.4.0 HTTP/1.1" 200 None
+2026-04-15 07:25:00,693 - CRITICAL - pid: 3819811 | RingDetector, Exception: TODO: implement this specific exception: FileNotFoundError, error: [Errno 2] No such file or directory: 'models/ring_detection_best_1318.pt'
+2026-04-15 07:25:00,694 - INFO -   Detector initialized in 0.31s
+2026-04-15 07:25:00,694 - INFO - 
+Processing frames...
+2026-04-15 07:25:01,406 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:01,712 - DEBUG - Batch 1: 64 frames in 0.170s (YOLO 0.170s, extract 0.000s) | GPU: 0MB allocated, 0MB reserved | Process: 1768MB RSS
+2026-04-15 07:25:02,053 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:02,402 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:02,803 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:03,239 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:03,251 - DEBUG - Batch 5: 64 frames in 0.172s (YOLO 0.172s, extract 0.000s) | GPU: 0MB allocated, 0MB reserved | Process: 1771MB RSS
+2026-04-15 07:25:03,585 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:03,978 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:04,393 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:04,709 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:05,020 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:05,033 - DEBUG - Batch 10: 64 frames in 0.146s (YOLO 0.146s, extract 0.000s) | GPU: 0MB allocated, 0MB reserved | Process: 1782MB RSS
+2026-04-15 07:25:05,376 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:05,801 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:06,132 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:06,490 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:06,903 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:06,916 - DEBUG - Batch 15: 64 frames in 0.167s (YOLO 0.167s, extract 0.000s) | GPU: 0MB allocated, 0MB reserved | Process: 1782MB RSS
+2026-04-15 07:25:07,204 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:07,576 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:07,969 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:08,396 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:08,791 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:08,803 - DEBUG - Batch 20: 64 frames in 0.170s (YOLO 0.170s, extract 0.000s) | GPU: 0MB allocated, 0MB reserved | Process: 1771MB RSS
+2026-04-15 07:25:09,154 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:09,564 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:10,007 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:10,354 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:10,738 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:10,751 - DEBUG - Batch 25: 64 frames in 0.167s (YOLO 0.167s, extract 0.000s) | GPU: 0MB allocated, 0MB reserved | Process: 1783MB RSS
+2026-04-15 07:25:11,171 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:11,510 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:11,859 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:12,256 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:12,690 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:12,702 - DEBUG - Batch 30: 64 frames in 0.169s (YOLO 0.169s, extract 0.000s) | GPU: 0MB allocated, 0MB reserved | Process: 1783MB RSS
+2026-04-15 07:25:13,046 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:13,407 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:13,826 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:14,220 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:14,567 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:14,580 - DEBUG - Batch 35: 64 frames in 0.158s (YOLO 0.158s, extract 0.000s) | GPU: 0MB allocated, 0MB reserved | Process: 1783MB RSS
+2026-04-15 07:25:14,934 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:15,365 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:15,720 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:16,078 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:16,495 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:16,507 - DEBUG - Batch 40: 64 frames in 0.168s (YOLO 0.168s, extract 0.000s) | GPU: 0MB allocated, 0MB reserved | Process: 1783MB RSS
+2026-04-15 07:25:16,887 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:17,278 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:17,675 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:18,103 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:18,435 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:18,448 - DEBUG - Batch 45: 64 frames in 0.154s (YOLO 0.154s, extract 0.000s) | GPU: 0MB allocated, 0MB reserved | Process: 1783MB RSS
+2026-04-15 07:25:18,800 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:19,211 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:19,653 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:20,058 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:20,464 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:20,477 - DEBUG - Batch 50: 64 frames in 0.170s (YOLO 0.170s, extract 0.000s) | GPU: 0MB allocated, 0MB reserved | Process: 1783MB RSS
+2026-04-15 07:25:20,899 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:21,302 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:21,663 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:22,070 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:22,512 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:22,524 - DEBUG - Batch 55: 64 frames in 0.170s (YOLO 0.170s, extract 0.000s) | GPU: 0MB allocated, 0MB reserved | Process: 1783MB RSS
+2026-04-15 07:25:22,855 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:23,218 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:23,642 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:23,964 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:24,311 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:24,324 - DEBUG - Batch 60: 64 frames in 0.157s (YOLO 0.157s, extract 0.000s) | GPU: 0MB allocated, 0MB reserved | Process: 1783MB RSS
+2026-04-15 07:25:24,714 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:25,157 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:25,505 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:25,861 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:26,282 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:26,295 - DEBUG - Batch 65: 64 frames in 0.169s (YOLO 0.169s, extract 0.000s) | GPU: 0MB allocated, 0MB reserved | Process: 1783MB RSS
+2026-04-15 07:25:26,591 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:26,937 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:27,331 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:27,763 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:28,100 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:28,113 - DEBUG - Batch 70: 64 frames in 0.153s (YOLO 0.153s, extract 0.000s) | GPU: 0MB allocated, 0MB reserved | Process: 1783MB RSS
+2026-04-15 07:25:28,458 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:28,870 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:29,312 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:29,656 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:30,015 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:30,028 - DEBUG - Batch 75: 64 frames in 0.158s (YOLO 0.158s, extract 0.000s) | GPU: 0MB allocated, 0MB reserved | Process: 1783MB RSS
+2026-04-15 07:25:30,450 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:30,788 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:31,158 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:31,559 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:31,999 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:32,012 - DEBUG - Batch 80: 64 frames in 0.172s (YOLO 0.172s, extract 0.000s) | GPU: 0MB allocated, 0MB reserved | Process: 1783MB RSS
+2026-04-15 07:25:32,368 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:32,733 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:33,156 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:33,526 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:33,878 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:33,890 - DEBUG - Batch 85: 64 frames in 0.157s (YOLO 0.157s, extract 0.000s) | GPU: 0MB allocated, 0MB reserved | Process: 1783MB RSS
+2026-04-15 07:25:34,280 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:34,720 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:35,065 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:35,424 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:35,846 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:35,859 - DEBUG - Batch 90: 64 frames in 0.168s (YOLO 0.168s, extract 0.000s) | GPU: 0MB allocated, 0MB reserved | Process: 1783MB RSS
+2026-04-15 07:25:36,160 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:36,484 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:36,852 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:37,292 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:37,635 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:37,647 - DEBUG - Batch 95: 64 frames in 0.154s (YOLO 0.154s, extract 0.000s) | GPU: 0MB allocated, 0MB reserved | Process: 1783MB RSS
+2026-04-15 07:25:37,996 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:38,414 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:38,860 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:39,247 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:39,610 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:39,623 - DEBUG - Batch 100: 64 frames in 0.159s (YOLO 0.159s, extract 0.000s) | GPU: 0MB allocated, 0MB reserved | Process: 1783MB RSS
+2026-04-15 07:25:40,048 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:40,383 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:40,748 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:41,161 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:41,606 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:41,618 - DEBUG - Batch 105: 64 frames in 0.170s (YOLO 0.170s, extract 0.000s) | GPU: 0MB allocated, 0MB reserved | Process: 1783MB RSS
+2026-04-15 07:25:41,951 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'
+2026-04-15 07:25:42,316 - ERROR - Error processing frame batch: 'RingDetector' object has no attribute 'model'

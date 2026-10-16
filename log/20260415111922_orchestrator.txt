@@ -1,0 +1,536 @@
+2026-04-15 11:19:22,685 - __main__ - INFO - AutoRingReader Pipeline Orchestrator Starting
+2026-04-15 11:19:22,685 - __main__ - INFO - Batch configuration: config/batch_pipeline_test.yaml
+2026-04-15 11:19:22,685 - __main__ - INFO - ⚠️  FORCE REPROCESS MODE ENABLED - will reprocess all videos
+2026-04-15 11:19:22,694 - pipeline_config - INFO - Loaded ROI configuration from config/rois_config.yaml
+2026-04-15 11:19:22,694 - __main__ - INFO - ================================================================================
+2026-04-15 11:19:22,694 - __main__ - INFO - PIPELINE CONFIGURATION SUMMARY
+2026-04-15 11:19:22,694 - __main__ - INFO - ================================================================================
+2026-04-15 11:19:22,695 - __main__ - INFO - Input Videos: /mnt/BSP_NAS2_work/ring_reader/eventvids_test
+2026-04-15 11:19:22,695 - __main__ - INFO - Cameras: ['FAR3_SCALE', 'FAR6_SCALE', 'ROST2_SCALE', 'FAR3_CUTE', 'BJORN3TRI3_SCALE', 'FAR3BONDEN3_SCALE', 'FAR6BONDEN6_SCALE', 'TRI5_SCALE']
+2026-04-15 11:19:22,695 - __main__ - INFO - Output Root: /mnt/BSP_NAS2_work/ring_reader/test_results
+2026-04-15 11:19:22,695 - __main__ - INFO - ROI Groups Loaded: 3
+2026-04-15 11:19:22,695 - __main__ - INFO - Resume Enabled: True
+2026-04-15 11:19:22,695 - __main__ - INFO - 
+2026-04-15 11:19:22,695 - __main__ - INFO - Step 1 (Ring Detection):
+2026-04-15 11:19:22,695 - __main__ - INFO -   - CPU workers: 64
+2026-04-15 11:19:22,695 - __main__ - INFO -   - GPU workers: 2 on devices [0, 1]
+2026-04-15 11:19:22,695 - __main__ - INFO -   - Batch size: 64, Frame sample rate: 1
+2026-04-15 11:19:22,695 - __main__ - INFO -   - Confidence threshold: 0.7
+2026-04-15 11:19:22,695 - __main__ - INFO - 
+2026-04-15 11:19:22,695 - __main__ - INFO - Step 2 (Tag Detection):
+2026-04-15 11:19:22,695 - __main__ - INFO -   - CPU workers: 64
+2026-04-15 11:19:22,695 - __main__ - INFO -   - GPU workers: 2 on devices [0, 1]
+2026-04-15 11:19:22,695 - __main__ - INFO -   - Batch size: 64
+2026-04-15 11:19:22,695 - __main__ - INFO -   - Confidence threshold: 0.7
+2026-04-15 11:19:22,695 - __main__ - INFO - 
+2026-04-15 11:19:22,695 - __main__ - INFO - Step 3 (Text Recognition):
+2026-04-15 11:19:22,695 - __main__ - INFO -   - CPU workers: 64
+2026-04-15 11:19:22,695 - __main__ - INFO -   - GPU workers: 2 on devices [0, 1]
+2026-04-15 11:19:22,695 - __main__ - INFO -   - Batch size: 64
+2026-04-15 11:19:22,696 - __main__ - INFO -   - Confidence threshold: 0.8
+2026-04-15 11:19:22,696 - __main__ - INFO - ================================================================================
+2026-04-15 11:19:22,876 - __main__ - INFO - ✓ Configuration validation passed
+2026-04-15 11:19:22,878 - pipeline_utils - INFO - Found 19 videos matching cameras: ['FAR3_SCALE', 'FAR6_SCALE', 'ROST2_SCALE', 'FAR3_CUTE', 'BJORN3TRI3_SCALE', 'FAR3BONDEN3_SCALE', 'FAR6BONDEN6_SCALE', 'TRI5_SCALE']
+2026-04-15 11:19:22,878 - __main__ - INFO - Total videos to process: 19
+2026-04-15 11:19:22,878 - __main__ - INFO - Running Step 1: Ring Detection
+2026-04-15 11:19:22,878 - __main__ - INFO - 
+2026-04-15 11:19:22,878 - __main__ - INFO - ================================================================================
+2026-04-15 11:19:22,878 - __main__ - INFO - STARTING STEP 1: RING DETECTION
+2026-04-15 11:19:22,878 - __main__ - INFO - ================================================================================
+2026-04-15 11:19:23,588 - step1_ring_detection - INFO - Starting Step 1: Ring Detection
+2026-04-15 11:19:23,588 - step1_ring_detection - INFO - Force reprocess mode: ignoring previous completions for Step 1
+2026-04-15 11:19:23,589 - pipeline_utils - INFO - Found 19 videos matching cameras: ['FAR3_SCALE', 'FAR6_SCALE', 'ROST2_SCALE', 'FAR3_CUTE', 'BJORN3TRI3_SCALE', 'FAR3BONDEN3_SCALE', 'FAR6BONDEN6_SCALE', 'TRI5_SCALE']
+2026-04-15 11:19:23,589 - step1_ring_detection - INFO - Processing 19 videos in Step 1 using 2 GPUs
+2026-04-15 11:19:23,593 - step1_ring_detection - INFO - Submitted 19 videos to GPU workers
+2026-04-15 11:19:30,893 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/BJORN3TRI3_SCALE_2023-06-12_8_47.mp4
+2026-04-15 11:19:30,893 - step1_ring_detection - INFO - ✓ [1/19] BJORN3TRI3_SCALE_2023-06-12_8_47: 110 crops in 750 frames
+2026-04-15 11:19:32,531 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/FAR6_SCALE_2024-07-04_16_316.mp4
+2026-04-15 11:19:32,531 - step1_ring_detection - INFO - ✓ [2/19] FAR6_SCALE_2024-07-04_16_316: 12 crops in 950 frames
+2026-04-15 11:20:35,944 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/FAR3_SCALE_2023-05-24_12_40.mp4
+2026-04-15 11:20:35,944 - step1_ring_detection - INFO - ✓ [3/19] FAR3_SCALE_2023-05-24_12_40: 68 crops saved from 69 detections (1 filtered by ROI)
+2026-04-15 11:20:35,967 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/FAR3_SCALE_2024-05-15_10_80.mp4
+2026-04-15 11:20:35,967 - step1_ring_detection - INFO - ✓ [4/19] FAR3_SCALE_2024-05-15_10_80: 0 crops saved from 10 detections (10 filtered by ROI)
+2026-04-15 11:20:35,984 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/FAR6_SCALE_2023-06-02_6_49.mp4
+2026-04-15 11:20:35,984 - step1_ring_detection - INFO - ✓ [5/19] FAR6_SCALE_2023-06-02_6_49: 22 crops in 1657 frames
+2026-04-15 11:20:35,999 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/BJORN3TRI3_SCALE_2024-05-13_4_00.mp4
+2026-04-15 11:20:35,999 - step1_ring_detection - INFO - ✓ [6/19] BJORN3TRI3_SCALE_2024-05-13_4_00: 33 crops in 1575 frames
+2026-04-15 11:20:36,009 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/BJORN3TRI3_SCALE_2025-05-21_9_14.mp4
+2026-04-15 11:20:36,010 - step1_ring_detection - INFO - ✓ [7/19] BJORN3TRI3_SCALE_2025-05-21_9_14: 384 crops in 650 frames
+2026-04-15 11:20:36,031 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/FAR3BONDEN3_SCALE_2023-05-11_21_07.mp4
+2026-04-15 11:20:36,031 - step1_ring_detection - INFO - ✓ [8/19] FAR3BONDEN3_SCALE_2023-05-11_21_07: 499 crops in 2225 frames
+2026-04-15 11:20:41,286 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/FAR3BONDEN3_SCALE_2024-05-26_17_03.mp4
+2026-04-15 11:20:41,286 - step1_ring_detection - INFO - ✓ [9/19] FAR3BONDEN3_SCALE_2024-05-26_17_03: 1271 crops in 4175 frames
+2026-04-15 11:20:41,680 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/FAR6BONDEN6_SCALE_2023-05-09_21_16.mp4
+2026-04-15 11:20:41,680 - step1_ring_detection - INFO - ✓ [10/19] FAR6BONDEN6_SCALE_2023-05-09_21_16: 467 crops in 1025 frames
+2026-04-15 11:21:16,352 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/FAR6BONDEN6_SCALE_2024-06-02_5_58.mp4
+2026-04-15 11:21:16,352 - step1_ring_detection - INFO - ✓ [11/19] FAR6BONDEN6_SCALE_2024-06-02_5_58: 6479 crops in 6925 frames
+2026-04-15 11:21:16,371 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/FAR3BONDEN3_SCALE_2025-07-08_18_17.mp4
+2026-04-15 11:21:16,371 - step1_ring_detection - INFO - ✓ [12/19] FAR3BONDEN3_SCALE_2025-07-08_18_17: 414 crops in 676 frames
+2026-04-15 11:21:16,378 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/FAR6BONDEN6_SCALE_2025-07-01_5_87.mp4
+2026-04-15 11:21:16,379 - step1_ring_detection - INFO - ✓ [13/19] FAR6BONDEN6_SCALE_2025-07-01_5_87: 0 crops in 325 frames
+2026-04-15 11:21:16,384 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/FAR3_SCALE_2025-05-19_20_59.mp4
+2026-04-15 11:21:16,384 - step1_ring_detection - INFO - ✓ [14/19] FAR3_SCALE_2025-05-19_20_59: 30 crops in 240 frames
+2026-04-15 11:21:16,388 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/TRI5_SCALE_2025-06-09_10_04.mp4
+2026-04-15 11:21:16,388 - step1_ring_detection - INFO - ✓ [15/19] TRI5_SCALE_2025-06-09_10_04: 24 crops in 112 frames
+2026-04-15 11:21:16,392 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/FAR3_SCALE_2025-06-17_10_109.mp4
+2026-04-15 11:21:16,392 - step1_ring_detection - INFO - ✓ [16/19] FAR3_SCALE_2025-06-17_10_109: 15 crops in 112 frames
+2026-04-15 11:21:16,402 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/FAR3_SCALE_2025-07-07_11_95.mp4
+2026-04-15 11:21:16,402 - step1_ring_detection - INFO - ✓ [17/19] FAR3_SCALE_2025-07-07_11_95: 412 crops in 552 frames
+2026-04-15 11:21:16,408 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/TRI5_SCALE_2025-06-08_5_03.mp4
+2026-04-15 11:21:16,408 - step1_ring_detection - INFO - ✓ [18/19] TRI5_SCALE_2025-06-08_5_03: 13 crops in 640 frames
+2026-04-15 11:21:16,414 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/TRI5_SCALE_2025-06-16_4_00.mp4
+2026-04-15 11:21:16,414 - step1_ring_detection - INFO - ✓ [19/19] TRI5_SCALE_2025-06-16_4_00: 15 crops in 512 frames
+2026-04-15 11:21:17,141 - step1_ring_detection - INFO - ✓ Step 1 completed in 113.6 seconds
+2026-04-15 11:21:17,147 - __main__ - INFO - Step 1 completed in 114.3 seconds
+2026-04-15 11:21:17,147 - __main__ - INFO - Running Step 2: Tag Detection
+2026-04-15 11:21:17,147 - __main__ - INFO - 
+2026-04-15 11:21:17,147 - __main__ - INFO - ================================================================================
+2026-04-15 11:21:17,147 - __main__ - INFO - STARTING STEP 2: TAG DETECTION
+2026-04-15 11:21:17,147 - __main__ - INFO - ================================================================================
+2026-04-15 11:21:17,149 - step2_tag_detection - INFO - Starting Step 2: Tag Detection (Parallel Events)
+2026-04-15 11:21:17,152 - step2_tag_detection - INFO - Discovered event folder for camera FAR3_SCALE: FAR3_SCALE_2023-05-24_12_40 with 68 ring crops
+2026-04-15 11:21:17,153 - step2_tag_detection - INFO - Skipping empty event folder for camera FAR3_SCALE: FAR3_SCALE_2024-05-15_10_80
+2026-04-15 11:21:17,154 - step2_tag_detection - INFO - Discovered event folder for camera FAR3_SCALE: FAR3_SCALE_2025-05-19_20_59 with 30 ring crops
+2026-04-15 11:21:17,155 - step2_tag_detection - INFO - Discovered event folder for camera FAR3_SCALE: FAR3_SCALE_2025-06-17_10_109 with 15 ring crops
+2026-04-15 11:21:17,161 - step2_tag_detection - INFO - Discovered event folder for camera FAR3_SCALE: FAR3_SCALE_2025-07-07_11_95 with 412 ring crops
+2026-04-15 11:21:17,161 - step2_tag_detection - INFO - Camera FAR3_SCALE: 4 event folders discovered
+2026-04-15 11:21:17,163 - step2_tag_detection - INFO - Discovered event folder for camera FAR6_SCALE: FAR6_SCALE_2023-06-02_6_49 with 22 ring crops
+2026-04-15 11:21:17,164 - step2_tag_detection - INFO - Discovered event folder for camera FAR6_SCALE: FAR6_SCALE_2024-07-04_16_316 with 12 ring crops
+2026-04-15 11:21:17,164 - step2_tag_detection - INFO - Camera FAR6_SCALE: 2 event folders discovered
+2026-04-15 11:21:17,164 - step2_tag_detection - INFO - No Step 1 crop directory found for camera ROST2_SCALE: /mnt/BSP_NAS2_work/ring_reader/test_results/step1_ring_crops/ROST2_SCALE
+2026-04-15 11:21:17,164 - step2_tag_detection - INFO - No ring crop event folders found for camera ROST2_SCALE
+2026-04-15 11:21:17,164 - step2_tag_detection - INFO - No Step 1 crop directory found for camera FAR3_CUTE: /mnt/BSP_NAS2_work/ring_reader/test_results/step1_ring_crops/FAR3_CUTE
+2026-04-15 11:21:17,165 - step2_tag_detection - INFO - No ring crop event folders found for camera FAR3_CUTE
+2026-04-15 11:21:17,168 - step2_tag_detection - INFO - Discovered event folder for camera BJORN3TRI3_SCALE: BJORN3TRI3_SCALE_2023-06-12_8_47 with 110 ring crops
+2026-04-15 11:21:17,169 - step2_tag_detection - INFO - Discovered event folder for camera BJORN3TRI3_SCALE: BJORN3TRI3_SCALE_2024-05-13_4_00 with 33 ring crops
+2026-04-15 11:21:17,176 - step2_tag_detection - INFO - Discovered event folder for camera BJORN3TRI3_SCALE: BJORN3TRI3_SCALE_2025-05-21_9_14 with 384 ring crops
+2026-04-15 11:21:17,176 - step2_tag_detection - INFO - Camera BJORN3TRI3_SCALE: 3 event folders discovered
+2026-04-15 11:21:17,185 - step2_tag_detection - INFO - Discovered event folder for camera FAR3BONDEN3_SCALE: FAR3BONDEN3_SCALE_2023-05-11_21_07 with 499 ring crops
+2026-04-15 11:21:17,202 - step2_tag_detection - INFO - Discovered event folder for camera FAR3BONDEN3_SCALE: FAR3BONDEN3_SCALE_2024-05-26_17_03 with 1271 ring crops
+2026-04-15 11:21:17,210 - step2_tag_detection - INFO - Discovered event folder for camera FAR3BONDEN3_SCALE: FAR3BONDEN3_SCALE_2025-07-08_18_17 with 414 ring crops
+2026-04-15 11:21:17,210 - step2_tag_detection - INFO - Camera FAR3BONDEN3_SCALE: 3 event folders discovered
+2026-04-15 11:21:17,219 - step2_tag_detection - INFO - Discovered event folder for camera FAR6BONDEN6_SCALE: FAR6BONDEN6_SCALE_2023-05-09_21_16 with 467 ring crops
+2026-04-15 11:21:17,284 - step2_tag_detection - INFO - Discovered event folder for camera FAR6BONDEN6_SCALE: FAR6BONDEN6_SCALE_2024-06-02_5_58 with 6479 ring crops
+2026-04-15 11:21:17,285 - step2_tag_detection - INFO - Skipping empty event folder for camera FAR6BONDEN6_SCALE: FAR6BONDEN6_SCALE_2025-07-01_5_87
+2026-04-15 11:21:17,285 - step2_tag_detection - INFO - Camera FAR6BONDEN6_SCALE: 2 event folders discovered
+2026-04-15 11:21:17,287 - step2_tag_detection - INFO - Discovered event folder for camera TRI5_SCALE: TRI5_SCALE_2025-06-08_5_03 with 13 ring crops
+2026-04-15 11:21:17,288 - step2_tag_detection - INFO - Discovered event folder for camera TRI5_SCALE: TRI5_SCALE_2025-06-09_10_04 with 24 ring crops
+2026-04-15 11:21:17,289 - step2_tag_detection - INFO - Discovered event folder for camera TRI5_SCALE: TRI5_SCALE_2025-06-16_4_00 with 15 ring crops
+2026-04-15 11:21:17,289 - step2_tag_detection - INFO - Camera TRI5_SCALE: 3 event folders discovered
+2026-04-15 11:21:17,289 - step2_tag_detection - INFO - Processing 17 event folders with parallel workers
+2026-04-15 11:21:17,289 - step2_tag_detection - INFO - Using up to 3 parallel workers
+2026-04-15 11:21:17,347 - step2_tag_detection - INFO - Starting event FAR3_SCALE/FAR3_SCALE_2023-05-24_12_40 with 68 crops
+2026-04-15 11:21:17,347 - step2_tag_detection - INFO - Starting event FAR3_SCALE/FAR3_SCALE_2025-05-19_20_59 with 30 crops
+2026-04-15 11:21:17,347 - step2_tag_detection - INFO - Starting event FAR3_SCALE/FAR3_SCALE_2025-06-17_10_109 with 15 crops
+2026-04-15 11:21:17,523 - step2_tag_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2025-06-17_10_109] Submitting 2 loading batches for one event folder
+2026-04-15 11:21:17,523 - step2_tag_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2025-06-17_10_109] Using tag detector model: models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-04-15 11:21:17,524 - step2_tag_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2025-06-17_10_109] Starting GPU worker on device 0
+2026-04-15 11:21:17,524 - step2_tag_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2025-06-17_10_109] Starting GPU worker on device 1
+2026-04-15 11:21:17,524 - step2_tag_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2025-06-17_10_109] Starting result saver process
+2026-04-15 11:21:17,563 - step2_tag_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2025-05-19_20_59] Submitting 3 loading batches for one event folder
+2026-04-15 11:21:17,564 - step2_tag_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2025-05-19_20_59] Using tag detector model: models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-04-15 11:21:17,564 - step2_tag_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2025-05-19_20_59] Starting GPU worker on device 0
+2026-04-15 11:21:17,564 - step2_tag_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2025-05-19_20_59] Starting GPU worker on device 1
+2026-04-15 11:21:17,564 - step2_tag_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2025-05-19_20_59] Starting result saver process
+2026-04-15 11:21:17,570 - step2_tag_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2023-05-24_12_40] Submitting 7 loading batches for one event folder
+2026-04-15 11:21:17,570 - step2_tag_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2023-05-24_12_40] Using tag detector model: models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-04-15 11:21:17,571 - step2_tag_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2023-05-24_12_40] Starting GPU worker on device 0
+2026-04-15 11:21:17,572 - step2_tag_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2023-05-24_12_40] Starting GPU worker on device 1
+2026-04-15 11:21:17,572 - step2_tag_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2023-05-24_12_40] Starting result saver process
+2026-04-15 11:21:17,573 - step2_tag_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2025-06-17_10_109] Waiting for crop loading to complete
+2026-04-15 11:21:17,620 - step2_tag_detection - INFO - Pre-indexed 1 videos with 15 total crops
+2026-04-15 11:21:17,620 - step2_tag_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2025-05-19_20_59] Waiting for crop loading to complete
+2026-04-15 11:21:17,642 - step2_tag_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2023-05-24_12_40] Waiting for crop loading to complete
+2026-04-15 11:21:17,658 - step2_tag_detection - INFO - Pre-indexed 1 videos with 30 total crops
+2026-04-15 11:21:17,672 - step2_tag_detection - INFO - Pre-indexed 1 videos with 68 total crops
+2026-04-15 11:21:21,789 - step2_tag_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2025-06-17_10_109] Crop loading complete, sending sentinels
+2026-04-15 11:21:21,790 - step2_tag_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2025-06-17_10_109] Waiting for GPU workers to complete inference
+2026-04-15 11:21:21,941 - step2_tag_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2025-05-19_20_59] Crop loading complete, sending sentinels
+2026-04-15 11:21:21,942 - step2_tag_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2025-05-19_20_59] Waiting for GPU workers to complete inference
+2026-04-15 11:21:21,971 - step2_tag_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2023-05-24_12_40] Crop loading complete, sending sentinels
+2026-04-15 11:21:22,483 - step2_tag_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2023-05-24_12_40] Waiting for GPU workers to complete inference
+2026-04-15 11:21:22,786 - step2_tag_detection - INFO - ✓ Video complete: FAR3_SCALE_2025-06-17_10_109 (0 tags from 15 crops)
+2026-04-15 11:21:22,788 - step2_tag_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2025-06-17_10_109] Tag detection complete, sending sentinels
+2026-04-15 11:21:22,788 - step2_tag_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2025-06-17_10_109] Waiting for result saver to finish
+2026-04-15 11:21:22,801 - __main__ - INFO - ✓ Logged Step 2: FAR3_SCALE_2025-06-17_10_109
+2026-04-15 11:21:22,801 - step2_tag_detection - INFO - Received sentinel 1/2
+2026-04-15 11:21:22,802 - step2_tag_detection - INFO - Received sentinel 2/2
+2026-04-15 11:21:22,802 - step2_tag_detection - INFO - All GPU workers finished, stopping result consumer
+2026-04-15 11:21:22,802 - step2_tag_detection - INFO - ✓ Result consumer processed 15/15 crops from 1 completed videos
+2026-04-15 11:21:22,821 - step2_tag_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2025-06-17_10_109] Result saver process joined
+2026-04-15 11:21:23,045 - step2_tag_detection - INFO - ✓ Video complete: FAR3_SCALE_2025-05-19_20_59 (0 tags from 30 crops)
+2026-04-15 11:21:23,059 - __main__ - INFO - ✓ Logged Step 2: FAR3_SCALE_2025-05-19_20_59
+2026-04-15 11:21:23,113 - step2_tag_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2025-05-19_20_59] Tag detection complete, sending sentinels
+2026-04-15 11:21:23,113 - step2_tag_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2025-05-19_20_59] Waiting for result saver to finish
+2026-04-15 11:21:23,113 - step2_tag_detection - INFO - Received sentinel 1/2
+2026-04-15 11:21:23,114 - step2_tag_detection - INFO - Received sentinel 2/2
+2026-04-15 11:21:23,114 - step2_tag_detection - INFO - All GPU workers finished, stopping result consumer
+2026-04-15 11:21:23,114 - step2_tag_detection - INFO - ✓ Result consumer processed 30/30 crops from 1 completed videos
+2026-04-15 11:21:23,132 - step2_tag_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2025-05-19_20_59] Result saver process joined
+2026-04-15 11:21:24,008 - step2_tag_detection - INFO - ✓ Video complete: FAR3_SCALE_2023-05-24_12_40 (16 tags from 68 crops)
+2026-04-15 11:21:24,028 - __main__ - INFO - ✓ Logged Step 2: FAR3_SCALE_2023-05-24_12_40
+2026-04-15 11:21:24,067 - step2_tag_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2023-05-24_12_40] Tag detection complete, sending sentinels
+2026-04-15 11:21:24,067 - step2_tag_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2023-05-24_12_40] Waiting for result saver to finish
+2026-04-15 11:21:24,067 - step2_tag_detection - INFO - Received sentinel 1/2
+2026-04-15 11:21:24,068 - step2_tag_detection - INFO - Received sentinel 2/2
+2026-04-15 11:21:24,068 - step2_tag_detection - INFO - All GPU workers finished, stopping result consumer
+2026-04-15 11:21:24,068 - step2_tag_detection - INFO - ✓ Result consumer processed 75/68 crops from 1 completed videos
+2026-04-15 11:21:24,172 - step2_tag_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2023-05-24_12_40] Result saver process joined
+2026-04-15 11:21:25,706 - step2_tag_detection - INFO - Finished event FAR3_SCALE/FAR3_SCALE_2025-06-17_10_109
+2026-04-15 11:21:25,707 - step2_tag_detection - INFO - Finished event FAR3_SCALE/FAR3_SCALE_2025-05-19_20_59
+2026-04-15 11:21:25,709 - step2_tag_detection - INFO - Starting event FAR3_SCALE/FAR3_SCALE_2025-07-07_11_95 with 412 crops
+2026-04-15 11:21:25,709 - step2_tag_detection - INFO - ✓ Event 1/17: FAR3_SCALE/FAR3_SCALE_2025-06-17_10_109
+2026-04-15 11:21:25,710 - step2_tag_detection - INFO - ✓ Event 2/17: FAR3_SCALE/FAR3_SCALE_2025-05-19_20_59
+2026-04-15 11:21:25,710 - step2_tag_detection - INFO - Starting event FAR6_SCALE/FAR6_SCALE_2023-06-02_6_49 with 22 crops
+2026-04-15 11:21:25,829 - step2_tag_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2025-07-07_11_95] Submitting 42 loading batches for one event folder
+2026-04-15 11:21:25,830 - step2_tag_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2025-07-07_11_95] Using tag detector model: models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-04-15 11:21:25,832 - step2_tag_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2025-07-07_11_95] Starting GPU worker on device 0
+2026-04-15 11:21:25,832 - step2_tag_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2025-07-07_11_95] Starting GPU worker on device 1
+2026-04-15 11:21:25,833 - step2_tag_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2025-07-07_11_95] Starting result saver process
+2026-04-15 11:21:25,840 - step2_tag_detection - INFO - [FAR6_SCALE/FAR6_SCALE_2023-06-02_6_49] Submitting 3 loading batches for one event folder
+2026-04-15 11:21:25,844 - step2_tag_detection - INFO - [FAR6_SCALE/FAR6_SCALE_2023-06-02_6_49] Using tag detector model: models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-04-15 11:21:25,844 - step2_tag_detection - INFO - [FAR6_SCALE/FAR6_SCALE_2023-06-02_6_49] Starting GPU worker on device 0
+2026-04-15 11:21:25,844 - step2_tag_detection - INFO - [FAR6_SCALE/FAR6_SCALE_2023-06-02_6_49] Starting GPU worker on device 1
+2026-04-15 11:21:25,845 - step2_tag_detection - INFO - [FAR6_SCALE/FAR6_SCALE_2023-06-02_6_49] Starting result saver process
+2026-04-15 11:21:25,874 - step2_tag_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2025-07-07_11_95] Waiting for crop loading to complete
+2026-04-15 11:21:25,890 - step2_tag_detection - INFO - [FAR6_SCALE/FAR6_SCALE_2023-06-02_6_49] Waiting for crop loading to complete
+2026-04-15 11:21:25,901 - step2_tag_detection - INFO - Pre-indexed 1 videos with 412 total crops
+2026-04-15 11:21:25,903 - step2_tag_detection - INFO - Pre-indexed 1 videos with 22 total crops
+2026-04-15 11:21:26,883 - step2_tag_detection - INFO - Finished event FAR3_SCALE/FAR3_SCALE_2023-05-24_12_40
+2026-04-15 11:21:26,888 - step2_tag_detection - INFO - Starting event FAR6_SCALE/FAR6_SCALE_2024-07-04_16_316 with 12 crops
+2026-04-15 11:21:26,889 - step2_tag_detection - INFO - ✓ Event 3/17: FAR3_SCALE/FAR3_SCALE_2023-05-24_12_40
+2026-04-15 11:21:27,173 - step2_tag_detection - INFO - [FAR6_SCALE/FAR6_SCALE_2024-07-04_16_316] Submitting 2 loading batches for one event folder
+2026-04-15 11:21:27,173 - step2_tag_detection - INFO - [FAR6_SCALE/FAR6_SCALE_2024-07-04_16_316] Using tag detector model: models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-04-15 11:21:27,174 - step2_tag_detection - INFO - [FAR6_SCALE/FAR6_SCALE_2024-07-04_16_316] Starting GPU worker on device 0
+2026-04-15 11:21:27,174 - step2_tag_detection - INFO - [FAR6_SCALE/FAR6_SCALE_2024-07-04_16_316] Starting GPU worker on device 1
+2026-04-15 11:21:27,174 - step2_tag_detection - INFO - [FAR6_SCALE/FAR6_SCALE_2024-07-04_16_316] Starting result saver process
+2026-04-15 11:21:27,227 - step2_tag_detection - INFO - [FAR6_SCALE/FAR6_SCALE_2024-07-04_16_316] Waiting for crop loading to complete
+2026-04-15 11:21:27,242 - step2_tag_detection - INFO - Pre-indexed 1 videos with 12 total crops
+2026-04-15 11:21:30,405 - step2_tag_detection - INFO - [FAR6_SCALE/FAR6_SCALE_2023-06-02_6_49] Crop loading complete, sending sentinels
+2026-04-15 11:21:30,406 - step2_tag_detection - INFO - [FAR6_SCALE/FAR6_SCALE_2023-06-02_6_49] Waiting for GPU workers to complete inference
+2026-04-15 11:21:30,744 - step2_tag_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2025-07-07_11_95] Crop loading complete, sending sentinels
+2026-04-15 11:21:30,745 - step2_tag_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2025-07-07_11_95] Waiting for GPU workers to complete inference
+2026-04-15 11:21:30,836 - step2_tag_detection - INFO - [FAR6_SCALE/FAR6_SCALE_2024-07-04_16_316] Crop loading complete, sending sentinels
+2026-04-15 11:21:30,837 - step2_tag_detection - INFO - [FAR6_SCALE/FAR6_SCALE_2024-07-04_16_316] Waiting for GPU workers to complete inference
+2026-04-15 11:21:31,469 - step2_tag_detection - INFO - ✓ Video complete: FAR6_SCALE_2023-06-02_6_49 (21 tags from 22 crops)
+2026-04-15 11:21:31,484 - __main__ - INFO - ✓ Logged Step 2: FAR6_SCALE_2023-06-02_6_49
+2026-04-15 11:21:31,910 - step2_tag_detection - INFO - [FAR6_SCALE/FAR6_SCALE_2023-06-02_6_49] Tag detection complete, sending sentinels
+2026-04-15 11:21:31,911 - step2_tag_detection - INFO - [FAR6_SCALE/FAR6_SCALE_2023-06-02_6_49] Waiting for result saver to finish
+2026-04-15 11:21:31,911 - step2_tag_detection - INFO - Received sentinel 1/2
+2026-04-15 11:21:31,911 - step2_tag_detection - INFO - Received sentinel 2/2
+2026-04-15 11:21:31,911 - step2_tag_detection - INFO - All GPU workers finished, stopping result consumer
+2026-04-15 11:21:31,911 - step2_tag_detection - INFO - ✓ Result consumer processed 35/22 crops from 1 completed videos
+2026-04-15 11:21:31,925 - step2_tag_detection - INFO - [FAR6_SCALE/FAR6_SCALE_2023-06-02_6_49] Result saver process joined
+2026-04-15 11:21:32,021 - step2_tag_detection - INFO - ✓ Video complete: FAR6_SCALE_2024-07-04_16_316 (0 tags from 12 crops)
+2026-04-15 11:21:32,022 - step2_tag_detection - INFO - [FAR6_SCALE/FAR6_SCALE_2024-07-04_16_316] Tag detection complete, sending sentinels
+2026-04-15 11:21:32,023 - step2_tag_detection - INFO - [FAR6_SCALE/FAR6_SCALE_2024-07-04_16_316] Waiting for result saver to finish
+2026-04-15 11:21:32,025 - __main__ - INFO - ✓ Logged Step 2: FAR6_SCALE_2024-07-04_16_316
+2026-04-15 11:21:32,025 - step2_tag_detection - INFO - Received sentinel 1/2
+2026-04-15 11:21:32,025 - step2_tag_detection - INFO - Received sentinel 2/2
+2026-04-15 11:21:32,025 - step2_tag_detection - INFO - All GPU workers finished, stopping result consumer
+2026-04-15 11:21:32,025 - step2_tag_detection - INFO - ✓ Result consumer processed 12/12 crops from 1 completed videos
+2026-04-15 11:21:32,043 - step2_tag_detection - INFO - [FAR6_SCALE/FAR6_SCALE_2024-07-04_16_316] Result saver process joined
+2026-04-15 11:21:33,235 - step2_tag_detection - INFO - ✓ Video complete: FAR3_SCALE_2025-07-07_11_95 (0 tags from 412 crops)
+2026-04-15 11:21:33,237 - step2_tag_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2025-07-07_11_95] Tag detection complete, sending sentinels
+2026-04-15 11:21:33,238 - step2_tag_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2025-07-07_11_95] Waiting for result saver to finish
+2026-04-15 11:21:33,255 - __main__ - INFO - ✓ Logged Step 2: FAR3_SCALE_2025-07-07_11_95
+2026-04-15 11:21:33,255 - step2_tag_detection - INFO - Received sentinel 1/2
+2026-04-15 11:21:33,255 - step2_tag_detection - INFO - Received sentinel 2/2
+2026-04-15 11:21:33,255 - step2_tag_detection - INFO - All GPU workers finished, stopping result consumer
+2026-04-15 11:21:33,255 - step2_tag_detection - INFO - ✓ Result consumer processed 412/412 crops from 1 completed videos
+2026-04-15 11:21:33,421 - step2_tag_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2025-07-07_11_95] Result saver process joined
+2026-04-15 11:21:35,202 - step2_tag_detection - INFO - Finished event FAR6_SCALE/FAR6_SCALE_2023-06-02_6_49
+2026-04-15 11:21:35,203 - step2_tag_detection - INFO - Finished event FAR6_SCALE/FAR6_SCALE_2024-07-04_16_316
+2026-04-15 11:21:35,205 - step2_tag_detection - INFO - Starting event BJORN3TRI3_SCALE/BJORN3TRI3_SCALE_2023-06-12_8_47 with 110 crops
+2026-04-15 11:21:35,205 - step2_tag_detection - INFO - ✓ Event 4/17: FAR6_SCALE/FAR6_SCALE_2023-06-02_6_49
+2026-04-15 11:21:35,205 - step2_tag_detection - INFO - Event processing: 4/17 complete (23.5%)
+2026-04-15 11:21:35,206 - step2_tag_detection - INFO - Starting event BJORN3TRI3_SCALE/BJORN3TRI3_SCALE_2024-05-13_4_00 with 33 crops
+2026-04-15 11:21:35,206 - step2_tag_detection - INFO - ✓ Event 5/17: FAR6_SCALE/FAR6_SCALE_2024-07-04_16_316
+2026-04-15 11:21:35,325 - step2_tag_detection - INFO - [BJORN3TRI3_SCALE/BJORN3TRI3_SCALE_2023-06-12_8_47] Submitting 11 loading batches for one event folder
+2026-04-15 11:21:35,325 - step2_tag_detection - INFO - [BJORN3TRI3_SCALE/BJORN3TRI3_SCALE_2023-06-12_8_47] Using tag detector model: models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-04-15 11:21:35,325 - step2_tag_detection - INFO - [BJORN3TRI3_SCALE/BJORN3TRI3_SCALE_2023-06-12_8_47] Starting GPU worker on device 0
+2026-04-15 11:21:35,326 - step2_tag_detection - INFO - [BJORN3TRI3_SCALE/BJORN3TRI3_SCALE_2023-06-12_8_47] Starting GPU worker on device 1
+2026-04-15 11:21:35,326 - step2_tag_detection - INFO - [BJORN3TRI3_SCALE/BJORN3TRI3_SCALE_2023-06-12_8_47] Starting result saver process
+2026-04-15 11:21:35,338 - step2_tag_detection - INFO - [BJORN3TRI3_SCALE/BJORN3TRI3_SCALE_2024-05-13_4_00] Submitting 4 loading batches for one event folder
+2026-04-15 11:21:35,338 - step2_tag_detection - INFO - [BJORN3TRI3_SCALE/BJORN3TRI3_SCALE_2024-05-13_4_00] Using tag detector model: models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-04-15 11:21:35,339 - step2_tag_detection - INFO - [BJORN3TRI3_SCALE/BJORN3TRI3_SCALE_2024-05-13_4_00] Starting GPU worker on device 0
+2026-04-15 11:21:35,339 - step2_tag_detection - INFO - [BJORN3TRI3_SCALE/BJORN3TRI3_SCALE_2024-05-13_4_00] Starting GPU worker on device 1
+2026-04-15 11:21:35,340 - step2_tag_detection - INFO - [BJORN3TRI3_SCALE/BJORN3TRI3_SCALE_2024-05-13_4_00] Starting result saver process
+2026-04-15 11:21:35,372 - step2_tag_detection - INFO - [BJORN3TRI3_SCALE/BJORN3TRI3_SCALE_2023-06-12_8_47] Waiting for crop loading to complete
+2026-04-15 11:21:35,387 - step2_tag_detection - INFO - [BJORN3TRI3_SCALE/BJORN3TRI3_SCALE_2024-05-13_4_00] Waiting for crop loading to complete
+2026-04-15 11:21:35,402 - step2_tag_detection - INFO - Pre-indexed 1 videos with 33 total crops
+2026-04-15 11:21:35,403 - step2_tag_detection - INFO - Pre-indexed 1 videos with 110 total crops
+2026-04-15 11:21:36,565 - step2_tag_detection - INFO - Finished event FAR3_SCALE/FAR3_SCALE_2025-07-07_11_95
+2026-04-15 11:21:36,567 - step2_tag_detection - INFO - Starting event BJORN3TRI3_SCALE/BJORN3TRI3_SCALE_2025-05-21_9_14 with 384 crops
+2026-04-15 11:21:36,567 - step2_tag_detection - INFO - ✓ Event 6/17: FAR3_SCALE/FAR3_SCALE_2025-07-07_11_95
+2026-04-15 11:21:36,834 - step2_tag_detection - INFO - [BJORN3TRI3_SCALE/BJORN3TRI3_SCALE_2025-05-21_9_14] Submitting 39 loading batches for one event folder
+2026-04-15 11:21:36,835 - step2_tag_detection - INFO - [BJORN3TRI3_SCALE/BJORN3TRI3_SCALE_2025-05-21_9_14] Using tag detector model: models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-04-15 11:21:36,836 - step2_tag_detection - INFO - [BJORN3TRI3_SCALE/BJORN3TRI3_SCALE_2025-05-21_9_14] Starting GPU worker on device 0
+2026-04-15 11:21:36,836 - step2_tag_detection - INFO - [BJORN3TRI3_SCALE/BJORN3TRI3_SCALE_2025-05-21_9_14] Starting GPU worker on device 1
+2026-04-15 11:21:36,836 - step2_tag_detection - INFO - [BJORN3TRI3_SCALE/BJORN3TRI3_SCALE_2025-05-21_9_14] Starting result saver process
+2026-04-15 11:21:36,878 - step2_tag_detection - INFO - [BJORN3TRI3_SCALE/BJORN3TRI3_SCALE_2025-05-21_9_14] Waiting for crop loading to complete
+2026-04-15 11:21:36,906 - step2_tag_detection - INFO - Pre-indexed 1 videos with 384 total crops
+2026-04-15 11:21:39,843 - step2_tag_detection - INFO - [BJORN3TRI3_SCALE/BJORN3TRI3_SCALE_2023-06-12_8_47] Crop loading complete, sending sentinels
+2026-04-15 11:21:39,885 - step2_tag_detection - INFO - [BJORN3TRI3_SCALE/BJORN3TRI3_SCALE_2024-05-13_4_00] Crop loading complete, sending sentinels
+2026-04-15 11:21:39,886 - step2_tag_detection - INFO - [BJORN3TRI3_SCALE/BJORN3TRI3_SCALE_2024-05-13_4_00] Waiting for GPU workers to complete inference
+2026-04-15 11:21:40,153 - step2_tag_detection - INFO - [BJORN3TRI3_SCALE/BJORN3TRI3_SCALE_2023-06-12_8_47] Waiting for GPU workers to complete inference
+2026-04-15 11:21:40,701 - step2_tag_detection - INFO - [BJORN3TRI3_SCALE/BJORN3TRI3_SCALE_2025-05-21_9_14] Crop loading complete, sending sentinels
+2026-04-15 11:21:41,267 - step2_tag_detection - INFO - [BJORN3TRI3_SCALE/BJORN3TRI3_SCALE_2025-05-21_9_14] Waiting for GPU workers to complete inference
+2026-04-15 11:21:41,544 - step2_tag_detection - INFO - ✓ Video complete: BJORN3TRI3_SCALE_2024-05-13_4_00 (3 tags from 33 crops)
+2026-04-15 11:21:41,550 - step2_tag_detection - INFO - [BJORN3TRI3_SCALE/BJORN3TRI3_SCALE_2024-05-13_4_00] Tag detection complete, sending sentinels
+2026-04-15 11:21:41,551 - step2_tag_detection - INFO - [BJORN3TRI3_SCALE/BJORN3TRI3_SCALE_2024-05-13_4_00] Waiting for result saver to finish
+2026-04-15 11:21:41,561 - __main__ - INFO - ✓ Logged Step 2: BJORN3TRI3_SCALE_2024-05-13_4_00
+2026-04-15 11:21:41,561 - step2_tag_detection - INFO - Received sentinel 1/2
+2026-04-15 11:21:41,562 - step2_tag_detection - INFO - Received sentinel 2/2
+2026-04-15 11:21:41,562 - step2_tag_detection - INFO - All GPU workers finished, stopping result consumer
+2026-04-15 11:21:41,562 - step2_tag_detection - INFO - ✓ Result consumer processed 34/33 crops from 1 completed videos
+2026-04-15 11:21:41,581 - step2_tag_detection - INFO - [BJORN3TRI3_SCALE/BJORN3TRI3_SCALE_2024-05-13_4_00] Result saver process joined
+2026-04-15 11:21:41,767 - step2_tag_detection - INFO - ✓ Video complete: BJORN3TRI3_SCALE_2023-06-12_8_47 (50 tags from 110 crops)
+2026-04-15 11:21:41,783 - __main__ - INFO - ✓ Logged Step 2: BJORN3TRI3_SCALE_2023-06-12_8_47
+2026-04-15 11:21:41,867 - step2_tag_detection - INFO - [BJORN3TRI3_SCALE/BJORN3TRI3_SCALE_2023-06-12_8_47] Tag detection complete, sending sentinels
+2026-04-15 11:21:41,867 - step2_tag_detection - INFO - [BJORN3TRI3_SCALE/BJORN3TRI3_SCALE_2023-06-12_8_47] Waiting for result saver to finish
+2026-04-15 11:21:41,870 - step2_tag_detection - INFO - Received sentinel 1/2
+2026-04-15 11:21:41,870 - step2_tag_detection - INFO - Received sentinel 2/2
+2026-04-15 11:21:41,870 - step2_tag_detection - INFO - All GPU workers finished, stopping result consumer
+2026-04-15 11:21:41,870 - step2_tag_detection - INFO - ✓ Result consumer processed 127/110 crops from 1 completed videos
+2026-04-15 11:21:41,888 - step2_tag_detection - INFO - [BJORN3TRI3_SCALE/BJORN3TRI3_SCALE_2023-06-12_8_47] Result saver process joined
+2026-04-15 11:21:43,221 - step2_tag_detection - INFO - ✓ Video complete: BJORN3TRI3_SCALE_2025-05-21_9_14 (384 tags from 384 crops)
+2026-04-15 11:21:43,237 - __main__ - INFO - ✓ Logged Step 2: BJORN3TRI3_SCALE_2025-05-21_9_14
+2026-04-15 11:21:43,996 - step2_tag_detection - INFO - [BJORN3TRI3_SCALE/BJORN3TRI3_SCALE_2025-05-21_9_14] Tag detection complete, sending sentinels
+2026-04-15 11:21:43,997 - step2_tag_detection - INFO - [BJORN3TRI3_SCALE/BJORN3TRI3_SCALE_2025-05-21_9_14] Waiting for result saver to finish
+2026-04-15 11:21:43,999 - step2_tag_detection - INFO - Received sentinel 1/2
+2026-04-15 11:21:43,999 - step2_tag_detection - INFO - Received sentinel 2/2
+2026-04-15 11:21:43,999 - step2_tag_detection - INFO - All GPU workers finished, stopping result consumer
+2026-04-15 11:21:43,999 - step2_tag_detection - INFO - ✓ Result consumer processed 759/384 crops from 1 completed videos
+2026-04-15 11:21:44,013 - step2_tag_detection - INFO - [BJORN3TRI3_SCALE/BJORN3TRI3_SCALE_2025-05-21_9_14] Result saver process joined
+2026-04-15 11:21:44,072 - step2_tag_detection - INFO - Finished event BJORN3TRI3_SCALE/BJORN3TRI3_SCALE_2024-05-13_4_00
+2026-04-15 11:21:44,075 - step2_tag_detection - INFO - Starting event FAR3BONDEN3_SCALE/FAR3BONDEN3_SCALE_2023-05-11_21_07 with 499 crops
+2026-04-15 11:21:44,076 - step2_tag_detection - INFO - ✓ Event 7/17: BJORN3TRI3_SCALE/BJORN3TRI3_SCALE_2024-05-13_4_00
+2026-04-15 11:21:44,161 - step2_tag_detection - INFO - Finished event BJORN3TRI3_SCALE/BJORN3TRI3_SCALE_2023-06-12_8_47
+2026-04-15 11:21:44,165 - step2_tag_detection - INFO - ✓ Event 8/17: BJORN3TRI3_SCALE/BJORN3TRI3_SCALE_2023-06-12_8_47
+2026-04-15 11:21:44,166 - step2_tag_detection - INFO - Starting event FAR3BONDEN3_SCALE/FAR3BONDEN3_SCALE_2024-05-26_17_03 with 1271 crops
+2026-04-15 11:21:44,207 - step2_tag_detection - INFO - [FAR3BONDEN3_SCALE/FAR3BONDEN3_SCALE_2023-05-11_21_07] Submitting 50 loading batches for one event folder
+2026-04-15 11:21:44,208 - step2_tag_detection - INFO - [FAR3BONDEN3_SCALE/FAR3BONDEN3_SCALE_2023-05-11_21_07] Using tag detector model: models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-04-15 11:21:44,209 - step2_tag_detection - INFO - [FAR3BONDEN3_SCALE/FAR3BONDEN3_SCALE_2023-05-11_21_07] Starting GPU worker on device 0
+2026-04-15 11:21:44,209 - step2_tag_detection - INFO - [FAR3BONDEN3_SCALE/FAR3BONDEN3_SCALE_2023-05-11_21_07] Starting GPU worker on device 1
+2026-04-15 11:21:44,210 - step2_tag_detection - INFO - [FAR3BONDEN3_SCALE/FAR3BONDEN3_SCALE_2023-05-11_21_07] Starting result saver process
+2026-04-15 11:21:44,258 - step2_tag_detection - INFO - [FAR3BONDEN3_SCALE/FAR3BONDEN3_SCALE_2023-05-11_21_07] Waiting for crop loading to complete
+2026-04-15 11:21:44,286 - step2_tag_detection - INFO - Pre-indexed 1 videos with 499 total crops
+2026-04-15 11:21:44,577 - step2_tag_detection - INFO - [FAR3BONDEN3_SCALE/FAR3BONDEN3_SCALE_2024-05-26_17_03] Submitting 128 loading batches for one event folder
+2026-04-15 11:21:44,579 - step2_tag_detection - INFO - [FAR3BONDEN3_SCALE/FAR3BONDEN3_SCALE_2024-05-26_17_03] Using tag detector model: models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-04-15 11:21:44,581 - step2_tag_detection - INFO - [FAR3BONDEN3_SCALE/FAR3BONDEN3_SCALE_2024-05-26_17_03] Starting GPU worker on device 0
+2026-04-15 11:21:44,582 - step2_tag_detection - INFO - [FAR3BONDEN3_SCALE/FAR3BONDEN3_SCALE_2024-05-26_17_03] Starting GPU worker on device 1
+2026-04-15 11:21:44,583 - step2_tag_detection - INFO - [FAR3BONDEN3_SCALE/FAR3BONDEN3_SCALE_2024-05-26_17_03] Starting result saver process
+2026-04-15 11:21:44,645 - step2_tag_detection - INFO - [FAR3BONDEN3_SCALE/FAR3BONDEN3_SCALE_2024-05-26_17_03] Waiting for crop loading to complete
+2026-04-15 11:21:44,678 - step2_tag_detection - INFO - Pre-indexed 1 videos with 1271 total crops
+2026-04-15 11:21:48,041 - step2_tag_detection - INFO - Finished event BJORN3TRI3_SCALE/BJORN3TRI3_SCALE_2025-05-21_9_14
+2026-04-15 11:21:48,045 - step2_tag_detection - INFO - ✓ Event 9/17: BJORN3TRI3_SCALE/BJORN3TRI3_SCALE_2025-05-21_9_14
+2026-04-15 11:21:48,045 - step2_tag_detection - INFO - Starting event FAR3BONDEN3_SCALE/FAR3BONDEN3_SCALE_2025-07-08_18_17 with 414 crops
+2026-04-15 11:21:48,045 - step2_tag_detection - INFO - Event processing: 9/17 complete (52.9%)
+2026-04-15 11:21:48,389 - step2_tag_detection - INFO - [FAR3BONDEN3_SCALE/FAR3BONDEN3_SCALE_2025-07-08_18_17] Submitting 42 loading batches for one event folder
+2026-04-15 11:21:48,390 - step2_tag_detection - INFO - [FAR3BONDEN3_SCALE/FAR3BONDEN3_SCALE_2025-07-08_18_17] Using tag detector model: models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-04-15 11:21:48,395 - step2_tag_detection - INFO - [FAR3BONDEN3_SCALE/FAR3BONDEN3_SCALE_2025-07-08_18_17] Starting GPU worker on device 0
+2026-04-15 11:21:48,395 - step2_tag_detection - INFO - [FAR3BONDEN3_SCALE/FAR3BONDEN3_SCALE_2025-07-08_18_17] Starting GPU worker on device 1
+2026-04-15 11:21:48,395 - step2_tag_detection - INFO - [FAR3BONDEN3_SCALE/FAR3BONDEN3_SCALE_2025-07-08_18_17] Starting result saver process
+2026-04-15 11:21:48,426 - step2_tag_detection - INFO - [FAR3BONDEN3_SCALE/FAR3BONDEN3_SCALE_2025-07-08_18_17] Waiting for crop loading to complete
+2026-04-15 11:21:48,453 - step2_tag_detection - INFO - Pre-indexed 1 videos with 414 total crops
+2026-04-15 11:21:50,184 - step2_tag_detection - INFO - [FAR3BONDEN3_SCALE/FAR3BONDEN3_SCALE_2023-05-11_21_07] Crop loading complete, sending sentinels
+2026-04-15 11:21:50,185 - step2_tag_detection - INFO - [FAR3BONDEN3_SCALE/FAR3BONDEN3_SCALE_2023-05-11_21_07] Waiting for GPU workers to complete inference
+2026-04-15 11:21:50,631 - step2_tag_detection - INFO - [FAR3BONDEN3_SCALE/FAR3BONDEN3_SCALE_2024-05-26_17_03] Crop loading complete, sending sentinels
+2026-04-15 11:21:50,632 - step2_tag_detection - INFO - [FAR3BONDEN3_SCALE/FAR3BONDEN3_SCALE_2024-05-26_17_03] Waiting for GPU workers to complete inference
+2026-04-15 11:21:51,790 - step2_tag_detection - INFO - [FAR3BONDEN3_SCALE/FAR3BONDEN3_SCALE_2025-07-08_18_17] Crop loading complete, sending sentinels
+2026-04-15 11:21:52,077 - step2_tag_detection - INFO - [FAR3BONDEN3_SCALE/FAR3BONDEN3_SCALE_2025-07-08_18_17] Waiting for GPU workers to complete inference
+2026-04-15 11:21:52,623 - step2_tag_detection - INFO - ✓ Video complete: FAR3BONDEN3_SCALE_2023-05-11_21_07 (188 tags from 499 crops)
+2026-04-15 11:21:52,637 - __main__ - INFO - ✓ Logged Step 2: FAR3BONDEN3_SCALE_2023-05-11_21_07
+2026-04-15 11:21:53,000 - step2_tag_detection - INFO - [FAR3BONDEN3_SCALE/FAR3BONDEN3_SCALE_2023-05-11_21_07] Tag detection complete, sending sentinels
+2026-04-15 11:21:53,000 - step2_tag_detection - INFO - [FAR3BONDEN3_SCALE/FAR3BONDEN3_SCALE_2023-05-11_21_07] Waiting for result saver to finish
+2026-04-15 11:21:53,000 - step2_tag_detection - INFO - Received sentinel 1/2
+2026-04-15 11:21:53,000 - step2_tag_detection - INFO - Received sentinel 2/2
+2026-04-15 11:21:53,000 - step2_tag_detection - INFO - All GPU workers finished, stopping result consumer
+2026-04-15 11:21:53,001 - step2_tag_detection - INFO - ✓ Result consumer processed 557/499 crops from 1 completed videos
+2026-04-15 11:21:53,022 - step2_tag_detection - INFO - [FAR3BONDEN3_SCALE/FAR3BONDEN3_SCALE_2023-05-11_21_07] Result saver process joined
+2026-04-15 11:21:53,934 - step2_tag_detection - INFO - ✓ Video complete: FAR3BONDEN3_SCALE_2025-07-08_18_17 (407 tags from 414 crops)
+2026-04-15 11:21:53,949 - __main__ - INFO - ✓ Logged Step 2: FAR3BONDEN3_SCALE_2025-07-08_18_17
+2026-04-15 11:21:54,449 - step2_tag_detection - INFO - ✓ Video complete: FAR3BONDEN3_SCALE_2024-05-26_17_03 (1247 tags from 1271 crops)
+2026-04-15 11:21:54,463 - __main__ - INFO - ✓ Logged Step 2: FAR3BONDEN3_SCALE_2024-05-26_17_03
+2026-04-15 11:21:54,682 - step2_tag_detection - INFO - Progress: 1347/1271 crops (106.0%) | Videos: 1 complete
+2026-04-15 11:21:54,757 - step2_tag_detection - INFO - [FAR3BONDEN3_SCALE/FAR3BONDEN3_SCALE_2025-07-08_18_17] Tag detection complete, sending sentinels
+2026-04-15 11:21:54,758 - step2_tag_detection - INFO - [FAR3BONDEN3_SCALE/FAR3BONDEN3_SCALE_2025-07-08_18_17] Waiting for result saver to finish
+2026-04-15 11:21:54,776 - step2_tag_detection - INFO - Received sentinel 1/2
+2026-04-15 11:21:54,776 - step2_tag_detection - INFO - Received sentinel 2/2
+2026-04-15 11:21:54,777 - step2_tag_detection - INFO - All GPU workers finished, stopping result consumer
+2026-04-15 11:21:54,777 - step2_tag_detection - INFO - ✓ Result consumer processed 741/414 crops from 1 completed videos
+2026-04-15 11:21:54,795 - step2_tag_detection - INFO - [FAR3BONDEN3_SCALE/FAR3BONDEN3_SCALE_2025-07-08_18_17] Result saver process joined
+2026-04-15 11:21:55,174 - step2_tag_detection - INFO - Finished event FAR3BONDEN3_SCALE/FAR3BONDEN3_SCALE_2023-05-11_21_07
+2026-04-15 11:21:55,176 - step2_tag_detection - INFO - ✓ Event 10/17: FAR3BONDEN3_SCALE/FAR3BONDEN3_SCALE_2023-05-11_21_07
+2026-04-15 11:21:55,177 - step2_tag_detection - INFO - Starting event FAR6BONDEN6_SCALE/FAR6BONDEN6_SCALE_2023-05-09_21_16 with 467 crops
+2026-04-15 11:21:55,306 - step2_tag_detection - INFO - [FAR6BONDEN6_SCALE/FAR6BONDEN6_SCALE_2023-05-09_21_16] Submitting 47 loading batches for one event folder
+2026-04-15 11:21:55,307 - step2_tag_detection - INFO - [FAR6BONDEN6_SCALE/FAR6BONDEN6_SCALE_2023-05-09_21_16] Using tag detector model: models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-04-15 11:21:55,308 - step2_tag_detection - INFO - [FAR6BONDEN6_SCALE/FAR6BONDEN6_SCALE_2023-05-09_21_16] Starting GPU worker on device 0
+2026-04-15 11:21:55,308 - step2_tag_detection - INFO - [FAR6BONDEN6_SCALE/FAR6BONDEN6_SCALE_2023-05-09_21_16] Starting GPU worker on device 1
+2026-04-15 11:21:55,309 - step2_tag_detection - INFO - [FAR6BONDEN6_SCALE/FAR6BONDEN6_SCALE_2023-05-09_21_16] Starting result saver process
+2026-04-15 11:21:55,337 - step2_tag_detection - INFO - [FAR6BONDEN6_SCALE/FAR6BONDEN6_SCALE_2023-05-09_21_16] Waiting for crop loading to complete
+2026-04-15 11:21:55,365 - step2_tag_detection - INFO - Pre-indexed 1 videos with 467 total crops
+2026-04-15 11:21:57,572 - step2_tag_detection - INFO - Finished event FAR3BONDEN3_SCALE/FAR3BONDEN3_SCALE_2025-07-08_18_17
+2026-04-15 11:21:57,574 - step2_tag_detection - INFO - ✓ Event 11/17: FAR3BONDEN3_SCALE/FAR3BONDEN3_SCALE_2025-07-08_18_17
+2026-04-15 11:21:57,577 - step2_tag_detection - INFO - Starting event FAR6BONDEN6_SCALE/FAR6BONDEN6_SCALE_2024-06-02_5_58 with 6479 crops
+2026-04-15 11:21:57,604 - step2_tag_detection - INFO - [FAR3BONDEN3_SCALE/FAR3BONDEN3_SCALE_2024-05-26_17_03] Tag detection complete, sending sentinels
+2026-04-15 11:21:57,604 - step2_tag_detection - INFO - [FAR3BONDEN3_SCALE/FAR3BONDEN3_SCALE_2024-05-26_17_03] Waiting for result saver to finish
+2026-04-15 11:21:57,607 - step2_tag_detection - INFO - Received sentinel 1/2
+2026-04-15 11:21:57,608 - step2_tag_detection - INFO - Received sentinel 2/2
+2026-04-15 11:21:57,608 - step2_tag_detection - INFO - All GPU workers finished, stopping result consumer
+2026-04-15 11:21:57,608 - step2_tag_detection - INFO - ✓ Result consumer processed 2182/1271 crops from 1 completed videos
+2026-04-15 11:21:57,636 - step2_tag_detection - INFO - [FAR3BONDEN3_SCALE/FAR3BONDEN3_SCALE_2024-05-26_17_03] Result saver process joined
+2026-04-15 11:21:57,722 - step2_tag_detection - INFO - [FAR6BONDEN6_SCALE/FAR6BONDEN6_SCALE_2024-06-02_5_58] Submitting 648 loading batches for one event folder
+2026-04-15 11:21:57,741 - step2_tag_detection - INFO - [FAR6BONDEN6_SCALE/FAR6BONDEN6_SCALE_2024-06-02_5_58] Using tag detector model: models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-04-15 11:21:57,741 - step2_tag_detection - INFO - [FAR6BONDEN6_SCALE/FAR6BONDEN6_SCALE_2024-06-02_5_58] Starting GPU worker on device 0
+2026-04-15 11:21:57,741 - step2_tag_detection - INFO - [FAR6BONDEN6_SCALE/FAR6BONDEN6_SCALE_2024-06-02_5_58] Starting GPU worker on device 1
+2026-04-15 11:21:57,742 - step2_tag_detection - INFO - [FAR6BONDEN6_SCALE/FAR6BONDEN6_SCALE_2024-06-02_5_58] Starting result saver process
+2026-04-15 11:21:57,792 - step2_tag_detection - INFO - [FAR6BONDEN6_SCALE/FAR6BONDEN6_SCALE_2024-06-02_5_58] Waiting for crop loading to complete
+2026-04-15 11:21:57,897 - step2_tag_detection - INFO - Pre-indexed 1 videos with 6479 total crops
+2026-04-15 11:22:00,423 - step2_tag_detection - INFO - [FAR6BONDEN6_SCALE/FAR6BONDEN6_SCALE_2023-05-09_21_16] Crop loading complete, sending sentinels
+2026-04-15 11:22:00,424 - step2_tag_detection - INFO - [FAR6BONDEN6_SCALE/FAR6BONDEN6_SCALE_2023-05-09_21_16] Waiting for GPU workers to complete inference
+2026-04-15 11:22:01,375 - step2_tag_detection - INFO - Finished event FAR3BONDEN3_SCALE/FAR3BONDEN3_SCALE_2024-05-26_17_03
+2026-04-15 11:22:01,377 - step2_tag_detection - INFO - Starting event TRI5_SCALE/TRI5_SCALE_2025-06-08_5_03 with 13 crops
+2026-04-15 11:22:01,377 - step2_tag_detection - INFO - ✓ Event 12/17: FAR3BONDEN3_SCALE/FAR3BONDEN3_SCALE_2024-05-26_17_03
+2026-04-15 11:22:01,377 - step2_tag_detection - INFO - Event processing: 12/17 complete (70.6%)
+2026-04-15 11:22:01,479 - step2_tag_detection - INFO - [TRI5_SCALE/TRI5_SCALE_2025-06-08_5_03] Submitting 2 loading batches for one event folder
+2026-04-15 11:22:01,479 - step2_tag_detection - INFO - [TRI5_SCALE/TRI5_SCALE_2025-06-08_5_03] Using tag detector model: models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-04-15 11:22:01,480 - step2_tag_detection - INFO - [TRI5_SCALE/TRI5_SCALE_2025-06-08_5_03] Starting GPU worker on device 0
+2026-04-15 11:22:01,480 - step2_tag_detection - INFO - [TRI5_SCALE/TRI5_SCALE_2025-06-08_5_03] Starting GPU worker on device 1
+2026-04-15 11:22:01,480 - step2_tag_detection - INFO - [TRI5_SCALE/TRI5_SCALE_2025-06-08_5_03] Starting result saver process
+2026-04-15 11:22:01,505 - step2_tag_detection - INFO - [TRI5_SCALE/TRI5_SCALE_2025-06-08_5_03] Waiting for crop loading to complete
+2026-04-15 11:22:01,510 - step2_tag_detection - INFO - Pre-indexed 1 videos with 13 total crops
+2026-04-15 11:22:02,646 - step2_tag_detection - INFO - ✓ Video complete: FAR6BONDEN6_SCALE_2023-05-09_21_16 (416 tags from 467 crops)
+2026-04-15 11:22:02,661 - __main__ - INFO - ✓ Logged Step 2: FAR6BONDEN6_SCALE_2023-05-09_21_16
+2026-04-15 11:22:03,700 - step2_tag_detection - INFO - [FAR6BONDEN6_SCALE/FAR6BONDEN6_SCALE_2023-05-09_21_16] Tag detection complete, sending sentinels
+2026-04-15 11:22:03,701 - step2_tag_detection - INFO - [FAR6BONDEN6_SCALE/FAR6BONDEN6_SCALE_2023-05-09_21_16] Waiting for result saver to finish
+2026-04-15 11:22:03,703 - step2_tag_detection - INFO - Received sentinel 1/2
+2026-04-15 11:22:03,703 - step2_tag_detection - INFO - Received sentinel 2/2
+2026-04-15 11:22:03,703 - step2_tag_detection - INFO - All GPU workers finished, stopping result consumer
+2026-04-15 11:22:03,704 - step2_tag_detection - INFO - ✓ Result consumer processed 718/467 crops from 1 completed videos
+2026-04-15 11:22:03,718 - step2_tag_detection - INFO - [FAR6BONDEN6_SCALE/FAR6BONDEN6_SCALE_2023-05-09_21_16] Result saver process joined
+2026-04-15 11:22:03,733 - step2_tag_detection - INFO - [FAR6BONDEN6_SCALE/FAR6BONDEN6_SCALE_2024-06-02_5_58] Crop loading complete, sending sentinels
+2026-04-15 11:22:03,740 - step2_tag_detection - INFO - [FAR6BONDEN6_SCALE/FAR6BONDEN6_SCALE_2024-06-02_5_58] Waiting for GPU workers to complete inference
+2026-04-15 11:22:04,251 - step2_tag_detection - INFO - [TRI5_SCALE/TRI5_SCALE_2025-06-08_5_03] Crop loading complete, sending sentinels
+2026-04-15 11:22:04,252 - step2_tag_detection - INFO - [TRI5_SCALE/TRI5_SCALE_2025-06-08_5_03] Waiting for GPU workers to complete inference
+2026-04-15 11:22:05,195 - step2_tag_detection - INFO - ✓ Video complete: TRI5_SCALE_2025-06-08_5_03 (10 tags from 13 crops)
+2026-04-15 11:22:05,209 - __main__ - INFO - ✓ Logged Step 2: TRI5_SCALE_2025-06-08_5_03
+2026-04-15 11:22:05,214 - step2_tag_detection - INFO - [TRI5_SCALE/TRI5_SCALE_2025-06-08_5_03] Tag detection complete, sending sentinels
+2026-04-15 11:22:05,214 - step2_tag_detection - INFO - [TRI5_SCALE/TRI5_SCALE_2025-06-08_5_03] Waiting for result saver to finish
+2026-04-15 11:22:05,218 - step2_tag_detection - INFO - Received sentinel 1/2
+2026-04-15 11:22:05,218 - step2_tag_detection - INFO - Received sentinel 2/2
+2026-04-15 11:22:05,218 - step2_tag_detection - INFO - All GPU workers finished, stopping result consumer
+2026-04-15 11:22:05,219 - step2_tag_detection - INFO - ✓ Result consumer processed 19/13 crops from 1 completed videos
+2026-04-15 11:22:05,238 - step2_tag_detection - INFO - [TRI5_SCALE/TRI5_SCALE_2025-06-08_5_03] Result saver process joined
+2026-04-15 11:22:06,212 - step2_tag_detection - INFO - Finished event FAR6BONDEN6_SCALE/FAR6BONDEN6_SCALE_2023-05-09_21_16
+2026-04-15 11:22:06,214 - step2_tag_detection - INFO - Starting event TRI5_SCALE/TRI5_SCALE_2025-06-09_10_04 with 24 crops
+2026-04-15 11:22:06,214 - step2_tag_detection - INFO - ✓ Event 13/17: FAR6BONDEN6_SCALE/FAR6BONDEN6_SCALE_2023-05-09_21_16
+2026-04-15 11:22:06,286 - step2_tag_detection - INFO - [TRI5_SCALE/TRI5_SCALE_2025-06-09_10_04] Submitting 3 loading batches for one event folder
+2026-04-15 11:22:06,288 - step2_tag_detection - INFO - [TRI5_SCALE/TRI5_SCALE_2025-06-09_10_04] Using tag detector model: models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-04-15 11:22:06,288 - step2_tag_detection - INFO - [TRI5_SCALE/TRI5_SCALE_2025-06-09_10_04] Starting GPU worker on device 0
+2026-04-15 11:22:06,288 - step2_tag_detection - INFO - [TRI5_SCALE/TRI5_SCALE_2025-06-09_10_04] Starting GPU worker on device 1
+2026-04-15 11:22:06,289 - step2_tag_detection - INFO - [TRI5_SCALE/TRI5_SCALE_2025-06-09_10_04] Starting result saver process
+2026-04-15 11:22:06,311 - step2_tag_detection - INFO - [TRI5_SCALE/TRI5_SCALE_2025-06-09_10_04] Waiting for crop loading to complete
+2026-04-15 11:22:06,318 - step2_tag_detection - INFO - Pre-indexed 1 videos with 24 total crops
+2026-04-15 11:22:07,262 - step2_tag_detection - INFO - Finished event TRI5_SCALE/TRI5_SCALE_2025-06-08_5_03
+2026-04-15 11:22:07,264 - step2_tag_detection - INFO - Starting event TRI5_SCALE/TRI5_SCALE_2025-06-16_4_00 with 15 crops
+2026-04-15 11:22:07,264 - step2_tag_detection - INFO - ✓ Event 14/17: TRI5_SCALE/TRI5_SCALE_2025-06-08_5_03
+2026-04-15 11:22:07,396 - step2_tag_detection - INFO - [TRI5_SCALE/TRI5_SCALE_2025-06-16_4_00] Submitting 2 loading batches for one event folder
+2026-04-15 11:22:07,396 - step2_tag_detection - INFO - [TRI5_SCALE/TRI5_SCALE_2025-06-16_4_00] Using tag detector model: models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-04-15 11:22:07,396 - step2_tag_detection - INFO - [TRI5_SCALE/TRI5_SCALE_2025-06-16_4_00] Starting GPU worker on device 0
+2026-04-15 11:22:07,397 - step2_tag_detection - INFO - [TRI5_SCALE/TRI5_SCALE_2025-06-16_4_00] Starting GPU worker on device 1
+2026-04-15 11:22:07,397 - step2_tag_detection - INFO - [TRI5_SCALE/TRI5_SCALE_2025-06-16_4_00] Starting result saver process
+2026-04-15 11:22:07,433 - step2_tag_detection - INFO - [TRI5_SCALE/TRI5_SCALE_2025-06-16_4_00] Waiting for crop loading to complete
+2026-04-15 11:22:07,441 - step2_tag_detection - INFO - Pre-indexed 1 videos with 15 total crops
+2026-04-15 11:22:07,907 - step2_tag_detection - INFO - Progress: 880/6479 crops (13.6%) | Videos: 0 complete (ETA: 1.1m)
+2026-04-15 11:22:09,149 - step2_tag_detection - INFO - [TRI5_SCALE/TRI5_SCALE_2025-06-09_10_04] Crop loading complete, sending sentinels
+2026-04-15 11:22:09,150 - step2_tag_detection - INFO - [TRI5_SCALE/TRI5_SCALE_2025-06-09_10_04] Waiting for GPU workers to complete inference
+2026-04-15 11:22:09,950 - step2_tag_detection - INFO - [TRI5_SCALE/TRI5_SCALE_2025-06-16_4_00] Crop loading complete, sending sentinels
+2026-04-15 11:22:09,951 - step2_tag_detection - INFO - [TRI5_SCALE/TRI5_SCALE_2025-06-16_4_00] Waiting for GPU workers to complete inference
+2026-04-15 11:22:10,368 - step2_tag_detection - INFO - ✓ Video complete: TRI5_SCALE_2025-06-09_10_04 (9 tags from 24 crops)
+2026-04-15 11:22:10,376 - step2_tag_detection - INFO - [TRI5_SCALE/TRI5_SCALE_2025-06-09_10_04] Tag detection complete, sending sentinels
+2026-04-15 11:22:10,376 - step2_tag_detection - INFO - [TRI5_SCALE/TRI5_SCALE_2025-06-09_10_04] Waiting for result saver to finish
+2026-04-15 11:22:10,383 - __main__ - INFO - ✓ Logged Step 2: TRI5_SCALE_2025-06-09_10_04
+2026-04-15 11:22:10,388 - step2_tag_detection - INFO - Received sentinel 1/2
+2026-04-15 11:22:10,389 - step2_tag_detection - INFO - Received sentinel 2/2
+2026-04-15 11:22:10,389 - step2_tag_detection - INFO - All GPU workers finished, stopping result consumer
+2026-04-15 11:22:10,389 - step2_tag_detection - INFO - ✓ Result consumer processed 26/24 crops from 1 completed videos
+2026-04-15 11:22:10,408 - step2_tag_detection - INFO - [TRI5_SCALE/TRI5_SCALE_2025-06-09_10_04] Result saver process joined
+2026-04-15 11:22:11,378 - step2_tag_detection - INFO - ✓ Video complete: TRI5_SCALE_2025-06-16_4_00 (9 tags from 15 crops)
+2026-04-15 11:22:11,394 - __main__ - INFO - ✓ Logged Step 2: TRI5_SCALE_2025-06-16_4_00
+2026-04-15 11:22:11,402 - step2_tag_detection - INFO - [TRI5_SCALE/TRI5_SCALE_2025-06-16_4_00] Tag detection complete, sending sentinels
+2026-04-15 11:22:11,402 - step2_tag_detection - INFO - Received sentinel 1/2
+2026-04-15 11:22:11,402 - step2_tag_detection - INFO - [TRI5_SCALE/TRI5_SCALE_2025-06-16_4_00] Waiting for result saver to finish
+2026-04-15 11:22:11,402 - step2_tag_detection - INFO - Received sentinel 2/2
+2026-04-15 11:22:11,402 - step2_tag_detection - INFO - All GPU workers finished, stopping result consumer
+2026-04-15 11:22:11,402 - step2_tag_detection - INFO - ✓ Result consumer processed 19/15 crops from 1 completed videos
+2026-04-15 11:22:11,417 - step2_tag_detection - INFO - [TRI5_SCALE/TRI5_SCALE_2025-06-16_4_00] Result saver process joined
+2026-04-15 11:22:12,567 - step2_tag_detection - INFO - Finished event TRI5_SCALE/TRI5_SCALE_2025-06-09_10_04
+2026-04-15 11:22:12,570 - step2_tag_detection - INFO - ✓ Event 15/17: TRI5_SCALE/TRI5_SCALE_2025-06-09_10_04
+2026-04-15 11:22:12,570 - step2_tag_detection - INFO - Event processing: 15/17 complete (88.2%)
+2026-04-15 11:22:13,076 - step2_tag_detection - INFO - Finished event TRI5_SCALE/TRI5_SCALE_2025-06-16_4_00
+2026-04-15 11:22:13,079 - step2_tag_detection - INFO - ✓ Event 16/17: TRI5_SCALE/TRI5_SCALE_2025-06-16_4_00
+2026-04-15 11:22:17,909 - step2_tag_detection - INFO - Progress: 4174/6479 crops (64.4%) | Videos: 0 complete (ETA: 7s)
+2026-04-15 11:22:22,541 - step2_tag_detection - INFO - ✓ Video complete: FAR6BONDEN6_SCALE_2024-06-02_5_58 (5988 tags from 6479 crops)
+2026-04-15 11:22:22,554 - __main__ - INFO - ✓ Logged Step 2: FAR6BONDEN6_SCALE_2024-06-02_5_58
+2026-04-15 11:22:27,911 - step2_tag_detection - INFO - Progress: 9259/6479 crops (142.9%) | Videos: 1 complete
+2026-04-15 11:22:29,295 - step2_tag_detection - INFO - [FAR6BONDEN6_SCALE/FAR6BONDEN6_SCALE_2024-06-02_5_58] Tag detection complete, sending sentinels
+2026-04-15 11:22:29,297 - step2_tag_detection - INFO - Received sentinel 1/2
+2026-04-15 11:22:29,297 - step2_tag_detection - INFO - [FAR6BONDEN6_SCALE/FAR6BONDEN6_SCALE_2024-06-02_5_58] Waiting for result saver to finish
+2026-04-15 11:22:29,297 - step2_tag_detection - INFO - Received sentinel 2/2
+2026-04-15 11:22:29,297 - step2_tag_detection - INFO - All GPU workers finished, stopping result consumer
+2026-04-15 11:22:29,297 - step2_tag_detection - INFO - ✓ Result consumer processed 9841/6479 crops from 1 completed videos
+2026-04-15 11:22:29,329 - step2_tag_detection - INFO - [FAR6BONDEN6_SCALE/FAR6BONDEN6_SCALE_2024-06-02_5_58] Result saver process joined
+2026-04-15 11:22:31,523 - step2_tag_detection - INFO - Finished event FAR6BONDEN6_SCALE/FAR6BONDEN6_SCALE_2024-06-02_5_58
+2026-04-15 11:22:31,527 - step2_tag_detection - INFO - ✓ Event 17/17: FAR6BONDEN6_SCALE/FAR6BONDEN6_SCALE_2024-06-02_5_58
+2026-04-15 11:22:31,527 - step2_tag_detection - INFO - Event processing: 17/17 complete (100.0%)
+2026-04-15 11:22:31,549 - step2_tag_detection - INFO - ✓ Step 2 completed in 74.4 seconds
+2026-04-15 11:22:31,550 - step2_tag_detection - INFO -   Completed: 17/17 events
+2026-04-15 11:22:31,550 - __main__ - INFO - Step 2 completed in 74.4 seconds
+2026-04-15 11:22:31,550 - __main__ - INFO - Running Step 3: Text Recognition
+2026-04-15 11:22:31,550 - __main__ - INFO - 
+2026-04-15 11:22:31,550 - __main__ - INFO - ================================================================================
+2026-04-15 11:22:31,550 - __main__ - INFO - STARTING STEP 3: TEXT RECOGNITION
+2026-04-15 11:22:31,550 - __main__ - INFO - ================================================================================
+2026-04-15 11:22:32,316 - step3_text_recognition - INFO - Starting Step 3: Text Recognition
+2026-04-15 11:22:32,614 - step3_text_recognition - INFO - Processing 8590 ring tag groups with 2 GPU(s)
+2026-04-15 11:22:32,614 - step3_text_recognition - INFO - Using multi-GPU mode with Manager and Pools
+2026-04-15 11:22:32,614 - step3_text_recognition - INFO - Starting multi-GPU processing with 2 GPUs (batch_size=64)
+2026-04-15 11:22:32,649 - step3_text_recognition - INFO - Started 2 GPU workers
+2026-04-15 11:22:48,739 - step3_text_recognition - INFO - All batches submitted, sending sentinels to GPU workers
+2026-04-15 11:22:48,739 - step3_text_recognition - INFO - Collecting results from GPU workers
+2026-04-15 11:22:53,830 - step3_text_recognition - INFO - Results: 99/135 batches (73.3%)
+2026-04-15 11:22:58,879 - step3_text_recognition - INFO - Results: 129/135 batches (95.6%)
+2026-04-15 11:22:59,519 - step3_text_recognition - INFO - ✓ Sentinel 1/2 received
+2026-04-15 11:22:59,590 - step3_text_recognition - INFO - ✓ Sentinel 2/2 received
+2026-04-15 11:22:59,590 - step3_text_recognition - INFO - ✓ Collected results from 135 batches
+2026-04-15 11:22:59,698 - step3_text_recognition - INFO - Waiting for GPU workers to complete
+2026-04-15 11:22:59,698 - step3_text_recognition - INFO - ✓ OCR complete with 2 GPUs: 4231 results
+2026-04-15 11:23:00,891 - __main__ - INFO - ✓ Logged Step 3: BJORN3TRI3_SCALE_2023-06-12_8_47
+2026-04-15 11:23:00,891 - step3_text_recognition - INFO - ✓ Saved OCR result: BJORN3TRI3_SCALE_2023-06-12_8_47 → ADN181 (camera: BJORN3TRI3_SCALE)
+2026-04-15 11:23:00,900 - __main__ - INFO - ✓ Logged Step 3: BJORN3TRI3_SCALE_2024-05-13_4_00
+2026-04-15 11:23:00,900 - step3_text_recognition - INFO - ✓ Saved OCR result: BJORN3TRI3_SCALE_2024-05-13_4_00 → ADN765 (camera: BJORN3TRI3_SCALE)
+2026-04-15 11:23:00,909 - __main__ - INFO - ✓ Logged Step 3: BJORN3TRI3_SCALE_2025-05-21_9_14
+2026-04-15 11:23:00,910 - step3_text_recognition - INFO - ✓ Saved OCR result: BJORN3TRI3_SCALE_2025-05-21_9_14 → ADN792 (camera: BJORN3TRI3_SCALE)
+2026-04-15 11:23:00,918 - __main__ - INFO - ✓ Logged Step 3: FAR3BONDEN3_SCALE_2023-05-11_21_07
+2026-04-15 11:23:00,918 - step3_text_recognition - INFO - ✓ Saved OCR result: FAR3BONDEN3_SCALE_2023-05-11_21_07 → ACT777 (camera: FAR3BONDEN3_SCALE)
+2026-04-15 11:23:00,923 - __main__ - INFO - ✓ Logged Step 3: FAR3BONDEN3_SCALE_2024-05-26_17_03
+2026-04-15 11:23:00,923 - step3_text_recognition - INFO - ✓ Saved OCR result: FAR3BONDEN3_SCALE_2024-05-26_17_03 → ADE000 (camera: FAR3BONDEN3_SCALE)
+2026-04-15 11:23:00,929 - __main__ - INFO - ✓ Logged Step 3: FAR3BONDEN3_SCALE_2025-07-08_18_17
+2026-04-15 11:23:00,929 - step3_text_recognition - INFO - ✓ Saved OCR result: FAR3BONDEN3_SCALE_2025-07-08_18_17 → ACT779 (camera: FAR3BONDEN3_SCALE)
+2026-04-15 11:23:00,935 - __main__ - INFO - ✓ Logged Step 3: FAR6BONDEN6_SCALE_2023-05-09_21_16
+2026-04-15 11:23:00,935 - step3_text_recognition - INFO - ✓ Saved OCR result: FAR6BONDEN6_SCALE_2023-05-09_21_16 → ADE000 (camera: FAR6BONDEN6_SCALE)
+2026-04-15 11:23:00,940 - __main__ - INFO - ✓ Logged Step 3: FAR6BONDEN6_SCALE_2024-06-02_5_58
+2026-04-15 11:23:00,940 - step3_text_recognition - INFO - ✓ Saved OCR result: FAR6BONDEN6_SCALE_2024-06-02_5_58 → ACP276 (camera: FAR6BONDEN6_SCALE)
+2026-04-15 11:23:00,946 - __main__ - INFO - ✓ Logged Step 3: FAR6_SCALE_2023-06-02_6_49
+2026-04-15 11:23:00,946 - step3_text_recognition - INFO - ✓ Saved OCR result: FAR6_SCALE_2023-06-02_6_49 → ADN764 (camera: FAR6_SCALE)
+2026-04-15 11:23:00,952 - __main__ - INFO - ✓ Logged Step 3: TRI5_SCALE_2025-06-08_5_03
+2026-04-15 11:23:00,953 - step3_text_recognition - INFO - ✓ Saved OCR result: TRI5_SCALE_2025-06-08_5_03 → ADR422 (camera: TRI5_SCALE)
+2026-04-15 11:23:00,953 - step3_text_recognition - INFO - ✓ Step 3 completed in 28.6 seconds (10 videos processed)
+2026-04-15 11:23:00,955 - __main__ - INFO - Step 3 completed in 29.4 seconds
+2026-04-15 11:23:00,955 - __main__ - INFO - 
+2026-04-15 11:23:00,955 - __main__ - INFO - ================================================================================
+2026-04-15 11:23:00,955 - __main__ - INFO - ✓ PIPELINE COMPLETED SUCCESSFULLY in 218.1 seconds
+2026-04-15 11:23:00,955 - __main__ - INFO - ================================================================================
+2026-04-15 11:23:00,955 - __main__ - INFO - ✓ Database optimized and closed

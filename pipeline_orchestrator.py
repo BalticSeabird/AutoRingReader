@@ -9,6 +9,7 @@ from time import time
 
 from pipeline_config import PipelineConfig
 from pipeline_logger import PipelineLogger
+from pipeline_diagnostics import PipelineDiagnostics
 from pipeline_utils import ensure_output_dir, get_video_list, get_available_gpus
 
 
@@ -89,7 +90,7 @@ def validate_config(config: PipelineConfig, logger: logging.Logger) -> bool:
     return True
 
 
-def run_step1(config: PipelineConfig, logger: PipelineLogger, pipeline_logger: logging.Logger, force_reprocess: bool = False) -> bool:
+def run_step1(config: PipelineConfig, logger: PipelineLogger, pipeline_logger: logging.Logger, diagnostics: PipelineDiagnostics, force_reprocess: bool = False) -> bool:
     """Run Step 1: Ring Detection."""
     pipeline_logger.info("")
     pipeline_logger.info("=" * 80)
@@ -100,7 +101,12 @@ def run_step1(config: PipelineConfig, logger: PipelineLogger, pipeline_logger: l
 
     try:
         from step1_ring_detection import run_step1_ring_detection
-        return run_step1_ring_detection(config, logger, force_reprocess=force_reprocess)
+        success = run_step1_ring_detection(config, logger, force_reprocess=force_reprocess)
+
+        if success:
+            diagnostics.print_step_report("step1")
+
+        return success
 
     except Exception as e:
         pipeline_logger.error(f"Step 1 failed with error: {e}", exc_info=True)
@@ -110,7 +116,7 @@ def run_step1(config: PipelineConfig, logger: PipelineLogger, pipeline_logger: l
         pipeline_logger.info(f"Step 1 completed in {elapsed:.1f} seconds")
 
 
-def run_step2(config: PipelineConfig, logger: PipelineLogger, pipeline_logger: logging.Logger, force_reprocess: bool = False) -> bool:
+def run_step2(config: PipelineConfig, logger: PipelineLogger, pipeline_logger: logging.Logger, diagnostics: PipelineDiagnostics, force_reprocess: bool = False) -> bool:
     """Run Step 2: Tag Detection."""
     pipeline_logger.info("")
     pipeline_logger.info("=" * 80)
@@ -121,7 +127,12 @@ def run_step2(config: PipelineConfig, logger: PipelineLogger, pipeline_logger: l
 
     try:
         from step2_tag_detection import run_step2_tag_detection
-        return run_step2_tag_detection(config, logger, force_reprocess=force_reprocess)
+        success = run_step2_tag_detection(config, logger, force_reprocess=force_reprocess)
+
+        if success:
+            diagnostics.print_step_report("step2")
+
+        return success
 
     except Exception as e:
         pipeline_logger.error(f"Step 2 failed with error: {e}", exc_info=True)
@@ -131,7 +142,7 @@ def run_step2(config: PipelineConfig, logger: PipelineLogger, pipeline_logger: l
         pipeline_logger.info(f"Step 2 completed in {elapsed:.1f} seconds")
 
 
-def run_step3(config: PipelineConfig, logger: PipelineLogger, pipeline_logger: logging.Logger, force_reprocess: bool = False) -> bool:
+def run_step3(config: PipelineConfig, logger: PipelineLogger, pipeline_logger: logging.Logger, diagnostics: PipelineDiagnostics, force_reprocess: bool = False) -> bool:
     """Run Step 3: Text Recognition."""
     pipeline_logger.info("")
     pipeline_logger.info("=" * 80)
@@ -142,7 +153,12 @@ def run_step3(config: PipelineConfig, logger: PipelineLogger, pipeline_logger: l
 
     try:
         from step3_text_recognition import run_step3_text_recognition
-        return run_step3_text_recognition(config, logger, force_reprocess=force_reprocess)
+        success = run_step3_text_recognition(config, logger, force_reprocess=force_reprocess)
+
+        if success:
+            diagnostics.print_step_report("step3")
+
+        return success
 
     except Exception as e:
         pipeline_logger.error(f"Step 3 failed with error: {e}", exc_info=True)
@@ -178,9 +194,10 @@ def main(batch_yaml_path: str, force_reprocess: bool = False):
         # Ensure output directories
         ensure_output_dir(config.output_root_path)
 
-        # Initialize database logger
+        # Initialize database logger and diagnostics
         db_path = config.get_db_path()
         pipeline_logger = PipelineLogger(str(db_path), logger)
+        diagnostics = PipelineDiagnostics(config.output_root_path, str(db_path), logger)
 
         # Check available videos
         all_videos = get_video_list(config, step=1)
@@ -195,21 +212,34 @@ def main(batch_yaml_path: str, force_reprocess: bool = False):
 
         # Step 1: Ring Detection
         logger.info("Running Step 1: Ring Detection")
-        if not run_step1(config, pipeline_logger, logger, force_reprocess):
+        if not run_step1(config, pipeline_logger, logger, diagnostics, force_reprocess):
             logger.error("Step 1 failed")
             return 1
 
         # Step 2: Tag Detection
         logger.info("Running Step 2: Tag Detection")
-        if not run_step2(config, pipeline_logger, logger, force_reprocess):
+        if not run_step2(config, pipeline_logger, logger, diagnostics, force_reprocess):
             logger.error("Step 2 failed")
             return 1
 
         # Step 3: Text Recognition
         logger.info("Running Step 3: Text Recognition")
-        if not run_step3(config, pipeline_logger, logger, force_reprocess):
+        if not run_step3(config, pipeline_logger, logger, diagnostics, force_reprocess):
             logger.error("Step 3 failed")
             return 1
+
+        # Print combined diagnostics
+        diagnostics.print_combined_report()
+
+        # Export diagnostics to JSON and CSV with timestamp suffix
+        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+        log_dir = Path("log")
+        log_dir.mkdir(exist_ok=True)
+
+        diagnostics_json_path = log_dir / f"diagnostics_{timestamp}.json"
+        diagnostics_csv_path = log_dir / f"diagnostics_{timestamp}.csv"
+        diagnostics.export_json(str(diagnostics_json_path))
+        diagnostics.export_csv(str(diagnostics_csv_path))
 
         overall_elapsed = time() - overall_start
         logger.info("")

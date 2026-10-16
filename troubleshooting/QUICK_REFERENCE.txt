@@ -1,0 +1,275 @@
+"""
+🚀 TROUBLESHOOTING SUITE - QUICK REFERENCE
+
+Your Issue: "I see clear ring detections visually but Step 1 outputs nothing"
+
+This means either:
+  1. YOLO isn't detecting in these videos (model issue)
+  2. Confidence threshold is too high (settings issue)
+  3. ROI masking is filtering everything out (config issue)
+  4. Detections found but crops not saved (I/O issue)
+
+=============================
+  THE 3-STEP COMMAND FLOW
+=============================
+
+Step 1: QUICK TEST (1 minute)
+───────────────────────────────────────────────────────────────────────
+
+Run this first to get immediate understanding:
+
+    python troubleshooting/step1_walkthrough.py \\
+      path/to/TRI5_SCALE_2025-06-09_10_04.mp4 \\
+      path/to/ring_detector_model.pt
+
+✓ What it does:
+  - Extracts 5 frames from video
+  - Runs YOLO on each frame
+  - Shows if detections are found
+  - Shows if they pass confidence threshold
+
+✓ What to look for:
+  - "Detection found!" = Model is seeing rings
+  - "Passes threshold: True" = Would be saved
+  - "Passes threshold: False" = Filtered out (threshold too high)
+
+✓ Time: ~1 minute
+✓ Output: Console only (no files)
+
+
+Step 2: DETAILED DIAGNOSTIC (5-30 minutes depending on video length)
+────────────────────────────────────────────────────────────────────
+
+If Step 1 suggests problem, run this:
+
+    python troubleshooting/diagnose_step1.py \\
+      path/to/TRI5_SCALE_2025-06-09_10_04.mp4 \\
+      path/to/ring_detector_model.pt \\
+      --max-frames 100
+
+✓ What it does:
+  - Processes first 100 frames in detail
+  - Creates visualizations with detection boxes
+  - Saves comprehensive diagnostic report
+  - Ranks detections by confidence
+
+✓ What to look for:
+  - troubleshooting/step1_diagnostic_output/
+  - READ: *_diagnostic_summary.txt (human-readable)
+  - EXAMINE: 02_frame_*.jpg (visual detection boxes)
+  - ANALYZE: *_diagnostic_report.json (full data)
+
+✓ Summary will tell you:
+  - Total detections found (not filtered)
+  - Detections above threshold (will be saved)
+  - Confidence min/max/mean
+  - What went wrong and why
+
+✓ Time: 5-30 minutes
+✓ Output: Saved to troubleshooting/step1_diagnostic_output/
+
+
+Step 3: PINPOINT THE PROBLEM (depends on issue)
+────────────────────────────────────────────────────────────────────
+
+Based on Step 2 results:
+
+A) "No detections found" OR "All below threshold"?
+   ────────────────────────────────────────
+   Run ROI test:
+
+       python troubleshooting/test_roi_impact.py \\
+         path/to/TRI5_SCALE_2025-06-09_10_04.mp4 \\
+         path/to/ring_detector_model.pt
+
+   This will show:
+   - Does YOLO find rings WITHOUT ROI masking?
+   - Does YOLO find rings WITH ROI masking?
+   - Are coordinates transformed correctly?
+
+   If detections without ROI but none with ROI:
+   → ROI configuration is too aggressive
+   → Fix: Update TRI5 region in config/rois_config.yaml
+
+B) "Detections found but coordinates wrong"?
+   ──────────────────────────────────────────
+   Create comparison images:
+
+       python troubleshooting/compare_detections.py \\
+         path/to/TRI5_SCALE_2025-06-09_10_04.mp4 \\
+         output_root/step1_ring_crops/TRI5_SCALE/TRI5_SCALE_2025-06-09_10_04/_metadata.json
+
+   Shows side-by-side:
+   - LEFT: Original frame
+   - RIGHT: Same frame with detected boxes
+
+   Green box = above threshold (will be saved)
+   Red box = below threshold (filtered)
+   No box = no detection
+
+C) "Want to test everything at once"?
+   ──────────────────────────────────
+   Run master diagnostic:
+
+       python troubleshooting/run_diagnostic.py \\
+         --video path/to/video.mp4 \\
+         --model path/to/model.pt \\
+         --mode all
+
+
+=============================
+  ONE-LINE QUICK COMMANDS
+=============================
+
+For your specific video:
+
+# Quick test
+python troubleshooting/step1_walkthrough.py \
+  "path/to/TRI5_SCALE_2025-06-09_10_04.mp4" \
+  "path/to/ring_detector_model.pt"
+
+# Full diagnostic
+python troubleshooting/diagnose_step1.py \
+  "path/to/TRI5_SCALE_2025-06-09_10_04.mp4" \
+  "path/to/ring_detector_model.pt" \
+  --max-frames 100
+
+# Check if ROI is the culprit
+python troubleshooting/test_roi_impact.py \
+  "path/to/TRI5_SCALE_2025-06-09_10_04.mp4" \
+  "path/to/ring_detector_model.pt"
+
+# Check what pipeline already saved
+python troubleshooting/check_step1_outputs.py "output_root"
+
+# Create visual comparison
+python troubleshooting/compare_detections.py \
+  "path/to/TRI5_SCALE_2025-06-09_10_04.mp4" \
+  "output_root/step1_ring_crops/TRI5_SCALE/TRI5_SCALE_2025-06-09_10_04/_metadata.json"
+
+
+=============================
+  FILE REFERENCE
+=============================
+
+Core Diagnostics:
+  ✓ diagnose_step1.py ............ Full 100-frame trace with visuals
+  ✓ step1_walkthrough.py ......... 5-frame interactive walkthrough
+  ✓ test_roi_impact.py ........... Test if ROI masking is the problem
+  ✓ check_step1_outputs.py ....... Inspect saved results
+  ✓ compare_detections.py ........ Visual side-by-side comparison
+  ✓ run_diagnostic.py ............ Master script (runs all)
+
+Utilities:
+  ✓ quickstart.sh ................ Bash script to run all diagnostics
+  ✓ README.md .................... Full troubleshooting guide
+  ✓ QUICK_REFERENCE.txt (this file)
+
+Output:
+  ✓ troubleshooting/step1_diagnostic_output/
+      └─ Contains JSON, summary, and visualizations
+
+
+=============================
+  WHAT EACH OUTPUT MEANS
+=============================
+
+FROM STEP 1 WALKTHROUGH:
+
+"Detection found!"
+  → YOLO is seeing something
+  → Confidence value tells you how sure
+
+"Passes threshold: True"
+  → Would be saved as crop
+  → Check compare_detections.py to verify it's correct
+
+"Passes threshold: False"
+  → Detected but too low confidence
+  → Either: Lower threshold OR model not trained for this
+
+
+FROM DIAGNOSTIC SUMMARY:
+
+"Total detections found: 7"
+  → YOLO found 7 rings in 100 frames
+
+"Detections above threshold: 0"
+  → But all had confidence < 0.7
+  → FIX: Lower conf_threshold in batch YAML
+
+"Detections above threshold: 7"
+  → All would be saved
+  → If not saving: Check disk/permissions
+
+
+FROM ROI TEST:
+
+"WITHOUT ROI: 10 detections"
+"WITH ROI: 0 detections"
+  → ROI cropping is removing rings
+  → FIX: Expand ROI region in config/rois_config.yaml
+
+"Both have same detections"
+  → ROI not the problem
+  → Check confidence threshold or model
+
+
+=============================
+  FIXES BASED ON DIAGNOSIS
+=============================
+
+Issue: "No detections at all"
+Fix: 1. Verify video is readable
+     2. Check model file is valid
+     3. Try lower confidence: --confidence 0.5
+
+Issue: "Detections found but all below threshold"
+Fix: 1. Edit config/batch_step1_tri5.yaml
+     2. Change conf_threshold: 0.7 → 0.5
+     3. Re-run pipeline
+
+Issue: "ROI filtering everything"
+Fix: 1. Edit config/rois_config.yaml
+     2. Expand TRI5 scale region
+     3. Or temporarily disable ROI (remove from batch YAML)
+
+Issue: "Coordinates wrong or crops misaligned"
+Fix: 1. Check ROI transforms: run test_roi_impact.py
+     2. Verify video resolution in diagnostics
+     3. Ensure model trained on same resolution
+
+
+=============================
+  BEFORE ASKING FOR HELP
+=============================
+
+Collect this information:
+
+1. Summary of diagnostics:
+   cat troubleshooting/step1_diagnostic_output/*_diagnostic_summary.txt
+
+2. Sample images:
+   ls -la troubleshooting/step1_diagnostic_output/02_frame_*.jpg
+
+3. Video characteristics:
+   ffprobe -show_format -show_streams path/to/video.mp4 | head -20
+
+4. Step 1 config used:
+   cat config/batch_step1_tri5.yaml
+
+5. ROI configuration:
+   cat config/rois_config.yaml | grep -A 10 "TRI5:"
+
+This gives developers everything needed to diagnose quickly.
+
+"""
+
+# This is documentation - display as-is
+if __name__ == "__main__":
+    import textwrap
+
+    # Print formatted
+    lines = __doc__.split('\n')
+    for line in lines[2:]:  # Skip module docstring indicator
+        print(line)

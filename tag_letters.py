@@ -54,6 +54,10 @@ _tag_letters_tuple = (
     "ADG",
     "ADJ",
     "ADK",
+    "ADZ",
+    "AEA", 
+    "AEB",
+    "AEG",
 )
 
 

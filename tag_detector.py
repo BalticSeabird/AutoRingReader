@@ -75,19 +75,21 @@ class TagDetector:
         )
 
     def _predict_tag_entries(self, image: np.ndarray):
+        tags = []
         try:
             results = self.predict(image=image)
-            tags = []
+            image_np = np.array(image)
+
             for res in results:
+                boxes_conf = None
+                if res.boxes is not None and res.boxes.conf is not None:
+                    boxes_conf = res.boxes.conf.cpu().numpy()
+
+                # Handle segmentation results (masks)
                 masks = res.masks
                 if masks is not None:
-                    boxes_conf = None
-                    if res.boxes is not None and res.boxes.conf is not None:
-                        boxes_conf = res.boxes.conf.cpu().numpy()
-
                     for idx, mask in enumerate(res.masks):
                         rect = cv2.minAreaRect(np.float32(mask.cpu().xy))
-                        #print(rect)
                         rect_resized = (
                             rect[0],
                             (1.05 * rect[1][0], 1.05 * rect[1][1]),
@@ -96,23 +98,12 @@ class TagDetector:
                         src = cv2.boxPoints(rect_resized)
                         src = src.astype(np.float32)
 
-                        wr, hr = np.array(rect_resized[1])  # * [w, h]
-                        #print(hr>wr)
+                        wr, hr = np.array(rect_resized[1])
                         ar = hr / wr
 
-                        if hr>wr:
-                            #h_target = int(_w_target / ar)
+                        if hr > wr:
                             w_target = int(_h_target * ar)
-
-                           #print(w_target,_h_target)
-
                             dst = np.array(
-                                # [
-                                #     [0, 0],
-                                #     [_w_target - 1, 0],
-                                #     [_w_target - 1, h_target - 1],
-                                #     [0, h_target - 1],
-                                # ],
                                 [
                                     [0, 0],
                                     [w_target - 1, 0],
@@ -122,13 +113,8 @@ class TagDetector:
                                 dtype=np.float32,
                             )
                         else:
-                            #h_target = int(_w_target / ar)
                             w_target = int(_h_target / ar)
-
-                           #print(w_target,_h_target)
-
                             dst = np.array(
-    
                                 [
                                     [0, _h_target - 1],
                                     [0, 0],
@@ -139,20 +125,11 @@ class TagDetector:
                             )
 
                         M = cv2.getPerspectiveTransform(src, dst)
-
-                        image_np = np.array(image)
                         img_np_aligned = cv2.warpPerspective(
                             image_np,
                             M,
-                            dsize=(
-                                # _w_target,
-                                # h_target,
-                                w_target,
-                                _h_target,
-                            ),
+                            dsize=(w_target, _h_target),
                             flags=cv2.INTER_AREA,
-                            # flags=cv2.INTER_LINEAR,
-                            # flags=cv2.INTER_CUBIC,
                         )
                         confidence = None
                         if boxes_conf is not None and idx < len(boxes_conf):
@@ -160,9 +137,35 @@ class TagDetector:
 
                         tags.append((Image.fromarray(img_np_aligned).convert("RGB"), confidence))
 
+                # Handle detection-only results (bounding boxes)
+                elif res.boxes is not None and len(res.boxes) > 0:
+                    for idx, box in enumerate(res.boxes):
+                        x1, y1, x2, y2 = box.xyxy[0].cpu().numpy()
+                        x1, y1, x2, y2 = int(x1), int(y1), int(x2), int(y2)
+
+                        # Extract bounding box region
+                        bbox_height = y2 - y1
+                        bbox_width = x2 - x1
+                        ar = bbox_height / bbox_width if bbox_width > 0 else 1.0
+
+                        if bbox_height > bbox_width:
+                            w_target = int(_h_target * ar)
+                        else:
+                            w_target = int(_h_target / ar)
+
+                        # Extract and resize the tag region
+                        tag_region = image_np[y1:y2, x1:x2]
+                        if tag_region.size > 0:
+                            tag_resized = cv2.resize(tag_region, (w_target, _h_target))
+                            confidence = None
+                            if boxes_conf is not None and idx < len(boxes_conf):
+                                confidence = float(boxes_conf[idx])
+
+                            tags.append((Image.fromarray(tag_resized).convert("RGB"), confidence))
+
         except Exception as err:
             logging.critical(
-                f"pid: {os.getpid()} | TagDetector, predict_tag: Exception: TODO: implement this specific exception: {err.__class__.__name__}, error: {err}"
+                f"pid: {os.getpid()} | TagDetector, predict_tag: Exception: {err.__class__.__name__}, error: {err}"
             )
         return tags
 

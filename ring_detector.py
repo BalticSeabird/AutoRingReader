@@ -15,6 +15,7 @@ class RingDetector:
         iou: float = 0.7,
         max_det: int = 1,
         device_id: int = 0,
+        imgsz: int = 480,
     ):
         try:
             self.stream = stream
@@ -22,9 +23,10 @@ class RingDetector:
             self.iou = iou
             self.max_det = max_det
             self.device_id = device_id
+            self.imgsz = imgsz
 
             logging.info(
-                f"pid: {os.getpid()} | Generate ring detection model {model_path} on GPU {device_id}"
+                f"pid: {os.getpid()} | Generate ring detection model {model_path} on GPU {device_id} (imgsz={imgsz})"
             )
 
             self.model = YOLO(str(model_path))
@@ -47,6 +49,9 @@ class RingDetector:
             max_det=self.max_det,
             verbose=False,
             device=f"cuda:{self.device_id}",
+            half=True,
+            imgsz=self.imgsz,
+            agnostic_nms=True,
         )
 
     def predict_cls(self, image: np.ndarray, cls_target: int):
