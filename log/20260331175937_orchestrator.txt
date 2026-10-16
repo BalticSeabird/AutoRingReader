@@ -1,0 +1,46 @@
+2026-03-31 17:59:37,938 - __main__ - INFO - AutoRingReader Pipeline Orchestrator Starting
+2026-03-31 17:59:37,939 - __main__ - INFO - Batch configuration: batch/batch_pipeline_test.yaml
+2026-03-31 17:59:37,943 - __main__ - INFO - ================================================================================
+2026-03-31 17:59:37,943 - __main__ - INFO - PIPELINE CONFIGURATION SUMMARY
+2026-03-31 17:59:37,943 - __main__ - INFO - ================================================================================
+2026-03-31 17:59:37,943 - __main__ - INFO - Input Videos: /mnt/BSP_NAS2_work/ring_reader/eventvids_test
+2026-03-31 17:59:37,943 - __main__ - INFO - Cameras: ['FAR3_SCALE', 'FAR6_SCALE', 'ROST2_SCALE', 'FAR3_CUTE']
+2026-03-31 17:59:37,943 - __main__ - INFO - Output Root: /mnt/BSP_NAS2_work/ring_reader/results
+2026-03-31 17:59:37,943 - __main__ - INFO - Resume Enabled: True
+2026-03-31 17:59:37,943 - __main__ - INFO - 
+2026-03-31 17:59:37,943 - __main__ - INFO - Step 1 (Ring Detection):
+2026-03-31 17:59:37,943 - __main__ - INFO -   - CPU workers: 16
+2026-03-31 17:59:37,943 - __main__ - INFO -   - GPU workers: 2 on devices [0, 1]
+2026-03-31 17:59:37,943 - __main__ - INFO -   - Batch size: 16, Frame sample rate: 1
+2026-03-31 17:59:37,943 - __main__ - INFO -   - Confidence threshold: 0.7
+2026-03-31 17:59:37,943 - __main__ - INFO - 
+2026-03-31 17:59:37,943 - __main__ - INFO - Step 2 (Tag Detection):
+2026-03-31 17:59:37,943 - __main__ - INFO -   - CPU workers: 16
+2026-03-31 17:59:37,944 - __main__ - INFO -   - GPU workers: 2 on devices [0, 1]
+2026-03-31 17:59:37,944 - __main__ - INFO -   - Batch size: 16
+2026-03-31 17:59:37,944 - __main__ - INFO -   - Confidence threshold: 0.7
+2026-03-31 17:59:37,944 - __main__ - INFO - 
+2026-03-31 17:59:37,944 - __main__ - INFO - Step 3 (Text Recognition):
+2026-03-31 17:59:37,944 - __main__ - INFO -   - CPU workers: 32
+2026-03-31 17:59:37,944 - __main__ - INFO -   - GPU workers: 1 on devices [0]
+2026-03-31 17:59:37,944 - __main__ - INFO -   - Batch size: 32
+2026-03-31 17:59:37,944 - __main__ - INFO -   - Confidence threshold: 0.9
+2026-03-31 17:59:37,944 - __main__ - INFO - ================================================================================
+2026-03-31 17:59:38,136 - __main__ - INFO - ✓ Configuration validation passed
+2026-03-31 17:59:38,138 - pipeline_utils - INFO - Found 2 videos matching cameras: ['FAR3_SCALE', 'FAR6_SCALE', 'ROST2_SCALE', 'FAR3_CUTE']
+2026-03-31 17:59:38,138 - __main__ - INFO - Total videos to process: 2
+2026-03-31 17:59:38,138 - __main__ - INFO - Running Step 1: Ring Detection
+2026-03-31 17:59:38,138 - __main__ - INFO - 
+2026-03-31 17:59:38,138 - __main__ - INFO - ================================================================================
+2026-03-31 17:59:38,138 - __main__ - INFO - STARTING STEP 1: RING DETECTION
+2026-03-31 17:59:38,138 - __main__ - INFO - ================================================================================
+2026-03-31 17:59:38,975 - __main__ - ERROR - Step 1 failed with error: name 'Queue' is not defined
+Traceback (most recent call last):
+  File "/home/jonas/Documents/vscode/AutoRingReader/pipeline_orchestrator.py", line 101, in run_step1
+    from step1_ring_detection import run_step1_ring_detection
+  File "/home/jonas/Documents/vscode/AutoRingReader/step1_ring_detection.py", line 36, in <module>
+    def frame_extraction_worker(video_path: str, camera: str, frame_queue: Queue,
+                                                                           ^^^^^
+NameError: name 'Queue' is not defined
+2026-03-31 17:59:38,975 - __main__ - INFO - Step 1 completed in 0.8 seconds
+2026-03-31 17:59:38,975 - __main__ - ERROR - Step 1 failed

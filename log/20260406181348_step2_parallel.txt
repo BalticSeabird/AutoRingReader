@@ -1,0 +1,5 @@
+2026-04-06 18:13:48,791 - __main__ - INFO - Starting Step 2 (Tag Detection) runner
+2026-04-06 18:13:48,791 - __main__ - INFO - Batch YAML: batch/batch_pipeline_test.yaml
+2026-04-06 18:13:48,791 - __main__ - INFO - Console log: log/*_step2_parallel.txt
+2026-04-06 18:13:48,791 - __main__ - INFO - Requested GPU: 1
+2026-04-06 18:13:48,791 - __main__ - ERROR - Batch YAML not found: batch/batch_pipeline_test.yaml

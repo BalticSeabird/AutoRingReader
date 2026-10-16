@@ -1,0 +1,48 @@
+2024-12-29 16:10:04,814 | INFO | Start ring tag reading
+2024-12-29 16:10:04,815 | INFO | Video root path: /mnt/BSP_NAS2_work/temp/eventvids_imageio2
+2024-12-29 16:10:04,815 | INFO | Cameras: ['FAR6_SCALE', 'FAR3_SCALE', 'FAR3BONDEN3_SCALE', 'BJORN3TRI3_SCALE', 'FAR6BONDEN6_SCALE', 'ROST2_SCALE', 'FAR3_CUTE']
+2024-12-29 16:10:04,815 | INFO | Output root path: /mnt/xdisk/data/work/bsp/weight_events/2024/imageio2
+2024-12-29 16:10:04,815 | INFO | Ring detection model root path: /home/bsp/git/AutoRingReader/models
+2024-12-29 16:10:04,815 | INFO | Ring detection model name: 20230722002419_RingDataset1_yolov8n_640.pt
+2024-12-29 16:10:04,815 | INFO | Tag detection model root path: /home/bsp/git/AutoRingReader/models
+2024-12-29 16:10:04,815 | INFO | Tag detection model name: 20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2024-12-29 16:10:04,815 | INFO | Text recognition model root path: /home/bsp/git/AutoRingReader/CLIP4STR/models
+2024-12-29 16:10:04,815 | INFO | Text recognition model name: clip4str_base16x16_d70bde1f2d.ckpt
+2024-12-29 16:10:05,233 | INFO | Start multiprocessing
+2024-12-29 16:10:05,315 | INFO | pid: 640374 | Start prediction on: /mnt/BSP_NAS2_work/temp/eventvids_imageio2/FAR3_SCALE_2023-05-07_16_16.mp4
+2024-12-29 16:10:05,315 | INFO | pid: 640375 | Start prediction on: /mnt/BSP_NAS2_work/temp/eventvids_imageio2/FAR3BONDEN3_SCALE_2023-05-28_11_03.mp4
+2024-12-29 16:10:05,315 | INFO | pid: 640376 | Start prediction on: /mnt/BSP_NAS2_work/temp/eventvids_imageio2/FAR3_SCALE_2023-06-08_11_86.mp4
+2024-12-29 16:10:05,316 | INFO | pid: 640377 | Start prediction on: /mnt/BSP_NAS2_work/temp/eventvids_imageio2/FAR6_SCALE_2023-06-16_18_77.mp4
+2024-12-29 16:10:05,316 | INFO | pid: 640378 | Start prediction on: /mnt/BSP_NAS2_work/temp/eventvids_imageio2/FAR6_SCALE_2023-06-23_18_63.mp4
+2024-12-29 16:10:05,317 | INFO | pid: 640379 | Start prediction on: /mnt/BSP_NAS2_work/temp/eventvids_imageio2/FAR6BONDEN6_SCALE_2023-06-28_15_84.mp4
+2024-12-29 16:10:05,317 | INFO | pid: 640380 | Start prediction on: /mnt/BSP_NAS2_work/temp/eventvids_imageio2/FAR6_SCALE_2023-07-02_21_52.mp4
+2024-12-29 16:10:05,318 | INFO | pid: 640381 | Start prediction on: /mnt/BSP_NAS2_work/temp/eventvids_imageio2/FAR6_SCALE_2023-07-07_4_39.mp4
+2024-12-29 16:10:05,325 | INFO | pid: 640375 | Generate ring detection model /home/bsp/git/AutoRingReader/models/20230722002419_RingDataset1_yolov8n_640.pt
+2024-12-29 16:10:05,325 | INFO | pid: 640376 | Generate ring detection model /home/bsp/git/AutoRingReader/models/20230722002419_RingDataset1_yolov8n_640.pt
+2024-12-29 16:10:05,325 | INFO | pid: 640377 | Generate ring detection model /home/bsp/git/AutoRingReader/models/20230722002419_RingDataset1_yolov8n_640.pt
+2024-12-29 16:10:05,327 | INFO | pid: 640378 | Generate ring detection model /home/bsp/git/AutoRingReader/models/20230722002419_RingDataset1_yolov8n_640.pt
+2024-12-29 16:10:05,327 | INFO | pid: 640380 | Generate ring detection model /home/bsp/git/AutoRingReader/models/20230722002419_RingDataset1_yolov8n_640.pt
+2024-12-29 16:10:05,327 | INFO | pid: 640379 | Generate ring detection model /home/bsp/git/AutoRingReader/models/20230722002419_RingDataset1_yolov8n_640.pt
+2024-12-29 16:10:05,328 | INFO | pid: 640381 | Generate ring detection model /home/bsp/git/AutoRingReader/models/20230722002419_RingDataset1_yolov8n_640.pt
+2024-12-29 16:10:05,342 | INFO | pid: 640374 | Generate ring detection model /home/bsp/git/AutoRingReader/models/20230722002419_RingDataset1_yolov8n_640.pt
+2024-12-29 16:10:06,389 | INFO | pid: 640374 | Generate tag detection model /home/bsp/git/AutoRingReader/models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2024-12-29 16:10:06,542 | INFO | pid: 640375 | Generate tag detection model /home/bsp/git/AutoRingReader/models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2024-12-29 16:10:06,562 | INFO | pid: 640378 | Generate tag detection model /home/bsp/git/AutoRingReader/models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2024-12-29 16:10:06,633 | INFO | pid: 640379 | Generate tag detection model /home/bsp/git/AutoRingReader/models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2024-12-29 16:10:06,624 | INFO | pid: 640376 | Generate tag detection model /home/bsp/git/AutoRingReader/models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2024-12-29 16:10:06,627 | INFO | pid: 640380 | Generate tag detection model /home/bsp/git/AutoRingReader/models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2024-12-29 16:10:06,646 | INFO | pid: 640381 | Generate tag detection model /home/bsp/git/AutoRingReader/models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2024-12-29 16:10:06,708 | INFO | pid: 640377 | Generate tag detection model /home/bsp/git/AutoRingReader/models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2024-12-29 16:10:07,806 | INFO | pid: 640376 | Generate text recognition model /home/bsp/git/AutoRingReader/CLIP4STR/models/clip4str_base16x16_d70bde1f2d.ckpt
+2024-12-29 16:10:07,822 | INFO | pid: 640374 | Generate text recognition model /home/bsp/git/AutoRingReader/CLIP4STR/models/clip4str_base16x16_d70bde1f2d.ckpt
+2024-12-29 16:10:07,849 | INFO | pid: 640375 | Generate text recognition model /home/bsp/git/AutoRingReader/CLIP4STR/models/clip4str_base16x16_d70bde1f2d.ckpt
+2024-12-29 16:10:07,867 | INFO | pid: 640379 | Generate text recognition model /home/bsp/git/AutoRingReader/CLIP4STR/models/clip4str_base16x16_d70bde1f2d.ckpt
+2024-12-29 16:10:07,876 | INFO | pid: 640378 | Generate text recognition model /home/bsp/git/AutoRingReader/CLIP4STR/models/clip4str_base16x16_d70bde1f2d.ckpt
+2024-12-29 16:10:07,893 | INFO | pid: 640377 | Generate text recognition model /home/bsp/git/AutoRingReader/CLIP4STR/models/clip4str_base16x16_d70bde1f2d.ckpt
+2024-12-29 16:10:07,909 | INFO | pid: 640380 | Generate text recognition model /home/bsp/git/AutoRingReader/CLIP4STR/models/clip4str_base16x16_d70bde1f2d.ckpt
+2024-12-29 16:10:07,914 | INFO | pid: 640381 | Generate text recognition model /home/bsp/git/AutoRingReader/CLIP4STR/models/clip4str_base16x16_d70bde1f2d.ckpt
+2024-12-29 16:10:37,735 | INFO | pid: 640374 | Done predict on: /mnt/BSP_NAS2_work/temp/eventvids_imageio2/FAR3_SCALE_2023-05-07_16_16.mp4, time: 0:00:32.420617
+2024-12-29 16:10:37,735 | INFO | pid: 640374 | Start prediction on: /mnt/BSP_NAS2_work/temp/eventvids_imageio2/FAR3_SCALE_2023-05-07_19_18.mp4
+2024-12-29 16:10:37,754 | INFO | pid: 640374 | Generate ring detection model /home/bsp/git/AutoRingReader/models/20230722002419_RingDataset1_yolov8n_640.pt
+2024-12-29 16:10:37,789 | INFO | pid: 640374 | Generate tag detection model /home/bsp/git/AutoRingReader/models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2024-12-29 16:10:37,832 | INFO | pid: 640374 | Generate text recognition model /home/bsp/git/AutoRingReader/CLIP4STR/models/clip4str_base16x16_d70bde1f2d.ckpt

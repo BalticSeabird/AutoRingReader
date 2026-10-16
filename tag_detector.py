@@ -12,8 +12,6 @@ from ultralytics import YOLO
 _h_target = 96
 
 
-#torch.cuda.set_device(1)
-
 class TagDetector:
 
     def __init__(
@@ -23,15 +21,17 @@ class TagDetector:
         conf: float = 0.7,
         iou: float = 0.7,
         max_det: int = 2,
+        device_id: int = 0,
     ):
         try:
             self.stream = stream
             self.conf = conf
             self.iou = iou
             self.max_det = max_det
+            self.device_id = device_id
 
             logging.info(
-                f"pid: {os.getpid()} | Generate tag detection model {model_path}"
+                f"pid: {os.getpid()} | Generate tag detection model {model_path} on GPU {device_id}"
             )
 
             self.model = YOLO(str(model_path))
@@ -56,9 +56,9 @@ class TagDetector:
             save_conf=False,
             max_det=self.max_det,
             verbose=False,
-            #device="cuda:1",
+            device=f"cuda:{self.device_id}",
         )
-    
+
     def predict2(self, image: np.ndarray):
         return self.model2(
             image,
@@ -71,16 +71,21 @@ class TagDetector:
             save_conf=False,
             max_det=self.max_det,
             verbose=False,
+            device=f"cuda:{self.device_id}",
         )
 
-    def predict_tag(self, image: np.ndarray):
+    def _predict_tag_entries(self, image: np.ndarray):
         try:
             results = self.predict(image=image)
             tags = []
             for res in results:
                 masks = res.masks
                 if masks is not None:
-                    for mask in res.masks:
+                    boxes_conf = None
+                    if res.boxes is not None and res.boxes.conf is not None:
+                        boxes_conf = res.boxes.conf.cpu().numpy()
+
+                    for idx, mask in enumerate(res.masks):
                         rect = cv2.minAreaRect(np.float32(mask.cpu().xy))
                         #print(rect)
                         rect_resized = (
@@ -149,13 +154,23 @@ class TagDetector:
                             # flags=cv2.INTER_LINEAR,
                             # flags=cv2.INTER_CUBIC,
                         )
-                        tags.append(Image.fromarray(img_np_aligned).convert("RGB"))
+                        confidence = None
+                        if boxes_conf is not None and idx < len(boxes_conf):
+                            confidence = float(boxes_conf[idx])
+
+                        tags.append((Image.fromarray(img_np_aligned).convert("RGB"), confidence))
 
         except Exception as err:
             logging.critical(
                 f"pid: {os.getpid()} | TagDetector, predict_tag: Exception: TODO: implement this specific exception: {err.__class__.__name__}, error: {err}"
             )
         return tags
+
+    def predict_tag(self, image: np.ndarray):
+        return [tag for tag, _ in self._predict_tag_entries(image)]
+
+    def predict_tag_with_meta(self, image: np.ndarray):
+        return self._predict_tag_entries(image)
     
     # def predict_tag_2(self, image: np.ndarray):
     #     try:

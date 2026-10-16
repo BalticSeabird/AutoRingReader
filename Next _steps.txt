@@ -1,0 +1,7 @@
+# Next steps
+
+# test datasets for all cameras all years
+# run step 1 again, see that it is ok with the new rois
+# rerun those stations that failed last step (adapt script for that)
+# Make sure step 2 can run separetely
+# Run step 3

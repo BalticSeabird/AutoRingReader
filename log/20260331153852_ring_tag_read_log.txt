@@ -1,0 +1,18 @@
+2026-03-31 15:38:52,053 | INFO | Start ring tag reading
+2026-03-31 15:38:52,054 | INFO | Video root path: /mnt/BSP_NAS2_work/ring_reader/eventvids_test
+2026-03-31 15:38:52,054 | INFO | Cameras: ['FAR6_SCALE', 'FAR3_SCALE', 'FAR3BONDEN3_SCALE', 'BJORN3TRI3_SCALE', 'FAR6BONDEN6_SCALE', 'ROST2_SCALE', 'FAR3_CUTE', 'TRI2_SCALE', 'TRI5_SCALE']
+2026-03-31 15:38:52,054 | INFO | Output root path: /mnt/BSP_NAS2_work/ring_reader/results
+2026-03-31 15:38:52,054 | INFO | Ring detection model root path: /home/bsp/git/AutoRingReader/models
+2026-03-31 15:38:52,054 | INFO | Ring detection model name: 20230722002419_RingDataset1_yolov8n_640.pt
+2026-03-31 15:38:52,054 | INFO | Tag detection model root path: /home/bsp/git/AutoRingReader/models
+2026-03-31 15:38:52,054 | INFO | Tag detection model name: 20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-03-31 15:38:52,054 | INFO | Text recognition model root path: /home/bsp/git/AutoRingReader/CLIP4STR/models
+2026-03-31 15:38:52,054 | INFO | Text recognition model name: clip4str_base16x16_d70bde1f2d.ckpt
+2026-03-31 15:38:52,056 | INFO | DEBUG: Total videos after camera matching: 24
+2026-03-31 15:38:52,056 | INFO | DEBUG: Previously processed videos in DB: 2
+2026-03-31 15:38:52,056 | INFO | DEBUG: Videos to process after filtering: 22 (skipped 2)
+2026-03-31 15:38:52,056 | INFO | Skipping 2 previously processed videos
+2026-03-31 15:38:52,152 | INFO | Start multiprocessing with 22 videos to process
+2026-03-31 15:38:52,160 | INFO | DEBUG: video_path_by_row keys: ['/mnt/BSP_NAS2_work/ring_reader/eventvids_test/BJORN3TRI3_SCALE_2025-07-29_17_02.mp4', '/mnt/BSP_NAS2_work/ring_reader/eventvids_test/BJORN3TRI3_SCALE_2023-06-12_13_49.mp4', '/mnt/BSP_NAS2_work/ring_reader/eventvids_test/BJORN3TRI3_SCALE_2023-06-12_17_51.mp4']... (22 total)
+2026-03-31 15:38:52,160 | INFO | Starting to iterate over pool results...
+2026-03-31 15:38:52,160 | INFO | [POOL] Calling p.starmap with 22 tasks...

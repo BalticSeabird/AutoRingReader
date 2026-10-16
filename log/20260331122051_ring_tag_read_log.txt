@@ -1,0 +1,291 @@
+2026-03-31 12:20:51,646 | INFO | Start ring tag reading
+2026-03-31 12:20:51,647 | INFO | Video root path: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2
+2026-03-31 12:20:51,647 | INFO | Cameras: ['FAR6_SCALE', 'FAR3_SCALE', 'FAR3BONDEN3_SCALE', 'BJORN3TRI3_SCALE', 'FAR6BONDEN6_SCALE', 'ROST2_SCALE', 'FAR3_CUTE', 'TRI2_SCALE', 'TRI5_SCALE']
+2026-03-31 12:20:51,647 | INFO | Output root path: /mnt/BSP_NAS2_work/ring_reader/results
+2026-03-31 12:20:51,647 | INFO | Ring detection model root path: /home/bsp/git/AutoRingReader/models
+2026-03-31 12:20:51,647 | INFO | Ring detection model name: 20230722002419_RingDataset1_yolov8n_640.pt
+2026-03-31 12:20:51,647 | INFO | Tag detection model root path: /home/bsp/git/AutoRingReader/models
+2026-03-31 12:20:51,647 | INFO | Tag detection model name: 20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-03-31 12:20:51,647 | INFO | Text recognition model root path: /home/bsp/git/AutoRingReader/CLIP4STR/models
+2026-03-31 12:20:51,647 | INFO | Text recognition model name: clip4str_base16x16_d70bde1f2d.ckpt
+2026-03-31 12:20:51,661 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-05-07_16_14.mp4
+2026-03-31 12:20:51,661 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-05-08_10_64.mp4
+2026-03-31 12:20:51,662 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-05-13_20_13.mp4
+2026-03-31 12:20:51,662 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-05-14_10_38.mp4
+2026-03-31 12:20:51,662 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-05-15_4_38.mp4
+2026-03-31 12:20:51,662 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-05-15_6_39.mp4
+2026-03-31 12:20:51,662 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-05-15_20_40.mp4
+2026-03-31 12:20:51,662 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-05-15_21_41.mp4
+2026-03-31 12:20:51,662 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-05-16_3_35.mp4
+2026-03-31 12:20:51,662 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-05-16_3_36.mp4
+2026-03-31 12:20:51,662 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-05-18_12_17.mp4
+2026-03-31 12:20:51,662 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-05-20_13_31.mp4
+2026-03-31 12:20:51,662 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-05-20_22_32.mp4
+2026-03-31 12:20:51,662 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-05-22_8_14.mp4
+2026-03-31 12:20:51,662 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-05-23_11_12.mp4
+2026-03-31 12:20:51,663 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-05-23_18_13.mp4
+2026-03-31 12:20:51,663 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-05-23_18_14.mp4
+2026-03-31 12:20:51,663 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-05-23_20_15.mp4
+2026-03-31 12:20:51,663 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-05-25_5_15.mp4
+2026-03-31 12:20:51,663 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-05-26_18_03.mp4
+2026-03-31 12:20:51,663 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-05-27_12_69.mp4
+2026-03-31 12:20:51,663 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-05-27_21_72.mp4
+2026-03-31 12:20:51,663 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-05-30_19_24.mp4
+2026-03-31 12:20:51,664 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-05-31_6_38.mp4
+2026-03-31 12:20:51,664 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-05-31_21_39.mp4
+2026-03-31 12:20:51,664 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-06-03_4_68.mp4
+2026-03-31 12:20:51,664 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-06-03_15_69.mp4
+2026-03-31 12:20:51,664 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-06-03_19_70.mp4
+2026-03-31 12:20:51,664 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-06-05_17_73.mp4
+2026-03-31 12:20:51,664 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-06-06_14_32.mp4
+2026-03-31 12:20:51,664 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-06-06_18_33.mp4
+2026-03-31 12:20:51,664 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-06-06_21_34.mp4
+2026-03-31 12:20:51,665 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-06-07_21_137.mp4
+2026-03-31 12:20:51,665 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-06-07_22_138.mp4
+2026-03-31 12:20:51,665 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-06-09_20_60.mp4
+2026-03-31 12:20:51,665 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-06-11_18_43.mp4
+2026-03-31 12:20:51,665 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-06-12_11_81.mp4
+2026-03-31 12:20:51,665 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-06-12_13_82.mp4
+2026-03-31 12:20:51,665 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-06-12_23_84.mp4
+2026-03-31 12:20:51,668 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-06-18_13_40.mp4
+2026-03-31 12:20:51,668 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-06-19_8_52.mp4
+2026-03-31 12:20:51,668 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-06-20_5_53.mp4
+2026-03-31 12:20:51,668 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-06-20_8_54.mp4
+2026-03-31 12:20:51,668 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-06-21_9_88.mp4
+2026-03-31 12:20:51,668 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-06-22_5_62.mp4
+2026-03-31 12:20:51,669 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-06-24_8_96.mp4
+2026-03-31 12:20:51,669 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-06-25_21_72.mp4
+2026-03-31 12:20:51,669 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-06-26_8_66.mp4
+2026-03-31 12:20:51,669 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-06-26_21_67.mp4
+2026-03-31 12:20:51,670 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-06-29_20_87.mp4
+2026-03-31 12:20:51,671 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-01_18_25.mp4
+2026-03-31 12:20:51,671 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-02_18_26.mp4
+2026-03-31 12:20:51,671 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-03_9_24.mp4
+2026-03-31 12:20:51,672 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-05_23_59.mp4
+2026-03-31 12:20:51,672 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-06_17_84.mp4
+2026-03-31 12:20:51,673 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-08_17_68.mp4
+2026-03-31 12:20:51,673 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-08_18_69.mp4
+2026-03-31 12:20:51,673 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-08_20_70.mp4
+2026-03-31 12:20:51,674 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-09_6_74.mp4
+2026-03-31 12:20:51,674 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-09_18_75.mp4
+2026-03-31 12:20:51,674 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-09_20_76.mp4
+2026-03-31 12:20:51,674 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-09_21_77.mp4
+2026-03-31 12:20:51,674 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-10_4_84.mp4
+2026-03-31 12:20:51,674 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-10_17_85.mp4
+2026-03-31 12:20:51,674 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-10_18_86.mp4
+2026-03-31 12:20:51,674 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-10_19_87.mp4
+2026-03-31 12:20:51,674 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-10_22_88.mp4
+2026-03-31 12:20:51,675 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-12_12_104.mp4
+2026-03-31 12:20:51,675 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-12_13_105.mp4
+2026-03-31 12:20:51,675 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-12_17_106.mp4
+2026-03-31 12:20:51,675 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-13_18_94.mp4
+2026-03-31 12:20:51,675 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-13_18_95.mp4
+2026-03-31 12:20:51,675 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-13_18_96.mp4
+2026-03-31 12:20:51,675 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-13_19_97.mp4
+2026-03-31 12:20:51,675 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-13_19_98.mp4
+2026-03-31 12:20:51,675 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-13_20_99.mp4
+2026-03-31 12:20:51,676 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-14_3_90.mp4
+2026-03-31 12:20:51,676 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-14_3_91.mp4
+2026-03-31 12:20:51,676 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-14_4_92.mp4
+2026-03-31 12:20:51,676 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-14_8_93.mp4
+2026-03-31 12:20:51,676 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-14_8_94.mp4
+2026-03-31 12:20:51,676 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-14_12_95.mp4
+2026-03-31 12:20:51,676 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-14_20_96.mp4
+2026-03-31 12:20:51,676 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-15_9_46.mp4
+2026-03-31 12:20:51,676 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-15_10_47.mp4
+2026-03-31 12:20:51,676 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-15_14_48.mp4
+2026-03-31 12:20:51,676 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-15_14_49.mp4
+2026-03-31 12:20:51,676 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-15_15_50.mp4
+2026-03-31 12:20:51,676 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-15_17_51.mp4
+2026-03-31 12:20:51,676 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-15_18_52.mp4
+2026-03-31 12:20:51,676 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-15_19_53.mp4
+2026-03-31 12:20:51,676 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-15_21_54.mp4
+2026-03-31 12:20:51,677 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-16_8_62.mp4
+2026-03-31 12:20:51,677 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-16_8_63.mp4
+2026-03-31 12:20:51,677 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-16_8_64.mp4
+2026-03-31 12:20:51,677 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-16_9_65.mp4
+2026-03-31 12:20:51,677 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-16_14_66.mp4
+2026-03-31 12:20:51,677 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-16_14_67.mp4
+2026-03-31 12:20:51,677 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-16_15_68.mp4
+2026-03-31 12:20:51,677 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-16_21_69.mp4
+2026-03-31 12:20:51,677 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-16_21_70.mp4
+2026-03-31 12:20:51,677 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-16_21_71.mp4
+2026-03-31 12:20:51,677 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-17_9_71.mp4
+2026-03-31 12:20:51,677 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-17_10_72.mp4
+2026-03-31 12:20:51,677 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-17_10_73.mp4
+2026-03-31 12:20:51,677 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-17_15_74.mp4
+2026-03-31 12:20:51,678 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-18_10_29.mp4
+2026-03-31 12:20:51,678 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-18_11_30.mp4
+2026-03-31 12:20:51,678 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-18_13_31.mp4
+2026-03-31 12:20:51,678 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-18_16_32.mp4
+2026-03-31 12:20:51,678 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-18_16_33.mp4
+2026-03-31 12:20:51,678 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-18_18_35.mp4
+2026-03-31 12:20:51,678 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-19_5_46.mp4
+2026-03-31 12:20:51,678 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-19_10_47.mp4
+2026-03-31 12:20:51,678 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-19_14_49.mp4
+2026-03-31 12:20:51,678 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-19_16_50.mp4
+2026-03-31 12:20:51,680 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-20_4_59.mp4
+2026-03-31 12:20:51,680 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-20_13_60.mp4
+2026-03-31 12:20:51,680 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-20_14_61.mp4
+2026-03-31 12:20:51,680 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-21_4_28.mp4
+2026-03-31 12:20:51,680 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-21_8_29.mp4
+2026-03-31 12:20:51,680 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-21_15_30.mp4
+2026-03-31 12:20:51,680 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-22_4_50.mp4
+2026-03-31 12:20:51,680 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-22_8_51.mp4
+2026-03-31 12:20:51,680 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-22_8_52.mp4
+2026-03-31 12:20:51,680 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-22_19_53.mp4
+2026-03-31 12:20:51,680 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-22_22_54.mp4
+2026-03-31 12:20:51,680 | WARNING | No camera match for: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/TLZOOM_2023-07-23_4_45.mp4
+2026-03-31 12:20:51,907 | INFO | Start multiprocessing
+2026-03-31 12:20:52,031 | INFO | pid: 2537046 | Start prediction on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR6BONDEN6_SCALE_2023-06-10_5_18.mp4
+2026-03-31 12:20:52,032 | INFO | pid: 2537045 | Start prediction on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR3_SCALE_2023-05-07_17_15.mp4
+2026-03-31 12:20:52,032 | INFO | pid: 2537047 | Start prediction on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR3BONDEN3_SCALE_2023-06-25_14_11.mp4
+2026-03-31 12:20:52,035 | INFO | pid: 2537048 | Start prediction on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR6_SCALE_2023-07-04_7_43.mp4
+2026-03-31 12:20:52,035 | INFO | pid: 2537049 | Start prediction on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR6_SCALE_2023-07-13_10_51.mp4
+2026-03-31 12:20:52,036 | INFO | pid: 2537050 | Start prediction on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR6_SCALE_2024-05-19_12_96.mp4
+2026-03-31 12:20:52,037 | INFO | pid: 2537051 | Start prediction on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR3_SCALE_2024-06-05_14_144.mp4
+2026-03-31 12:20:52,038 | INFO | pid: 2537052 | Start prediction on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR3_SCALE_2024-06-09_5_904.mp4
+2026-03-31 12:20:52,041 | INFO | pid: 2537046 | Generate ring detection model /home/bsp/git/AutoRingReader/models/20230722002419_RingDataset1_yolov8n_640.pt
+2026-03-31 12:20:52,042 | INFO | pid: 2537045 | Generate ring detection model /home/bsp/git/AutoRingReader/models/20230722002419_RingDataset1_yolov8n_640.pt
+2026-03-31 12:20:52,046 | INFO | pid: 2537049 | Generate ring detection model /home/bsp/git/AutoRingReader/models/20230722002419_RingDataset1_yolov8n_640.pt
+2026-03-31 12:20:52,048 | INFO | pid: 2537050 | Generate ring detection model /home/bsp/git/AutoRingReader/models/20230722002419_RingDataset1_yolov8n_640.pt
+2026-03-31 12:20:52,049 | INFO | pid: 2537052 | Generate ring detection model /home/bsp/git/AutoRingReader/models/20230722002419_RingDataset1_yolov8n_640.pt
+2026-03-31 12:20:52,049 | INFO | pid: 2537048 | Generate ring detection model /home/bsp/git/AutoRingReader/models/20230722002419_RingDataset1_yolov8n_640.pt
+2026-03-31 12:20:52,050 | INFO | pid: 2537051 | Generate ring detection model /home/bsp/git/AutoRingReader/models/20230722002419_RingDataset1_yolov8n_640.pt
+2026-03-31 12:20:52,064 | INFO | pid: 2537047 | Generate ring detection model /home/bsp/git/AutoRingReader/models/20230722002419_RingDataset1_yolov8n_640.pt
+2026-03-31 12:20:52,080 | INFO | pid: 2537046 | Generate tag detection model /home/bsp/git/AutoRingReader/models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-03-31 12:20:53,071 | INFO | pid: 2537045 | Generate tag detection model /home/bsp/git/AutoRingReader/models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-03-31 12:20:53,252 | INFO | pid: 2537049 | Generate tag detection model /home/bsp/git/AutoRingReader/models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-03-31 12:20:53,310 | INFO | pid: 2537050 | Generate tag detection model /home/bsp/git/AutoRingReader/models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-03-31 12:20:53,320 | INFO | pid: 2537052 | Generate tag detection model /home/bsp/git/AutoRingReader/models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-03-31 12:20:53,337 | INFO | pid: 2537051 | Generate tag detection model /home/bsp/git/AutoRingReader/models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-03-31 12:20:53,413 | INFO | pid: 2537047 | Generate tag detection model /home/bsp/git/AutoRingReader/models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-03-31 12:20:53,474 | INFO | pid: 2537048 | Generate tag detection model /home/bsp/git/AutoRingReader/models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-03-31 12:20:53,517 | INFO | pid: 2537046 | Generate text recognition model /home/bsp/git/AutoRingReader/CLIP4STR/models/clip4str_base16x16_d70bde1f2d.ckpt
+2026-03-31 12:20:54,430 | INFO | pid: 2537052 | Generate text recognition model /home/bsp/git/AutoRingReader/CLIP4STR/models/clip4str_base16x16_d70bde1f2d.ckpt
+2026-03-31 12:20:54,508 | INFO | pid: 2537045 | Generate text recognition model /home/bsp/git/AutoRingReader/CLIP4STR/models/clip4str_base16x16_d70bde1f2d.ckpt
+2026-03-31 12:20:54,553 | INFO | pid: 2537050 | Generate text recognition model /home/bsp/git/AutoRingReader/CLIP4STR/models/clip4str_base16x16_d70bde1f2d.ckpt
+2026-03-31 12:20:54,553 | INFO | pid: 2537048 | Generate text recognition model /home/bsp/git/AutoRingReader/CLIP4STR/models/clip4str_base16x16_d70bde1f2d.ckpt
+2026-03-31 12:20:54,588 | INFO | pid: 2537047 | Generate text recognition model /home/bsp/git/AutoRingReader/CLIP4STR/models/clip4str_base16x16_d70bde1f2d.ckpt
+2026-03-31 12:20:54,596 | INFO | pid: 2537051 | Generate text recognition model /home/bsp/git/AutoRingReader/CLIP4STR/models/clip4str_base16x16_d70bde1f2d.ckpt
+2026-03-31 12:20:54,601 | INFO | pid: 2537049 | Generate text recognition model /home/bsp/git/AutoRingReader/CLIP4STR/models/clip4str_base16x16_d70bde1f2d.ckpt
+2026-03-31 12:21:10,731 | INFO | pid: 2537046 | Done predict on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR6BONDEN6_SCALE_2023-06-10_5_18.mp4, time: 0:00:18.700078
+2026-03-31 12:21:10,732 | INFO | pid: 2537046 | Start prediction on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR6BONDEN6_SCALE_2023-06-10_5_19.mp4
+2026-03-31 12:21:10,735 | INFO | pid: 2537046 | Generate ring detection model /home/bsp/git/AutoRingReader/models/20230722002419_RingDataset1_yolov8n_640.pt
+2026-03-31 12:21:11,947 | INFO | pid: 2537046 | Generate tag detection model /home/bsp/git/AutoRingReader/models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-03-31 12:21:12,744 | INFO | pid: 2537046 | Generate text recognition model /home/bsp/git/AutoRingReader/CLIP4STR/models/clip4str_base16x16_d70bde1f2d.ckpt
+2026-03-31 12:21:27,675 | INFO | pid: 2537046 | Done predict on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR6BONDEN6_SCALE_2023-06-10_5_19.mp4, time: 0:00:16.942964
+2026-03-31 12:21:27,676 | INFO | pid: 2537046 | Start prediction on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR6BONDEN6_SCALE_2023-06-10_5_21.mp4
+2026-03-31 12:21:27,678 | INFO | pid: 2537046 | Generate ring detection model /home/bsp/git/AutoRingReader/models/20230722002419_RingDataset1_yolov8n_640.pt
+2026-03-31 12:21:27,699 | INFO | pid: 2537046 | Generate tag detection model /home/bsp/git/AutoRingReader/models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-03-31 12:21:27,723 | INFO | pid: 2537046 | Generate text recognition model /home/bsp/git/AutoRingReader/CLIP4STR/models/clip4str_base16x16_d70bde1f2d.ckpt
+2026-03-31 12:21:31,609 | INFO | pid: 2537048 | Done predict on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR6_SCALE_2023-07-04_7_43.mp4, time: 0:00:39.574626
+2026-03-31 12:21:31,610 | INFO | pid: 2537048 | Start prediction on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR6_SCALE_2023-07-04_10_44.mp4
+2026-03-31 12:21:31,612 | INFO | pid: 2537048 | Generate ring detection model /home/bsp/git/AutoRingReader/models/20230722002419_RingDataset1_yolov8n_640.pt
+2026-03-31 12:21:31,650 | INFO | pid: 2537048 | Generate tag detection model /home/bsp/git/AutoRingReader/models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-03-31 12:21:31,676 | INFO | pid: 2537048 | Generate text recognition model /home/bsp/git/AutoRingReader/CLIP4STR/models/clip4str_base16x16_d70bde1f2d.ckpt
+2026-03-31 12:21:38,220 | INFO | pid: 2537045 | Done predict on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR3_SCALE_2023-05-07_17_15.mp4, time: 0:00:46.188239
+2026-03-31 12:21:38,220 | INFO | pid: 2537045 | Start prediction on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR3_SCALE_2023-05-07_18_16.mp4
+2026-03-31 12:21:38,223 | INFO | pid: 2537045 | Generate ring detection model /home/bsp/git/AutoRingReader/models/20230722002419_RingDataset1_yolov8n_640.pt
+2026-03-31 12:21:38,283 | INFO | pid: 2537045 | Generate tag detection model /home/bsp/git/AutoRingReader/models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-03-31 12:21:38,307 | INFO | pid: 2537045 | Generate text recognition model /home/bsp/git/AutoRingReader/CLIP4STR/models/clip4str_base16x16_d70bde1f2d.ckpt
+2026-03-31 12:21:42,877 | INFO | pid: 2537047 | Done predict on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR3BONDEN3_SCALE_2023-06-25_14_11.mp4, time: 0:00:50.845247
+2026-03-31 12:21:42,878 | INFO | pid: 2537047 | Start prediction on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR3BONDEN3_SCALE_2023-06-25_14_12.mp4
+2026-03-31 12:21:42,891 | INFO | pid: 2537047 | Generate ring detection model /home/bsp/git/AutoRingReader/models/20230722002419_RingDataset1_yolov8n_640.pt
+2026-03-31 12:21:42,922 | INFO | pid: 2537047 | Generate tag detection model /home/bsp/git/AutoRingReader/models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-03-31 12:21:42,948 | INFO | pid: 2537047 | Generate text recognition model /home/bsp/git/AutoRingReader/CLIP4STR/models/clip4str_base16x16_d70bde1f2d.ckpt
+2026-03-31 12:21:49,333 | INFO | pid: 2537046 | Done predict on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR6BONDEN6_SCALE_2023-06-10_5_21.mp4, time: 0:00:21.656665
+2026-03-31 12:21:49,335 | INFO | pid: 2537046 | Start prediction on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR6BONDEN6_SCALE_2023-06-10_5_22.mp4
+2026-03-31 12:21:49,338 | INFO | pid: 2537046 | Generate ring detection model /home/bsp/git/AutoRingReader/models/20230722002419_RingDataset1_yolov8n_640.pt
+2026-03-31 12:21:49,359 | INFO | pid: 2537046 | Generate tag detection model /home/bsp/git/AutoRingReader/models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-03-31 12:21:49,383 | INFO | pid: 2537046 | Generate text recognition model /home/bsp/git/AutoRingReader/CLIP4STR/models/clip4str_base16x16_d70bde1f2d.ckpt
+2026-03-31 12:21:50,463 | INFO | pid: 2537048 | Done predict on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR6_SCALE_2023-07-04_10_44.mp4, time: 0:00:18.853345
+2026-03-31 12:21:50,468 | INFO | pid: 2537048 | Start prediction on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR6_SCALE_2023-07-04_10_45.mp4
+2026-03-31 12:21:50,471 | INFO | pid: 2537048 | Generate ring detection model /home/bsp/git/AutoRingReader/models/20230722002419_RingDataset1_yolov8n_640.pt
+2026-03-31 12:21:50,493 | INFO | pid: 2537048 | Generate tag detection model /home/bsp/git/AutoRingReader/models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-03-31 12:21:50,519 | INFO | pid: 2537048 | Generate text recognition model /home/bsp/git/AutoRingReader/CLIP4STR/models/clip4str_base16x16_d70bde1f2d.ckpt
+2026-03-31 12:21:51,192 | INFO | pid: 2537045 | Done predict on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR3_SCALE_2023-05-07_18_16.mp4, time: 0:00:12.972264
+2026-03-31 12:21:51,194 | INFO | pid: 2537045 | Start prediction on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR3_SCALE_2023-05-07_21_18.mp4
+2026-03-31 12:21:51,197 | INFO | pid: 2537045 | Generate ring detection model /home/bsp/git/AutoRingReader/models/20230722002419_RingDataset1_yolov8n_640.pt
+2026-03-31 12:21:51,217 | INFO | pid: 2537045 | Generate tag detection model /home/bsp/git/AutoRingReader/models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-03-31 12:21:51,241 | INFO | pid: 2537045 | Generate text recognition model /home/bsp/git/AutoRingReader/CLIP4STR/models/clip4str_base16x16_d70bde1f2d.ckpt
+2026-03-31 12:21:56,926 | INFO | pid: 2537049 | Done predict on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR6_SCALE_2023-07-13_10_51.mp4, time: 0:01:04.891099
+2026-03-31 12:21:56,926 | INFO | pid: 2537049 | Start prediction on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR6_SCALE_2023-07-13_11_52.mp4
+2026-03-31 12:21:56,929 | INFO | pid: 2537049 | Generate ring detection model /home/bsp/git/AutoRingReader/models/20230722002419_RingDataset1_yolov8n_640.pt
+2026-03-31 12:21:56,950 | INFO | pid: 2537049 | Generate tag detection model /home/bsp/git/AutoRingReader/models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-03-31 12:21:56,977 | INFO | pid: 2537049 | Generate text recognition model /home/bsp/git/AutoRingReader/CLIP4STR/models/clip4str_base16x16_d70bde1f2d.ckpt
+2026-03-31 12:22:01,376 | INFO | pid: 2537046 | Done predict on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR6BONDEN6_SCALE_2023-06-10_5_22.mp4, time: 0:00:12.041301
+2026-03-31 12:22:01,378 | INFO | pid: 2537046 | Start prediction on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR6BONDEN6_SCALE_2023-06-10_5_24.mp4
+2026-03-31 12:22:01,381 | INFO | pid: 2537046 | Generate ring detection model /home/bsp/git/AutoRingReader/models/20230722002419_RingDataset1_yolov8n_640.pt
+2026-03-31 12:22:01,402 | INFO | pid: 2537046 | Generate tag detection model /home/bsp/git/AutoRingReader/models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-03-31 12:22:01,426 | INFO | pid: 2537046 | Generate text recognition model /home/bsp/git/AutoRingReader/CLIP4STR/models/clip4str_base16x16_d70bde1f2d.ckpt
+2026-03-31 12:22:05,100 | INFO | pid: 2537045 | Done predict on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR3_SCALE_2023-05-07_21_18.mp4, time: 0:00:13.905481
+2026-03-31 12:22:05,102 | INFO | pid: 2537045 | Start prediction on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR3BONDEN3_SCALE_2023-05-07_22_00.mp4
+2026-03-31 12:22:05,104 | INFO | pid: 2537045 | Generate ring detection model /home/bsp/git/AutoRingReader/models/20230722002419_RingDataset1_yolov8n_640.pt
+2026-03-31 12:22:05,123 | INFO | pid: 2537045 | Generate tag detection model /home/bsp/git/AutoRingReader/models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-03-31 12:22:05,146 | INFO | pid: 2537045 | Generate text recognition model /home/bsp/git/AutoRingReader/CLIP4STR/models/clip4str_base16x16_d70bde1f2d.ckpt
+2026-03-31 12:22:11,436 | INFO | pid: 2537048 | Done predict on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR6_SCALE_2023-07-04_10_45.mp4, time: 0:00:20.968233
+2026-03-31 12:22:11,440 | INFO | pid: 2537048 | Start prediction on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR6_SCALE_2023-07-04_11_46.mp4
+2026-03-31 12:22:11,442 | INFO | pid: 2537048 | Generate ring detection model /home/bsp/git/AutoRingReader/models/20230722002419_RingDataset1_yolov8n_640.pt
+2026-03-31 12:22:11,469 | INFO | pid: 2537048 | Generate tag detection model /home/bsp/git/AutoRingReader/models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-03-31 12:22:11,503 | INFO | pid: 2537048 | Generate text recognition model /home/bsp/git/AutoRingReader/CLIP4STR/models/clip4str_base16x16_d70bde1f2d.ckpt
+2026-03-31 12:22:27,880 | INFO | pid: 2537045 | Done predict on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR3BONDEN3_SCALE_2023-05-07_22_00.mp4, time: 0:00:22.778074
+2026-03-31 12:22:27,882 | INFO | pid: 2537045 | Start prediction on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/BJORN3TRI3_SCALE_2023-05-07_16_01.mp4
+2026-03-31 12:22:27,884 | INFO | pid: 2537045 | Generate ring detection model /home/bsp/git/AutoRingReader/models/20230722002419_RingDataset1_yolov8n_640.pt
+2026-03-31 12:22:27,905 | INFO | pid: 2537045 | Generate tag detection model /home/bsp/git/AutoRingReader/models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-03-31 12:22:28,136 | INFO | pid: 2537045 | Generate text recognition model /home/bsp/git/AutoRingReader/CLIP4STR/models/clip4str_base16x16_d70bde1f2d.ckpt
+2026-03-31 12:22:37,230 | INFO | pid: 2537048 | Done predict on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR6_SCALE_2023-07-04_11_46.mp4, time: 0:00:25.789931
+2026-03-31 12:22:37,234 | INFO | pid: 2537048 | Start prediction on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR6_SCALE_2023-07-04_14_47.mp4
+2026-03-31 12:22:37,237 | INFO | pid: 2537048 | Generate ring detection model /home/bsp/git/AutoRingReader/models/20230722002419_RingDataset1_yolov8n_640.pt
+2026-03-31 12:22:37,280 | INFO | pid: 2537048 | Generate tag detection model /home/bsp/git/AutoRingReader/models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-03-31 12:22:37,576 | INFO | pid: 2537048 | Generate text recognition model /home/bsp/git/AutoRingReader/CLIP4STR/models/clip4str_base16x16_d70bde1f2d.ckpt
+2026-03-31 12:23:00,551 | INFO | pid: 2537048 | Done predict on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR6_SCALE_2023-07-04_14_47.mp4, time: 0:00:23.316470
+2026-03-31 12:23:00,557 | INFO | pid: 2537048 | Start prediction on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR6_SCALE_2023-07-04_16_48.mp4
+2026-03-31 12:23:00,564 | INFO | pid: 2537048 | Generate ring detection model /home/bsp/git/AutoRingReader/models/20230722002419_RingDataset1_yolov8n_640.pt
+2026-03-31 12:23:00,586 | INFO | pid: 2537048 | Generate tag detection model /home/bsp/git/AutoRingReader/models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-03-31 12:23:00,610 | INFO | pid: 2537048 | Generate text recognition model /home/bsp/git/AutoRingReader/CLIP4STR/models/clip4str_base16x16_d70bde1f2d.ckpt
+2026-03-31 12:23:28,425 | INFO | pid: 2537049 | Done predict on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR6_SCALE_2023-07-13_11_52.mp4, time: 0:01:31.498473
+2026-03-31 12:23:28,427 | INFO | pid: 2537049 | Start prediction on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR6_SCALE_2023-07-13_11_53.mp4
+2026-03-31 12:23:28,429 | INFO | pid: 2537049 | Generate ring detection model /home/bsp/git/AutoRingReader/models/20230722002419_RingDataset1_yolov8n_640.pt
+2026-03-31 12:23:28,454 | INFO | pid: 2537049 | Generate tag detection model /home/bsp/git/AutoRingReader/models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-03-31 12:23:28,659 | INFO | pid: 2537049 | Generate text recognition model /home/bsp/git/AutoRingReader/CLIP4STR/models/clip4str_base16x16_d70bde1f2d.ckpt
+2026-03-31 12:23:39,619 | INFO | pid: 2537048 | Done predict on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR6_SCALE_2023-07-04_16_48.mp4, time: 0:00:39.061750
+2026-03-31 12:23:39,625 | INFO | pid: 2537048 | Start prediction on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR6_SCALE_2023-07-04_17_49.mp4
+2026-03-31 12:23:39,628 | INFO | pid: 2537048 | Generate ring detection model /home/bsp/git/AutoRingReader/models/20230722002419_RingDataset1_yolov8n_640.pt
+2026-03-31 12:23:39,651 | INFO | pid: 2537048 | Generate tag detection model /home/bsp/git/AutoRingReader/models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-03-31 12:23:39,678 | INFO | pid: 2537048 | Generate text recognition model /home/bsp/git/AutoRingReader/CLIP4STR/models/clip4str_base16x16_d70bde1f2d.ckpt
+2026-03-31 12:23:51,058 | INFO | pid: 2537049 | Done predict on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR6_SCALE_2023-07-13_11_53.mp4, time: 0:00:22.631301
+2026-03-31 12:23:51,061 | INFO | pid: 2537049 | Start prediction on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR6_SCALE_2023-07-13_11_54.mp4
+2026-03-31 12:23:51,063 | INFO | pid: 2537049 | Generate ring detection model /home/bsp/git/AutoRingReader/models/20230722002419_RingDataset1_yolov8n_640.pt
+2026-03-31 12:23:51,083 | INFO | pid: 2537049 | Generate tag detection model /home/bsp/git/AutoRingReader/models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-03-31 12:23:51,106 | INFO | pid: 2537049 | Generate text recognition model /home/bsp/git/AutoRingReader/CLIP4STR/models/clip4str_base16x16_d70bde1f2d.ckpt
+2026-03-31 12:23:55,083 | INFO | pid: 2537048 | Done predict on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR6_SCALE_2023-07-04_17_49.mp4, time: 0:00:15.458196
+2026-03-31 12:23:55,086 | INFO | pid: 2537048 | Start prediction on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR6_SCALE_2023-07-04_18_50.mp4
+2026-03-31 12:23:55,090 | INFO | pid: 2537048 | Generate ring detection model /home/bsp/git/AutoRingReader/models/20230722002419_RingDataset1_yolov8n_640.pt
+2026-03-31 12:23:55,896 | INFO | pid: 2537048 | Generate tag detection model /home/bsp/git/AutoRingReader/models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-03-31 12:23:56,735 | INFO | pid: 2537048 | Generate text recognition model /home/bsp/git/AutoRingReader/CLIP4STR/models/clip4str_base16x16_d70bde1f2d.ckpt
+2026-03-31 12:24:22,862 | INFO | pid: 2537052 | Done predict on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR3_SCALE_2024-06-09_5_904.mp4, time: 0:03:30.823686
+2026-03-31 12:24:22,862 | INFO | pid: 2537052 | Start prediction on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR3_SCALE_2024-06-09_6_905.mp4
+2026-03-31 12:24:22,864 | INFO | pid: 2537052 | Generate ring detection model /home/bsp/git/AutoRingReader/models/20230722002419_RingDataset1_yolov8n_640.pt
+2026-03-31 12:24:22,885 | INFO | pid: 2537052 | Generate tag detection model /home/bsp/git/AutoRingReader/models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-03-31 12:24:23,334 | INFO | pid: 2537052 | Generate text recognition model /home/bsp/git/AutoRingReader/CLIP4STR/models/clip4str_base16x16_d70bde1f2d.ckpt
+2026-03-31 12:24:37,246 | INFO | pid: 2537050 | Done predict on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR6_SCALE_2024-05-19_12_96.mp4, time: 0:03:45.209346
+2026-03-31 12:24:37,246 | INFO | pid: 2537050 | Start prediction on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR6_SCALE_2024-05-19_12_97.mp4
+2026-03-31 12:24:37,248 | INFO | pid: 2537050 | Generate ring detection model /home/bsp/git/AutoRingReader/models/20230722002419_RingDataset1_yolov8n_640.pt
+2026-03-31 12:24:37,358 | INFO | pid: 2537050 | Generate tag detection model /home/bsp/git/AutoRingReader/models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-03-31 12:24:37,550 | INFO | pid: 2537050 | Generate text recognition model /home/bsp/git/AutoRingReader/CLIP4STR/models/clip4str_base16x16_d70bde1f2d.ckpt
+2026-03-31 12:24:39,133 | INFO | pid: 2537048 | Done predict on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR6_SCALE_2023-07-04_18_50.mp4, time: 0:00:44.046336
+2026-03-31 12:24:39,137 | INFO | pid: 2537048 | Start prediction on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR6_SCALE_2023-07-04_19_51.mp4
+2026-03-31 12:24:39,139 | INFO | pid: 2537048 | Generate ring detection model /home/bsp/git/AutoRingReader/models/20230722002419_RingDataset1_yolov8n_640.pt
+2026-03-31 12:24:39,337 | INFO | pid: 2537048 | Generate tag detection model /home/bsp/git/AutoRingReader/models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-03-31 12:24:39,362 | INFO | pid: 2537048 | Generate text recognition model /home/bsp/git/AutoRingReader/CLIP4STR/models/clip4str_base16x16_d70bde1f2d.ckpt
+2026-03-31 12:24:41,737 | INFO | pid: 2537049 | Done predict on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR6_SCALE_2023-07-13_11_54.mp4, time: 0:00:50.676144
+2026-03-31 12:24:41,740 | INFO | pid: 2537049 | Start prediction on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR6_SCALE_2023-07-13_11_55.mp4
+2026-03-31 12:24:41,744 | INFO | pid: 2537049 | Generate ring detection model /home/bsp/git/AutoRingReader/models/20230722002419_RingDataset1_yolov8n_640.pt
+2026-03-31 12:24:42,532 | INFO | pid: 2537049 | Generate tag detection model /home/bsp/git/AutoRingReader/models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-03-31 12:24:43,625 | INFO | pid: 2537049 | Generate text recognition model /home/bsp/git/AutoRingReader/CLIP4STR/models/clip4str_base16x16_d70bde1f2d.ckpt
+2026-03-31 12:24:48,582 | INFO | pid: 2537047 | Done predict on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR3BONDEN3_SCALE_2023-06-25_14_12.mp4, time: 0:03:05.704831
+2026-03-31 12:24:48,585 | INFO | pid: 2537047 | Start prediction on: /mnt/BSP_NAS2_work/ring_reader/eventvids_imageio2/FAR3BONDEN3_SCALE_2023-06-25_19_13.mp4
+2026-03-31 12:24:48,599 | INFO | pid: 2537047 | Generate ring detection model /home/bsp/git/AutoRingReader/models/20230722002419_RingDataset1_yolov8n_640.pt
+2026-03-31 12:24:48,877 | INFO | pid: 2537047 | Generate tag detection model /home/bsp/git/AutoRingReader/models/20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-03-31 12:24:48,923 | INFO | pid: 2537047 | Generate text recognition model /home/bsp/git/AutoRingReader/CLIP4STR/models/clip4str_base16x16_d70bde1f2d.ckpt

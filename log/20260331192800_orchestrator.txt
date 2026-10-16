@@ -1,0 +1,80 @@
+2026-03-31 19:28:00,411 - __main__ - INFO - AutoRingReader Pipeline Orchestrator Starting
+2026-03-31 19:28:00,411 - __main__ - INFO - Batch configuration: batch/batch_pipeline_test.yaml
+2026-03-31 19:28:00,419 - __main__ - INFO - ================================================================================
+2026-03-31 19:28:00,419 - __main__ - INFO - PIPELINE CONFIGURATION SUMMARY
+2026-03-31 19:28:00,419 - __main__ - INFO - ================================================================================
+2026-03-31 19:28:00,419 - __main__ - INFO - Input Videos: /mnt/BSP_NAS2_work/ring_reader/eventvids_test
+2026-03-31 19:28:00,419 - __main__ - INFO - Cameras: ['FAR3_SCALE', 'FAR6_SCALE', 'ROST2_SCALE', 'FAR3_CUTE']
+2026-03-31 19:28:00,419 - __main__ - INFO - Output Root: /mnt/BSP_NAS2_work/ring_reader/results
+2026-03-31 19:28:00,419 - __main__ - INFO - Resume Enabled: True
+2026-03-31 19:28:00,419 - __main__ - INFO - 
+2026-03-31 19:28:00,419 - __main__ - INFO - Step 1 (Ring Detection):
+2026-03-31 19:28:00,419 - __main__ - INFO -   - CPU workers: 16
+2026-03-31 19:28:00,419 - __main__ - INFO -   - GPU workers: 2 on devices [0, 1]
+2026-03-31 19:28:00,419 - __main__ - INFO -   - Batch size: 16, Frame sample rate: 1
+2026-03-31 19:28:00,419 - __main__ - INFO -   - Confidence threshold: 0.7
+2026-03-31 19:28:00,419 - __main__ - INFO - 
+2026-03-31 19:28:00,419 - __main__ - INFO - Step 2 (Tag Detection):
+2026-03-31 19:28:00,419 - __main__ - INFO -   - CPU workers: 16
+2026-03-31 19:28:00,419 - __main__ - INFO -   - GPU workers: 2 on devices [0, 1]
+2026-03-31 19:28:00,419 - __main__ - INFO -   - Batch size: 16
+2026-03-31 19:28:00,419 - __main__ - INFO -   - Confidence threshold: 0.7
+2026-03-31 19:28:00,419 - __main__ - INFO - 
+2026-03-31 19:28:00,419 - __main__ - INFO - Step 3 (Text Recognition):
+2026-03-31 19:28:00,420 - __main__ - INFO -   - CPU workers: 32
+2026-03-31 19:28:00,420 - __main__ - INFO -   - GPU workers: 1 on devices [0]
+2026-03-31 19:28:00,420 - __main__ - INFO -   - Batch size: 32
+2026-03-31 19:28:00,420 - __main__ - INFO -   - Confidence threshold: 0.9
+2026-03-31 19:28:00,420 - __main__ - INFO - ================================================================================
+2026-03-31 19:28:00,600 - __main__ - INFO - ✓ Configuration validation passed
+2026-03-31 19:28:00,602 - pipeline_utils - INFO - Found 2 videos matching cameras: ['FAR3_SCALE', 'FAR6_SCALE', 'ROST2_SCALE', 'FAR3_CUTE']
+2026-03-31 19:28:00,602 - __main__ - INFO - Total videos to process: 2
+2026-03-31 19:28:00,602 - __main__ - INFO - Running Step 1: Ring Detection
+2026-03-31 19:28:00,602 - __main__ - INFO - 
+2026-03-31 19:28:00,602 - __main__ - INFO - ================================================================================
+2026-03-31 19:28:00,602 - __main__ - INFO - STARTING STEP 1: RING DETECTION
+2026-03-31 19:28:00,602 - __main__ - INFO - ================================================================================
+2026-03-31 19:28:01,458 - step1_ring_detection - INFO - Starting Step 1: Ring Detection
+2026-03-31 19:28:01,460 - pipeline_utils - INFO - Found 2 videos matching cameras: ['FAR3_SCALE', 'FAR6_SCALE', 'ROST2_SCALE', 'FAR3_CUTE']
+2026-03-31 19:28:01,460 - step1_ring_detection - INFO - Processing 2 videos in Step 1 using 2 GPUs
+2026-03-31 19:28:01,490 - step1_ring_detection - INFO - Submitted 2 videos to GPU workers
+2026-03-31 19:28:01,509 - step1_ring_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2025-07-29_16_04] Starting: 704 frames
+2026-03-31 19:28:01,510 - root - INFO - pid: 2594441 | Generate ring detection model /models/20230722002419_RingDataset1_yolov8n_640.pt
+2026-03-31 19:28:01,510 - step1_ring_detection - INFO - [FAR3_SCALE/FAR3_SCALE_2025-07-29_13_03] Starting: 3080 frames
+2026-03-31 19:28:01,510 - root - INFO - pid: 2594440 | Generate ring detection model /models/20230722002419_RingDataset1_yolov8n_640.pt
+2026-03-31 19:28:01,828 - root - CRITICAL - pid: 2594440 | RingDetector, Exception: TODO: implement this specific exception: FileNotFoundError, error: [Errno 2] No such file or directory: '/models/20230722002419_RingDataset1_yolov8n_640.pt'
+2026-03-31 19:28:01,828 - step1_ring_detection - ERROR - [FAR3_SCALE/FAR3_SCALE_2025-07-29_13_03] ERROR: 'RingDetector' object has no attribute 'model'
+2026-03-31 19:28:01,829 - root - CRITICAL - pid: 2594441 | RingDetector, Exception: TODO: implement this specific exception: FileNotFoundError, error: [Errno 2] No such file or directory: '/models/20230722002419_RingDataset1_yolov8n_640.pt'
+2026-03-31 19:28:01,829 - step1_ring_detection - ERROR - [FAR3_SCALE/FAR3_SCALE_2025-07-29_16_04] ERROR: 'RingDetector' object has no attribute 'model'
+2026-03-31 19:28:01,843 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/FAR3_SCALE_2025-07-29_13_03.mp4
+2026-03-31 19:28:01,843 - step1_ring_detection - ERROR - ✗ [1/2] FAR3_SCALE_2025-07-29_13_03: 'RingDetector' object has no attribute 'model'
+2026-03-31 19:28:01,849 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/FAR3_SCALE_2025-07-29_16_04.mp4
+2026-03-31 19:28:01,849 - step1_ring_detection - ERROR - ✗ [2/2] FAR3_SCALE_2025-07-29_16_04: 'RingDetector' object has no attribute 'model'
+2026-03-31 19:28:01,877 - step1_ring_detection - INFO - ✓ Step 1 completed in 0.4 seconds
+2026-03-31 19:28:01,878 - __main__ - INFO - Step 1 completed in 1.3 seconds
+2026-03-31 19:28:01,878 - __main__ - INFO - Running Step 2: Tag Detection
+2026-03-31 19:28:01,878 - __main__ - INFO - 
+2026-03-31 19:28:01,878 - __main__ - INFO - ================================================================================
+2026-03-31 19:28:01,878 - __main__ - INFO - STARTING STEP 2: TAG DETECTION
+2026-03-31 19:28:01,878 - __main__ - INFO - ================================================================================
+2026-03-31 19:28:01,879 - step2_tag_detection - INFO - Starting Step 2: Tag Detection
+2026-03-31 19:28:01,880 - step2_tag_detection - WARNING - No ring crops found from Step 1
+2026-03-31 19:28:01,880 - __main__ - INFO - Step 2 completed in 0.0 seconds
+2026-03-31 19:28:01,881 - __main__ - INFO - Running Step 3: Text Recognition
+2026-03-31 19:28:01,881 - __main__ - INFO - 
+2026-03-31 19:28:01,881 - __main__ - INFO - ================================================================================
+2026-03-31 19:28:01,881 - __main__ - INFO - STARTING STEP 3: TEXT RECOGNITION
+2026-03-31 19:28:01,881 - __main__ - INFO - ================================================================================
+2026-03-31 19:28:01,883 - __main__ - ERROR - Step 3 failed with error: No module named 'pytorch_lightning'
+Traceback (most recent call last):
+  File "/home/jonas/Documents/vscode/AutoRingReader/pipeline_orchestrator.py", line 143, in run_step3
+    from step3_text_recognition import run_step3_text_recognition
+  File "/home/jonas/Documents/vscode/AutoRingReader/step3_text_recognition.py", line 30, in <module>
+    from text_recognition import TextRecognition
+  File "/home/jonas/Documents/vscode/AutoRingReader/text_recognition.py", line 12, in <module>
+    from strhub.data.module import SceneTextDataModule
+  File "/home/jonas/Documents/vscode/AutoRingReader/CLIP4STR/strhub/data/module.py", line 16, in <module>
+    import pytorch_lightning as pl
+ModuleNotFoundError: No module named 'pytorch_lightning'
+2026-03-31 19:28:01,884 - __main__ - INFO - Step 3 completed in 0.0 seconds
+2026-03-31 19:28:01,885 - __main__ - ERROR - Step 3 failed

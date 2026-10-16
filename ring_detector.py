@@ -5,8 +5,6 @@ from pathlib import Path
 import torch
 from ultralytics import YOLO
 
-#torch.cuda.set_device(1)
-
 class RingDetector:
 
     def __init__(
@@ -16,15 +14,17 @@ class RingDetector:
         conf: float = 0.7,
         iou: float = 0.7,
         max_det: int = 1,
+        device_id: int = 0,
     ):
         try:
             self.stream = stream
             self.conf = conf
             self.iou = iou
             self.max_det = max_det
+            self.device_id = device_id
 
             logging.info(
-                f"pid: {os.getpid()} | Generate ring detection model {model_path}"
+                f"pid: {os.getpid()} | Generate ring detection model {model_path} on GPU {device_id}"
             )
 
             self.model = YOLO(str(model_path))
@@ -46,7 +46,7 @@ class RingDetector:
             save_conf=False,
             max_det=self.max_det,
             verbose=False,
-            #device="cuda:1",
+            device=f"cuda:{self.device_id}",
         )
 
     def predict_cls(self, image: np.ndarray, cls_target: int):
@@ -58,7 +58,9 @@ class RingDetector:
                     for box in boxes:
                         cls_pred = int(np.squeeze(np.array(box.cls)))
                         if cls_pred == cls_target:
-                            return np.squeeze(np.array(box.cpu().xywhn))
+                            xywhn = np.squeeze(np.array(box.xywhn.cpu()))
+                            conf = float(np.squeeze(np.array(box.conf.cpu())))
+                            return xywhn, conf
         except Exception as err:
             logging.critical(
                 f"pid: {os.getpid()} | RingDetector, predict_cls: Exception: TODO: implement this specific exception: {err.__class__.__name__}, error: {err}"

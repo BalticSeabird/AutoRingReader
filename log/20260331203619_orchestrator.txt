@@ -1,0 +1,122 @@
+2026-03-31 20:36:19,773 - __main__ - INFO - AutoRingReader Pipeline Orchestrator Starting
+2026-03-31 20:36:19,773 - __main__ - INFO - Batch configuration: batch/batch_pipeline_test.yaml
+2026-03-31 20:36:19,773 - __main__ - INFO - ⚠️  FORCE REPROCESS MODE ENABLED - will reprocess all videos
+2026-03-31 20:36:19,777 - __main__ - INFO - ================================================================================
+2026-03-31 20:36:19,777 - __main__ - INFO - PIPELINE CONFIGURATION SUMMARY
+2026-03-31 20:36:19,777 - __main__ - INFO - ================================================================================
+2026-03-31 20:36:19,777 - __main__ - INFO - Input Videos: /mnt/BSP_NAS2_work/ring_reader/eventvids_test
+2026-03-31 20:36:19,777 - __main__ - INFO - Cameras: ['FAR3_SCALE', 'FAR6_SCALE', 'ROST2_SCALE', 'FAR3_CUTE', 'BJORN3TRI3_SCALE', 'FAR3BONDEN3_SCALE']
+2026-03-31 20:36:19,777 - __main__ - INFO - Output Root: /mnt/BSP_NAS2_work/ring_reader/results
+2026-03-31 20:36:19,777 - __main__ - INFO - Resume Enabled: True
+2026-03-31 20:36:19,777 - __main__ - INFO - 
+2026-03-31 20:36:19,777 - __main__ - INFO - Step 1 (Ring Detection):
+2026-03-31 20:36:19,778 - __main__ - INFO -   - CPU workers: 16
+2026-03-31 20:36:19,778 - __main__ - INFO -   - GPU workers: 2 on devices [0, 1]
+2026-03-31 20:36:19,778 - __main__ - INFO -   - Batch size: 32, Frame sample rate: 1
+2026-03-31 20:36:19,778 - __main__ - INFO -   - Confidence threshold: 0.7
+2026-03-31 20:36:19,778 - __main__ - INFO - 
+2026-03-31 20:36:19,778 - __main__ - INFO - Step 2 (Tag Detection):
+2026-03-31 20:36:19,778 - __main__ - INFO -   - CPU workers: 16
+2026-03-31 20:36:19,778 - __main__ - INFO -   - GPU workers: 2 on devices [0, 1]
+2026-03-31 20:36:19,778 - __main__ - INFO -   - Batch size: 16
+2026-03-31 20:36:19,778 - __main__ - INFO -   - Confidence threshold: 0.7
+2026-03-31 20:36:19,778 - __main__ - INFO - 
+2026-03-31 20:36:19,778 - __main__ - INFO - Step 3 (Text Recognition):
+2026-03-31 20:36:19,778 - __main__ - INFO -   - CPU workers: 32
+2026-03-31 20:36:19,778 - __main__ - INFO -   - GPU workers: 1 on devices [0]
+2026-03-31 20:36:19,778 - __main__ - INFO -   - Batch size: 32
+2026-03-31 20:36:19,778 - __main__ - INFO -   - Confidence threshold: 0.9
+2026-03-31 20:36:19,778 - __main__ - INFO - ================================================================================
+2026-03-31 20:36:19,951 - __main__ - INFO - ✓ Configuration validation passed
+2026-03-31 20:36:19,954 - pipeline_utils - INFO - Found 9 videos matching cameras: ['FAR3_SCALE', 'FAR6_SCALE', 'ROST2_SCALE', 'FAR3_CUTE', 'BJORN3TRI3_SCALE', 'FAR3BONDEN3_SCALE']
+2026-03-31 20:36:19,954 - __main__ - INFO - Total videos to process: 9
+2026-03-31 20:36:19,954 - __main__ - INFO - Running Step 1: Ring Detection
+2026-03-31 20:36:19,954 - __main__ - INFO - 
+2026-03-31 20:36:19,954 - __main__ - INFO - ================================================================================
+2026-03-31 20:36:19,954 - __main__ - INFO - STARTING STEP 1: RING DETECTION
+2026-03-31 20:36:19,954 - __main__ - INFO - ================================================================================
+2026-03-31 20:36:20,668 - step1_ring_detection - INFO - Starting Step 1: Ring Detection
+2026-03-31 20:36:20,668 - step1_ring_detection - INFO - Force reprocess mode: ignoring previous completions for Step 1
+2026-03-31 20:36:20,669 - pipeline_utils - INFO - Found 9 videos matching cameras: ['FAR3_SCALE', 'FAR6_SCALE', 'ROST2_SCALE', 'FAR3_CUTE', 'BJORN3TRI3_SCALE', 'FAR3BONDEN3_SCALE']
+2026-03-31 20:36:20,669 - step1_ring_detection - INFO - Processing 9 videos in Step 1 using 2 GPUs
+2026-03-31 20:36:20,673 - step1_ring_detection - INFO - Submitted 9 videos to GPU workers
+2026-03-31 20:36:48,309 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/BJORN3TRI3_SCALE_2023-06-12_13_49.mp4
+2026-03-31 20:36:48,309 - step1_ring_detection - INFO - ✓ [1/9] BJORN3TRI3_SCALE_2023-06-12_13_49: 647 rings in 3375 frames
+2026-03-31 20:36:48,321 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/BJORN3TRI3_SCALE_2023-06-12_8_47.mp4
+2026-03-31 20:36:48,321 - step1_ring_detection - INFO - ✓ [2/9] BJORN3TRI3_SCALE_2023-06-12_8_47: 5 rings in 750 frames
+2026-03-31 20:36:48,335 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/BJORN3TRI3_SCALE_2023-06-12_9_48.mp4
+2026-03-31 20:36:48,335 - step1_ring_detection - INFO - ✓ [3/9] BJORN3TRI3_SCALE_2023-06-12_9_48: 60 rings in 650 frames
+2026-03-31 20:36:48,345 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/BJORN3TRI3_SCALE_2023-06-13_15_29.mp4
+2026-03-31 20:36:48,346 - step1_ring_detection - INFO - ✓ [4/9] BJORN3TRI3_SCALE_2023-06-13_15_29: 2 rings in 675 frames
+2026-03-31 20:36:48,364 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/BJORN3TRI3_SCALE_2023-06-13_15_30.mp4
+2026-03-31 20:36:48,364 - step1_ring_detection - INFO - ✓ [5/9] BJORN3TRI3_SCALE_2023-06-13_15_30: 680 rings in 1850 frames
+2026-03-31 20:36:59,225 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/BJORN3TRI3_SCALE_2023-06-13_18_36.mp4
+2026-03-31 20:36:59,225 - step1_ring_detection - INFO - ✓ [6/9] BJORN3TRI3_SCALE_2023-06-13_18_36: 941 rings in 1450 frames
+2026-03-31 20:36:59,237 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/BJORN3TRI3_SCALE_2023-06-14_3_16.mp4
+2026-03-31 20:36:59,237 - step1_ring_detection - INFO - ✓ [7/9] BJORN3TRI3_SCALE_2023-06-14_3_16: 0 rings in 1050 frames
+2026-03-31 20:36:59,247 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/BJORN3TRI3_SCALE_2023-06-14_8_17.mp4
+2026-03-31 20:36:59,247 - step1_ring_detection - INFO - ✓ [8/9] BJORN3TRI3_SCALE_2023-06-14_8_17: 58 rings in 625 frames
+2026-03-31 20:37:01,231 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/FAR6_SCALE_2024-07-04_16_316.mp4
+2026-03-31 20:37:01,231 - step1_ring_detection - INFO - ✓ [9/9] FAR6_SCALE_2024-07-04_16_316: 63 rings in 950 frames
+2026-03-31 20:37:02,888 - step1_ring_detection - INFO - ✓ Step 1 completed in 42.2 seconds
+2026-03-31 20:37:02,890 - __main__ - INFO - Step 1 completed in 42.9 seconds
+2026-03-31 20:37:02,890 - __main__ - INFO - Running Step 2: Tag Detection
+2026-03-31 20:37:02,890 - __main__ - INFO - 
+2026-03-31 20:37:02,890 - __main__ - INFO - ================================================================================
+2026-03-31 20:37:02,890 - __main__ - INFO - STARTING STEP 2: TAG DETECTION
+2026-03-31 20:37:02,890 - __main__ - INFO - ================================================================================
+2026-03-31 20:37:02,891 - step2_tag_detection - INFO - Starting Step 2: Tag Detection
+2026-03-31 20:37:03,161 - step2_tag_detection - INFO - Processing 32950 ring crops in Step 2
+2026-03-31 20:39:23,376 - step2_tag_detection - INFO - Crop loading complete, sending sentinels
+2026-03-31 20:39:23,843 - step2_tag_detection - INFO - Tag detection complete, sending sentinels
+2026-03-31 20:39:23,845 - step2_tag_detection - INFO - Received sentinel 1/2
+2026-03-31 20:39:23,846 - step2_tag_detection - INFO - Received sentinel 2/2
+2026-03-31 20:39:23,846 - step2_tag_detection - INFO - All GPU workers finished, stopping result consumer
+2026-03-31 20:39:23,846 - step2_tag_detection - INFO - Result consumer processed 54437 results
+2026-03-31 20:39:23,846 - step2_tag_detection - INFO - Finalizing results for 26 videos...
+2026-03-31 20:39:23,847 - step2_tag_detection - INFO - ✓ Processed FAR3_SCALE_2025-07-29_16_04: 1 tags
+2026-03-31 20:39:23,848 - step2_tag_detection - INFO - ✓ Processed FAR6_SCALE_2024-07-04_16_310: 2170 tags
+2026-03-31 20:39:23,849 - step2_tag_detection - INFO - ✓ Processed FAR6_SCALE_2024-07-04_16_311: 3052 tags
+2026-03-31 20:39:23,850 - step2_tag_detection - INFO - ✓ Processed FAR6_SCALE_2024-07-04_16_312: 2 tags
+2026-03-31 20:39:23,851 - step2_tag_detection - INFO - ✓ Processed FAR6_SCALE_2024-07-04_16_313: 462 tags
+2026-03-31 20:39:23,851 - step2_tag_detection - INFO - ✓ Processed FAR6_SCALE_2024-07-04_16_314: 202 tags
+2026-03-31 20:39:23,852 - step2_tag_detection - INFO - ✓ Processed FAR6_SCALE_2024-07-04_16_315: 514 tags
+2026-03-31 20:39:23,853 - step2_tag_detection - INFO - ✓ Processed BJORN3TRI3_SCALE_2023-06-12_13_49: 1264 tags
+2026-03-31 20:39:23,854 - step2_tag_detection - INFO - ✓ Processed BJORN3TRI3_SCALE_2023-06-12_17_51: 1968 tags
+2026-03-31 20:39:23,855 - step2_tag_detection - INFO - ✓ Processed BJORN3TRI3_SCALE_2023-06-12_17_52: 498 tags
+2026-03-31 20:39:23,855 - step2_tag_detection - INFO - ✓ Processed BJORN3TRI3_SCALE_2023-06-12_6_45: 210 tags
+2026-03-31 20:39:23,856 - step2_tag_detection - INFO - ✓ Processed BJORN3TRI3_SCALE_2023-06-12_8_46: 3101 tags
+2026-03-31 20:39:23,857 - step2_tag_detection - INFO - ✓ Processed BJORN3TRI3_SCALE_2023-06-12_9_48: 94 tags
+2026-03-31 20:39:23,858 - step2_tag_detection - INFO - ✓ Processed BJORN3TRI3_SCALE_2023-06-12_8_47: 9 tags
+2026-03-31 20:39:23,859 - step2_tag_detection - INFO - ✓ Processed BJORN3TRI3_SCALE_2023-06-13_15_28: 795 tags
+2026-03-31 20:39:23,859 - step2_tag_detection - INFO - ✓ Processed BJORN3TRI3_SCALE_2023-06-13_15_30: 1355 tags
+2026-03-31 20:39:23,863 - step2_tag_detection - INFO - ✓ Processed BJORN3TRI3_SCALE_2023-06-13_16_31: 22505 tags
+2026-03-31 20:39:23,863 - step2_tag_detection - INFO - ✓ Processed BJORN3TRI3_SCALE_2023-06-13_16_32: 883 tags
+2026-03-31 20:39:23,864 - step2_tag_detection - INFO - ✓ Processed BJORN3TRI3_SCALE_2023-06-13_17_34: 391 tags
+2026-03-31 20:39:23,866 - step2_tag_detection - INFO - ✓ Processed BJORN3TRI3_SCALE_2023-06-13_18_35: 8252 tags
+2026-03-31 20:39:23,866 - step2_tag_detection - INFO - ✓ Processed BJORN3TRI3_SCALE_2023-06-13_18_36: 1502 tags
+2026-03-31 20:39:23,867 - step2_tag_detection - INFO - ✓ Processed BJORN3TRI3_SCALE_2023-06-13_6_27: 299 tags
+2026-03-31 20:39:23,868 - step2_tag_detection - INFO - ✓ Processed BJORN3TRI3_SCALE_2023-06-14_10_19: 651 tags
+2026-03-31 20:39:23,869 - step2_tag_detection - INFO - ✓ Processed BJORN3TRI3_SCALE_2023-06-14_8_17: 110 tags
+2026-03-31 20:39:23,869 - step2_tag_detection - INFO - ✓ Processed BJORN3TRI3_SCALE_2023-06-14_9_18: 94 tags
+2026-03-31 20:39:23,870 - step2_tag_detection - INFO - ✓ Processed BJORN3TRI3_SCALE_2025-07-29_17_02: 67 tags
+2026-03-31 20:39:25,246 - step2_tag_detection - INFO - ✓ Step 2 completed in 142.4 seconds
+2026-03-31 20:39:25,251 - __main__ - INFO - Step 2 completed in 142.4 seconds
+2026-03-31 20:39:25,251 - __main__ - INFO - Running Step 3: Text Recognition
+2026-03-31 20:39:25,251 - __main__ - INFO - 
+2026-03-31 20:39:25,252 - __main__ - INFO - ================================================================================
+2026-03-31 20:39:25,252 - __main__ - INFO - STARTING STEP 3: TEXT RECOGNITION
+2026-03-31 20:39:25,252 - __main__ - INFO - ================================================================================
+2026-03-31 20:39:25,254 - __main__ - ERROR - Step 3 failed with error: No module named 'pytorch_lightning'
+Traceback (most recent call last):
+  File "/home/jonas/Documents/vscode/AutoRingReader/pipeline_orchestrator.py", line 143, in run_step3
+    from step3_text_recognition import run_step3_text_recognition
+  File "/home/jonas/Documents/vscode/AutoRingReader/step3_text_recognition.py", line 30, in <module>
+    from text_recognition import TextRecognition
+  File "/home/jonas/Documents/vscode/AutoRingReader/text_recognition.py", line 12, in <module>
+    from strhub.data.module import SceneTextDataModule
+  File "/home/jonas/Documents/vscode/AutoRingReader/CLIP4STR/strhub/data/module.py", line 16, in <module>
+    import pytorch_lightning as pl
+ModuleNotFoundError: No module named 'pytorch_lightning'
+2026-03-31 20:39:25,256 - __main__ - INFO - Step 3 completed in 0.0 seconds
+2026-03-31 20:39:25,256 - __main__ - ERROR - Step 3 failed

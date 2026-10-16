@@ -1,0 +1,105 @@
+2026-03-31 20:09:35,171 - __main__ - INFO - AutoRingReader Pipeline Orchestrator Starting
+2026-03-31 20:09:35,171 - __main__ - INFO - Batch configuration: batch/batch_pipeline_test.yaml
+2026-03-31 20:09:35,171 - __main__ - INFO - ⚠️  FORCE REPROCESS MODE ENABLED - will reprocess all videos
+2026-03-31 20:09:35,175 - __main__ - INFO - ================================================================================
+2026-03-31 20:09:35,175 - __main__ - INFO - PIPELINE CONFIGURATION SUMMARY
+2026-03-31 20:09:35,175 - __main__ - INFO - ================================================================================
+2026-03-31 20:09:35,175 - __main__ - INFO - Input Videos: /mnt/BSP_NAS2_work/ring_reader/eventvids_test
+2026-03-31 20:09:35,175 - __main__ - INFO - Cameras: ['FAR3_SCALE', 'FAR6_SCALE', 'ROST2_SCALE', 'FAR3_CUTE', 'BJORN3TRI3_SCALE', 'FAR3BONDEN3_SCALE']
+2026-03-31 20:09:35,175 - __main__ - INFO - Output Root: /mnt/BSP_NAS2_work/ring_reader/results
+2026-03-31 20:09:35,175 - __main__ - INFO - Resume Enabled: True
+2026-03-31 20:09:35,175 - __main__ - INFO - 
+2026-03-31 20:09:35,175 - __main__ - INFO - Step 1 (Ring Detection):
+2026-03-31 20:09:35,176 - __main__ - INFO -   - CPU workers: 16
+2026-03-31 20:09:35,176 - __main__ - INFO -   - GPU workers: 2 on devices [0, 1]
+2026-03-31 20:09:35,176 - __main__ - INFO -   - Batch size: 16, Frame sample rate: 1
+2026-03-31 20:09:35,176 - __main__ - INFO -   - Confidence threshold: 0.7
+2026-03-31 20:09:35,176 - __main__ - INFO - 
+2026-03-31 20:09:35,176 - __main__ - INFO - Step 2 (Tag Detection):
+2026-03-31 20:09:35,176 - __main__ - INFO -   - CPU workers: 16
+2026-03-31 20:09:35,176 - __main__ - INFO -   - GPU workers: 2 on devices [0, 1]
+2026-03-31 20:09:35,176 - __main__ - INFO -   - Batch size: 16
+2026-03-31 20:09:35,176 - __main__ - INFO -   - Confidence threshold: 0.7
+2026-03-31 20:09:35,176 - __main__ - INFO - 
+2026-03-31 20:09:35,176 - __main__ - INFO - Step 3 (Text Recognition):
+2026-03-31 20:09:35,176 - __main__ - INFO -   - CPU workers: 32
+2026-03-31 20:09:35,176 - __main__ - INFO -   - GPU workers: 1 on devices [0]
+2026-03-31 20:09:35,176 - __main__ - INFO -   - Batch size: 32
+2026-03-31 20:09:35,176 - __main__ - INFO -   - Confidence threshold: 0.9
+2026-03-31 20:09:35,176 - __main__ - INFO - ================================================================================
+2026-03-31 20:09:35,376 - __main__ - INFO - ✓ Configuration validation passed
+2026-03-31 20:09:35,378 - pipeline_utils - INFO - Found 32 videos matching cameras: ['FAR3_SCALE', 'FAR6_SCALE', 'ROST2_SCALE', 'FAR3_CUTE', 'BJORN3TRI3_SCALE', 'FAR3BONDEN3_SCALE']
+2026-03-31 20:09:35,378 - __main__ - INFO - Total videos to process: 32
+2026-03-31 20:09:35,378 - __main__ - INFO - Running Step 1: Ring Detection
+2026-03-31 20:09:35,378 - __main__ - INFO - 
+2026-03-31 20:09:35,378 - __main__ - INFO - ================================================================================
+2026-03-31 20:09:35,378 - __main__ - INFO - STARTING STEP 1: RING DETECTION
+2026-03-31 20:09:35,378 - __main__ - INFO - ================================================================================
+2026-03-31 20:09:36,094 - step1_ring_detection - INFO - Starting Step 1: Ring Detection
+2026-03-31 20:09:36,094 - step1_ring_detection - INFO - Force reprocess mode: ignoring previous completions for Step 1
+2026-03-31 20:09:36,095 - pipeline_utils - INFO - Found 32 videos matching cameras: ['FAR3_SCALE', 'FAR6_SCALE', 'ROST2_SCALE', 'FAR3_CUTE', 'BJORN3TRI3_SCALE', 'FAR3BONDEN3_SCALE']
+2026-03-31 20:09:36,095 - step1_ring_detection - INFO - Processing 32 videos in Step 1 using 2 GPUs
+2026-03-31 20:09:36,099 - step1_ring_detection - INFO - Submitted 32 videos to GPU workers
+2026-03-31 20:09:48,229 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/BJORN3TRI3_SCALE_2025-07-29_17_02.mp4
+2026-03-31 20:09:48,229 - step1_ring_detection - INFO - ✓ [1/32] BJORN3TRI3_SCALE_2025-07-29_17_02: 42 rings in 1276 frames
+2026-03-31 20:09:56,947 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/FAR3_SCALE_2025-07-29_13_03.mp4
+2026-03-31 20:09:56,947 - step1_ring_detection - INFO - ✓ [2/32] FAR3_SCALE_2025-07-29_13_03: 0 rings in 3080 frames
+2026-03-31 20:09:56,957 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/FAR3_SCALE_2025-07-29_16_04.mp4
+2026-03-31 20:09:56,957 - step1_ring_detection - INFO - ✓ [3/32] FAR3_SCALE_2025-07-29_16_04: 1 rings in 704 frames
+2026-03-31 20:10:17,050 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/BJORN3TRI3_SCALE_2023-06-12_13_49.mp4
+2026-03-31 20:10:17,050 - step1_ring_detection - INFO - ✓ [4/32] BJORN3TRI3_SCALE_2023-06-12_13_49: 647 rings in 3375 frames
+2026-03-31 20:10:17,076 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/BJORN3TRI3_SCALE_2023-06-12_17_51.mp4
+2026-03-31 20:10:17,076 - step1_ring_detection - INFO - ✓ [5/32] BJORN3TRI3_SCALE_2023-06-12_17_51: 995 rings in 1475 frames
+2026-03-31 20:10:17,086 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/BJORN3TRI3_SCALE_2023-06-12_17_52.mp4
+2026-03-31 20:10:17,086 - step1_ring_detection - INFO - ✓ [6/32] BJORN3TRI3_SCALE_2023-06-12_17_52: 287 rings in 875 frames
+2026-03-31 20:10:39,454 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/BJORN3TRI3_SCALE_2023-06-12_6_44.mp4
+2026-03-31 20:10:39,454 - step1_ring_detection - INFO - ✓ [7/32] BJORN3TRI3_SCALE_2023-06-12_6_44: 1 rings in 3950 frames
+2026-03-31 20:10:39,469 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/BJORN3TRI3_SCALE_2023-06-12_6_45.mp4
+2026-03-31 20:10:39,469 - step1_ring_detection - INFO - ✓ [8/32] BJORN3TRI3_SCALE_2023-06-12_6_45: 107 rings in 775 frames
+2026-03-31 20:10:43,891 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/BJORN3TRI3_SCALE_2023-06-12_8_46.mp4
+2026-03-31 20:10:43,891 - step1_ring_detection - INFO - ✓ [9/32] BJORN3TRI3_SCALE_2023-06-12_8_46: 1656 rings in 2625 frames
+2026-03-31 20:10:43,902 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/BJORN3TRI3_SCALE_2023-06-12_8_47.mp4
+2026-03-31 20:10:43,902 - step1_ring_detection - INFO - ✓ [10/32] BJORN3TRI3_SCALE_2023-06-12_8_47: 5 rings in 750 frames
+2026-03-31 20:10:46,301 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/BJORN3TRI3_SCALE_2023-06-12_9_48.mp4
+2026-03-31 20:10:46,301 - step1_ring_detection - INFO - ✓ [11/32] BJORN3TRI3_SCALE_2023-06-12_9_48: 60 rings in 650 frames
+2026-03-31 20:10:51,345 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/BJORN3TRI3_SCALE_2023-06-13_15_28.mp4
+2026-03-31 20:10:51,345 - step1_ring_detection - INFO - ✓ [12/32] BJORN3TRI3_SCALE_2023-06-13_15_28: 418 rings in 1000 frames
+2026-03-31 20:10:51,355 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/BJORN3TRI3_SCALE_2023-06-13_15_29.mp4
+2026-03-31 20:10:51,356 - step1_ring_detection - INFO - ✓ [13/32] BJORN3TRI3_SCALE_2023-06-13_15_29: 2 rings in 675 frames
+2026-03-31 20:11:01,357 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/BJORN3TRI3_SCALE_2023-06-13_15_30.mp4
+2026-03-31 20:11:01,357 - step1_ring_detection - INFO - ✓ [14/32] BJORN3TRI3_SCALE_2023-06-13_15_30: 680 rings in 1850 frames
+2026-03-31 20:14:02,896 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/BJORN3TRI3_SCALE_2023-06-13_16_31.mp4
+2026-03-31 20:14:02,896 - step1_ring_detection - INFO - ✓ [15/32] BJORN3TRI3_SCALE_2023-06-13_16_31: 11280 rings in 12850 frames
+2026-03-31 20:14:02,912 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/BJORN3TRI3_SCALE_2023-06-13_16_32.mp4
+2026-03-31 20:14:02,912 - step1_ring_detection - INFO - ✓ [16/32] BJORN3TRI3_SCALE_2023-06-13_16_32: 444 rings in 950 frames
+2026-03-31 20:14:02,936 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/BJORN3TRI3_SCALE_2023-06-13_17_34.mp4
+2026-03-31 20:14:02,936 - step1_ring_detection - INFO - ✓ [17/32] BJORN3TRI3_SCALE_2023-06-13_17_34: 240 rings in 3925 frames
+2026-03-31 20:14:37,935 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/BJORN3TRI3_SCALE_2023-06-13_18_35.mp4
+2026-03-31 20:14:37,936 - step1_ring_detection - INFO - ✓ [18/32] BJORN3TRI3_SCALE_2023-06-13_18_35: 5370 rings in 10450 frames
+2026-03-31 20:14:37,973 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/BJORN3TRI3_SCALE_2023-06-13_18_36.mp4
+2026-03-31 20:14:37,973 - step1_ring_detection - INFO - ✓ [19/32] BJORN3TRI3_SCALE_2023-06-13_18_36: 941 rings in 1450 frames
+2026-03-31 20:14:37,985 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/BJORN3TRI3_SCALE_2023-06-13_6_27.mp4
+2026-03-31 20:14:37,986 - step1_ring_detection - INFO - ✓ [20/32] BJORN3TRI3_SCALE_2023-06-13_6_27: 181 rings in 1250 frames
+2026-03-31 20:14:37,998 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/BJORN3TRI3_SCALE_2023-06-14_10_19.mp4
+2026-03-31 20:14:37,998 - step1_ring_detection - INFO - ✓ [21/32] BJORN3TRI3_SCALE_2023-06-14_10_19: 367 rings in 1250 frames
+2026-03-31 20:14:39,211 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/BJORN3TRI3_SCALE_2023-06-14_3_16.mp4
+2026-03-31 20:14:39,211 - step1_ring_detection - INFO - ✓ [22/32] BJORN3TRI3_SCALE_2023-06-14_3_16: 0 rings in 1050 frames
+2026-03-31 20:14:40,427 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/BJORN3TRI3_SCALE_2023-06-14_8_17.mp4
+2026-03-31 20:14:40,427 - step1_ring_detection - INFO - ✓ [23/32] BJORN3TRI3_SCALE_2023-06-14_8_17: 58 rings in 625 frames
+2026-03-31 20:14:46,914 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/BJORN3TRI3_SCALE_2023-06-14_9_18.mp4
+2026-03-31 20:14:46,914 - step1_ring_detection - INFO - ✓ [24/32] BJORN3TRI3_SCALE_2023-06-14_9_18: 51 rings in 1150 frames
+2026-03-31 20:15:17,590 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/FAR6_SCALE_2024-07-04_16_310.mp4
+2026-03-31 20:15:17,591 - step1_ring_detection - INFO - ✓ [25/32] FAR6_SCALE_2024-07-04_16_310: 2957 rings in 4325 frames
+2026-03-31 20:16:47,158 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/FAR6_SCALE_2024-07-04_16_311.mp4
+2026-03-31 20:16:47,159 - step1_ring_detection - INFO - ✓ [26/32] FAR6_SCALE_2024-07-04_16_311: 3599 rings in 14850 frames
+2026-03-31 20:16:47,170 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/FAR6_SCALE_2024-07-04_16_312.mp4
+2026-03-31 20:16:47,170 - step1_ring_detection - INFO - ✓ [27/32] FAR6_SCALE_2024-07-04_16_312: 44 rings in 375 frames
+2026-03-31 20:16:47,210 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/FAR6_SCALE_2024-07-04_16_313.mp4
+2026-03-31 20:16:47,210 - step1_ring_detection - INFO - ✓ [28/32] FAR6_SCALE_2024-07-04_16_313: 420 rings in 1850 frames
+2026-03-31 20:16:47,254 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/FAR6_SCALE_2024-07-04_16_314.mp4
+2026-03-31 20:16:47,254 - step1_ring_detection - INFO - ✓ [29/32] FAR6_SCALE_2024-07-04_16_314: 983 rings in 1750 frames
+2026-03-31 20:16:47,282 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/FAR6_SCALE_2024-07-04_16_315.mp4
+2026-03-31 20:16:47,282 - step1_ring_detection - INFO - ✓ [30/32] FAR6_SCALE_2024-07-04_16_315: 1051 rings in 2425 frames
+2026-03-31 20:16:47,291 - __main__ - INFO - ✓ Logged Step 1: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/FAR6_SCALE_2024-07-04_16_316.mp4
+2026-03-31 20:16:47,291 - step1_ring_detection - INFO - ✓ [31/32] FAR6_SCALE_2024-07-04_16_316: 63 rings in 950 frames
+2026-03-31 20:24:13,267 - __main__ - INFO - Step 1 completed in 877.9 seconds

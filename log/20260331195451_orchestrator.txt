@@ -1,0 +1,72 @@
+2026-03-31 19:54:51,114 - __main__ - INFO - AutoRingReader Pipeline Orchestrator Starting
+2026-03-31 19:54:51,115 - __main__ - INFO - Batch configuration: batch/batch_pipeline_test.yaml
+2026-03-31 19:54:51,115 - __main__ - INFO - ⚠️  FORCE REPROCESS MODE ENABLED - will reprocess all videos
+2026-03-31 19:54:51,119 - __main__ - INFO - ================================================================================
+2026-03-31 19:54:51,119 - __main__ - INFO - PIPELINE CONFIGURATION SUMMARY
+2026-03-31 19:54:51,119 - __main__ - INFO - ================================================================================
+2026-03-31 19:54:51,119 - __main__ - INFO - Input Videos: /mnt/BSP_NAS2_work/ring_reader/eventvids_test
+2026-03-31 19:54:51,119 - __main__ - INFO - Cameras: ['FAR3_SCALE', 'FAR6_SCALE', 'ROST2_SCALE', 'FAR3_CUTE', 'BJORN3TRI3_SCALE', 'FAR3BONDEN3_SCALE']
+2026-03-31 19:54:51,119 - __main__ - INFO - Output Root: /mnt/BSP_NAS2_work/ring_reader/results
+2026-03-31 19:54:51,119 - __main__ - INFO - Resume Enabled: True
+2026-03-31 19:54:51,119 - __main__ - INFO - 
+2026-03-31 19:54:51,119 - __main__ - INFO - Step 1 (Ring Detection):
+2026-03-31 19:54:51,119 - __main__ - INFO -   - CPU workers: 16
+2026-03-31 19:54:51,119 - __main__ - INFO -   - GPU workers: 2 on devices [0, 1]
+2026-03-31 19:54:51,119 - __main__ - INFO -   - Batch size: 16, Frame sample rate: 1
+2026-03-31 19:54:51,119 - __main__ - INFO -   - Confidence threshold: 0.7
+2026-03-31 19:54:51,119 - __main__ - INFO - 
+2026-03-31 19:54:51,119 - __main__ - INFO - Step 2 (Tag Detection):
+2026-03-31 19:54:51,120 - __main__ - INFO -   - CPU workers: 16
+2026-03-31 19:54:51,120 - __main__ - INFO -   - GPU workers: 2 on devices [0, 1]
+2026-03-31 19:54:51,120 - __main__ - INFO -   - Batch size: 16
+2026-03-31 19:54:51,120 - __main__ - INFO -   - Confidence threshold: 0.7
+2026-03-31 19:54:51,120 - __main__ - INFO - 
+2026-03-31 19:54:51,120 - __main__ - INFO - Step 3 (Text Recognition):
+2026-03-31 19:54:51,120 - __main__ - INFO -   - CPU workers: 32
+2026-03-31 19:54:51,120 - __main__ - INFO -   - GPU workers: 1 on devices [0]
+2026-03-31 19:54:51,120 - __main__ - INFO -   - Batch size: 32
+2026-03-31 19:54:51,120 - __main__ - INFO -   - Confidence threshold: 0.9
+2026-03-31 19:54:51,120 - __main__ - INFO - ================================================================================
+2026-03-31 19:54:51,312 - __main__ - INFO - ✓ Configuration validation passed
+2026-03-31 19:54:51,314 - pipeline_utils - INFO - Found 32 videos matching cameras: ['FAR3_SCALE', 'FAR6_SCALE', 'ROST2_SCALE', 'FAR3_CUTE', 'BJORN3TRI3_SCALE', 'FAR3BONDEN3_SCALE']
+2026-03-31 19:54:51,314 - __main__ - INFO - Total videos to process: 32
+2026-03-31 19:54:51,314 - __main__ - INFO - Running Step 1: Ring Detection
+2026-03-31 19:54:51,314 - __main__ - INFO - 
+2026-03-31 19:54:51,314 - __main__ - INFO - ================================================================================
+2026-03-31 19:54:51,314 - __main__ - INFO - STARTING STEP 1: RING DETECTION
+2026-03-31 19:54:51,314 - __main__ - INFO - ================================================================================
+2026-03-31 19:54:52,146 - step1_ring_detection - INFO - Starting Step 1: Ring Detection
+2026-03-31 19:54:52,146 - step1_ring_detection - INFO - Force reprocess mode: ignoring previous completions for Step 1
+2026-03-31 19:54:52,147 - pipeline_utils - INFO - Found 32 videos matching cameras: ['FAR3_SCALE', 'FAR6_SCALE', 'ROST2_SCALE', 'FAR3_CUTE', 'BJORN3TRI3_SCALE', 'FAR3BONDEN3_SCALE']
+2026-03-31 19:54:52,147 - step1_ring_detection - INFO - Processing 32 videos in Step 1 using 2 GPUs
+2026-03-31 19:54:52,156 - step1_ring_detection - ERROR - Step 1 failed: [Errno 32] Broken pipe
+2026-03-31 19:54:52,164 - step1_ring_detection - ERROR - Traceback (most recent call last):
+  File "/home/jonas/Documents/vscode/AutoRingReader/step1_ring_detection.py", line 241, in run_step1_ring_detection
+    gpu_pool = ctx.Pool(len(config.step1.gpu_devices))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/multiprocessing/context.py", line 119, in Pool
+    return Pool(processes, initializer, initargs, maxtasksperchild,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/multiprocessing/pool.py", line 215, in __init__
+    self._repopulate_pool()
+  File "/usr/local/lib/python3.11/multiprocessing/pool.py", line 306, in _repopulate_pool
+    return self._repopulate_pool_static(self._ctx, self.Process,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/multiprocessing/pool.py", line 329, in _repopulate_pool_static
+    w.start()
+  File "/usr/local/lib/python3.11/multiprocessing/process.py", line 121, in start
+    self._popen = self._Popen(self)
+                  ^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/multiprocessing/context.py", line 288, in _Popen
+    return Popen(process_obj)
+           ^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/multiprocessing/popen_spawn_posix.py", line 32, in __init__
+    super().__init__(process_obj)
+  File "/usr/local/lib/python3.11/multiprocessing/popen_fork.py", line 16, in __init__
+    util._flush_std_streams()
+  File "/usr/local/lib/python3.11/multiprocessing/util.py", line 438, in _flush_std_streams
+    sys.stdout.flush()
+BrokenPipeError: [Errno 32] Broken pipe
+
+2026-03-31 19:54:52,164 - __main__ - INFO - Step 1 completed in 0.8 seconds
+2026-03-31 19:54:52,164 - __main__ - ERROR - Step 1 failed

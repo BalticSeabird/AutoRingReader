@@ -1,0 +1,56 @@
+2026-03-31 15:14:39,858 | INFO | Start ring tag reading
+2026-03-31 15:14:39,858 | INFO | Video root path: /mnt/BSP_NAS2_work/ring_reader/eventvids_test
+2026-03-31 15:14:39,858 | INFO | Cameras: ['FAR6_SCALE', 'FAR3_SCALE', 'FAR3BONDEN3_SCALE', 'BJORN3TRI3_SCALE', 'FAR6BONDEN6_SCALE', 'ROST2_SCALE', 'FAR3_CUTE', 'TRI2_SCALE', 'TRI5_SCALE']
+2026-03-31 15:14:39,858 | INFO | Output root path: /mnt/BSP_NAS2_work/ring_reader/results
+2026-03-31 15:14:39,859 | INFO | Ring detection model root path: /home/bsp/git/AutoRingReader/models
+2026-03-31 15:14:39,859 | INFO | Ring detection model name: 20230722002419_RingDataset1_yolov8n_640.pt
+2026-03-31 15:14:39,859 | INFO | Tag detection model root path: /home/bsp/git/AutoRingReader/models
+2026-03-31 15:14:39,859 | INFO | Tag detection model name: 20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+2026-03-31 15:14:39,859 | INFO | Text recognition model root path: /home/bsp/git/AutoRingReader/CLIP4STR/models
+2026-03-31 15:14:39,859 | INFO | Text recognition model name: clip4str_base16x16_d70bde1f2d.ckpt
+2026-03-31 15:14:39,861 | INFO | DEBUG: Total videos after camera matching: 3
+2026-03-31 15:14:39,861 | INFO | DEBUG: Previously processed videos in DB: 0
+2026-03-31 15:14:39,861 | INFO | DEBUG: Videos to process after filtering: 3 (skipped 0)
+2026-03-31 15:14:40,042 | INFO | Start multiprocessing with 3 videos to process
+2026-03-31 15:14:40,054 | INFO | DEBUG: video_path_by_row keys: ['/mnt/BSP_NAS2_work/ring_reader/eventvids_test/BJORN3TRI3_SCALE_2025-07-29_17_02.mp4', '/mnt/BSP_NAS2_work/ring_reader/eventvids_test/FAR3_SCALE_2025-07-29_13_03.mp4', '/mnt/BSP_NAS2_work/ring_reader/eventvids_test/FAR3_SCALE_2025-07-29_16_04.mp4']... (3 total)
+2026-03-31 15:14:40,054 | INFO | Starting to iterate over pool results...
+2026-03-31 15:14:40,054 | INFO | [POOL] Calling p.starmap with 3 tasks...
+2026-03-31 15:15:10,520 | INFO | [POOL] p.starmap iterator created successfully
+2026-03-31 15:15:10,520 | INFO | [RESULT 1] Received result: stats_row is not None = True
+2026-03-31 15:15:10,520 | INFO | [RESULT 1] Video path string: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/BJORN3TRI3_SCALE_2025-07-29_17_02.mp4
+2026-03-31 15:15:10,520 | INFO | [RESULT 1] ✓ Found video in dict. Camera: BJORN3TRI3_SCALE
+2026-03-31 15:15:10,520 | INFO | [RESULT 1] Calling log_video_summary with:
+2026-03-31 15:15:10,520 | INFO |   - video_path: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/BJORN3TRI3_SCALE_2025-07-29_17_02.mp4
+2026-03-31 15:15:10,521 | INFO |   - camera: BJORN3TRI3_SCALE
+2026-03-31 15:15:10,521 | INFO |   - processing_seconds: 20.004
+2026-03-31 15:15:10,521 | INFO |   - frames_total: 1276
+2026-03-31 15:15:10,521 | INFO |   - ring_detect_roi: 42
+2026-03-31 15:15:10,521 | INFO |   - final_tag: ADZ021
+2026-03-31 15:15:10,521 | INFO |   - final_tag_count: 1
+2026-03-31 15:15:10,535 | INFO | [RESULT 1] ✓✓✓ Successfully logged to database: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/BJORN3TRI3_SCALE_2025-07-29_17_02.mp4
+2026-03-31 15:15:10,535 | INFO | [RESULT 2] Received result: stats_row is not None = True
+2026-03-31 15:15:10,535 | INFO | [RESULT 2] Video path string: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/FAR3_SCALE_2025-07-29_13_03.mp4
+2026-03-31 15:15:10,535 | INFO | [RESULT 2] ✓ Found video in dict. Camera: FAR3_SCALE
+2026-03-31 15:15:10,535 | INFO | [RESULT 2] Calling log_video_summary with:
+2026-03-31 15:15:10,535 | INFO |   - video_path: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/FAR3_SCALE_2025-07-29_13_03.mp4
+2026-03-31 15:15:10,535 | INFO |   - camera: FAR3_SCALE
+2026-03-31 15:15:10,535 | INFO |   - processing_seconds: 26.122
+2026-03-31 15:15:10,535 | INFO |   - frames_total: 3080
+2026-03-31 15:15:10,535 | INFO |   - ring_detect_roi: 0
+2026-03-31 15:15:10,535 | INFO |   - final_tag: 
+2026-03-31 15:15:10,536 | INFO |   - final_tag_count: 0
+2026-03-31 15:15:10,542 | INFO | [RESULT 2] ✓✓✓ Successfully logged to database: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/FAR3_SCALE_2025-07-29_13_03.mp4
+2026-03-31 15:15:10,542 | INFO | [RESULT 3] Received result: stats_row is not None = True
+2026-03-31 15:15:10,542 | INFO | [RESULT 3] Video path string: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/FAR3_SCALE_2025-07-29_16_04.mp4
+2026-03-31 15:15:10,542 | INFO | [RESULT 3] ✓ Found video in dict. Camera: FAR3_SCALE
+2026-03-31 15:15:10,542 | INFO | [RESULT 3] Calling log_video_summary with:
+2026-03-31 15:15:10,542 | INFO |   - video_path: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/FAR3_SCALE_2025-07-29_16_04.mp4
+2026-03-31 15:15:10,542 | INFO |   - camera: FAR3_SCALE
+2026-03-31 15:15:10,542 | INFO |   - processing_seconds: 9.361
+2026-03-31 15:15:10,542 | INFO |   - frames_total: 704
+2026-03-31 15:15:10,542 | INFO |   - ring_detect_roi: 0
+2026-03-31 15:15:10,542 | INFO |   - final_tag: 
+2026-03-31 15:15:10,542 | INFO |   - final_tag_count: 0
+2026-03-31 15:15:10,548 | INFO | [RESULT 3] ✓✓✓ Successfully logged to database: /mnt/BSP_NAS2_work/ring_reader/eventvids_test/FAR3_SCALE_2025-07-29_16_04.mp4
+2026-03-31 15:15:10,548 | INFO | [POOL] Iteration completed. Processed 3 results total.
+2026-03-31 15:15:11,162 | INFO | Done: time: 0:00:31.350344
