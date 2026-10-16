@@ -5,7 +5,7 @@ from pathlib import Path
 from PIL import Image
 import sys
 
-module_path = Path(__file__).resolve().parent.joinpath("CLIP4STR")
+module_path = Path(__file__).resolve().parent.parent.joinpath("CLIP4STR")
 
 sys.path.append(str(module_path))
 
@@ -13,7 +13,7 @@ from strhub.data.module import SceneTextDataModule
 from strhub.models.utils import load_from_checkpoint
 
 import re
-import tag_letters
+from . import tag_letters
 
 #torch.cuda.set_device(1)
 

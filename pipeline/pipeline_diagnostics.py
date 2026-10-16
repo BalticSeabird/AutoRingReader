@@ -2,13 +2,11 @@
 
 import sqlite3
 import logging
-import csv
 import yaml
 from pathlib import Path
 from typing import Dict, List, Tuple, Any, Optional
 from dataclasses import dataclass, asdict
 from collections import defaultdict
-import json
 from concurrent.futures import ThreadPoolExecutor
 
 
@@ -437,71 +435,12 @@ class PipelineDiagnostics:
 
         self.logger.info("=" * 120)
 
-    def export_csv(self, output_path: str) -> bool:
-        """Export metrics to CSV file (one row per video)."""
-        try:
-            videos = self.scan_all_videos()
-
-            Path(output_path).parent.mkdir(parents=True, exist_ok=True)
-
-            with open(output_path, 'w', newline='') as f:
-                fieldnames = [
-                    'camera', 'video_stem',
-                    'step1_ring_detections', 'step1_ring_conf_mean', 'step1_status', 'step1_time',
-                    'step2_ring_crops_count', 'step2_tags_detected', 'step2_tag_conf_mean', 'step2_status', 'step2_time',
-                    'step3_final_tag', 'step3_ocr_matches', 'step3_letters_conf', 'step3_numbers_conf', 'step3_status', 'step3_time',
-                ]
-
-                writer = csv.DictWriter(f, fieldnames=fieldnames)
-                writer.writeheader()
-
-                for stem, metrics in sorted(videos.items()):
-                    row = {
-                        'camera': metrics.camera,
-                        'video_stem': metrics.video_stem,
-                        'step1_ring_detections': metrics.step1_ring_detections,
-                        'step1_ring_conf_mean': metrics.step1_ring_conf_mean if metrics.step1_ring_conf_mean else '',
-                        'step1_status': metrics.step1_status,
-                        'step1_time': metrics.step1_time if metrics.step1_time else '',
-                        'step2_ring_crops_count': metrics.step2_ring_crops_count,
-                        'step2_tags_detected': metrics.step2_tags_detected,
-                        'step2_tag_conf_mean': metrics.step2_tag_conf_mean if metrics.step2_tag_conf_mean else '',
-                        'step2_status': metrics.step2_status,
-                        'step2_time': metrics.step2_time if metrics.step2_time else '',
-                        'step3_final_tag': metrics.step3_final_tag if metrics.step3_final_tag else '',
-                        'step3_ocr_matches': metrics.step3_ocr_matches,
-                        'step3_letters_conf': metrics.step3_letters_conf if metrics.step3_letters_conf else '',
-                        'step3_numbers_conf': metrics.step3_numbers_conf if metrics.step3_numbers_conf else '',
-                        'step3_status': metrics.step3_status,
-                        'step3_time': metrics.step3_time if metrics.step3_time else '',
-                    }
-                    writer.writerow(row)
-
-            self.logger.info(f"✓ Exported {len(videos)} videos to CSV: {output_path}")
-            return True
-
-        except Exception as e:
-            self.logger.error(f"Failed to export CSV: {e}")
-            return False
-
-    def export_json(self, output_path: str) -> bool:
-        """Export metrics to JSON file."""
-        try:
-            videos = self.scan_all_videos()
-
-            Path(output_path).parent.mkdir(parents=True, exist_ok=True)
-
-            export_data = {
-                'total_videos': len(videos),
-                'videos': [asdict(v) for v in videos.values()],
-            }
-
-            with open(output_path, 'w') as f:
-                json.dump(export_data, f, indent=2, default=str)
-
-            self.logger.info(f"✓ Exported {len(videos)} videos to JSON: {output_path}")
-            return True
-
-        except Exception as e:
-            self.logger.error(f"Failed to export JSON: {e}")
-            return False
+    def save_final_summary(self, pipeline_logger) -> bool:
+        """Persist the combined per-video metrics in the pipeline database."""
+        summaries = []
+        for metrics in self.scan_all_videos().values():
+            summary = asdict(metrics)
+            if not summary["video_path"]:
+                summary["video_path"] = f"{metrics.camera}/{metrics.video_stem}"
+            summaries.append(summary)
+        return pipeline_logger.replace_final_summary(summaries)

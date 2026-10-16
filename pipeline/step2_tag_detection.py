@@ -22,13 +22,13 @@ import numpy as np
 import cv2 as cv
 import traceback
 
-from pipeline_config import PipelineConfig
-from pipeline_logger import PipelineLogger
-from pipeline_utils import (
+from .pipeline_config import PipelineConfig
+from .pipeline_logger import PipelineLogger
+from .pipeline_utils import (
     get_video_output_dir, ensure_step_output_dir, cuda_device_context,
     load_image_batch, batch_items
 )
-from tag_detector import TagDetector
+from .tag_detector import TagDetector
 
 
 logger = logging.getLogger(__name__)

@@ -10,7 +10,7 @@ import cv2 as cv
 from contextlib import contextmanager
 from multiprocessing import Queue
 
-from pipeline_config import PipelineConfig
+from .pipeline_config import PipelineConfig
 
 
 def get_video_list(config: PipelineConfig, step: int = 1,

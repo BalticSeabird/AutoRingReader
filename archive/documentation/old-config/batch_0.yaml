@@ -1,0 +1,44 @@
+video_coder:
+  dump_level: 0
+input:
+  video_rel_paths:
+    - BJORN3TRI3_SCALE
+    - FAR3BONDEN3_SCALE
+    - FAR3_SCALE
+    - FAR6BONDEN6_SCALE
+    - FAR6_SCALE
+    - TLZOOM
+  #video_root_path: /mnt/xdisk/data/work/bsp/weight_events/weight_event_clips_samples_v2
+  #video_root_path: /mnt/xdisk/data/work/bsp/weight_events/weight_event_clips_samples_v3
+  video_root_path: /mnt/xdisk/data/work/bsp/weight_events/weight_events_film_clips
+multiprocessing:
+  n_processes: 8
+#output_root_path: /mnt/xdisk/data/work/bsp/ring_tag_read
+#output_root_path: /mnt/xdisk/data/work/bsp/ring_tag_read_2
+#output_root_path: /mnt/xdisk/data/work/bsp/ring_tag_read_3
+#output_root_path: /mnt/xdisk/data/work/bsp/ddt
+output_root_path: /mnt/xdisk/data/work/bsp/weight_events_tag_detections_2022
+#output_root_path: /mnt/xdisk/data/work/bsp/ddt # text_recognition_conf=0.98
+#output_root_path: /mnt/xdisk/data/work/bsp/ddt1 # text_recognition_conf=0.96
+#output_root_path: /mnt/xdisk/data/work/bsp/ddt2 # text_recognition_conf=0.90
+#output_root_path: /mnt/xdisk/data/work/bsp/ddt5 # text_recognition_conf=0.98
+#output_root_path: /mnt/xdisk/data/work/bsp/ddt6 # text_recognition_conf=0.98
+models:
+  ring_detection:
+    conf: 0.7
+    iou: 0.7
+    max_det: 1
+    model_name: 20230722002419_RingDataset1_yolov8n_640.pt
+    model_root_path: /home/bsp/tmp/ikw/models
+  tag_detection:
+    conf: 0.7
+    iou: 0.7
+    max_det: 2
+    model_name: 20230831155313_RingTagDataset1_yolov8n-seg_224.pt
+    model_root_path: /home/bsp/tmp/ikw/models
+  text_recognition:
+    conf: 0.90
+    model_name: clip4str_base16x16_d70bde1f2d.ckpt
+    ###model_name: lip4str_large14x14_f125500adc.ckpt
+    #model_name: clip4str_large14x14_synth_3544c362f0.ckpt
+    model_root_path: /home/bsp/tmp/ikw/CLIP4STR/models

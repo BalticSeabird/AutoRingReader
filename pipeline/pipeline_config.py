@@ -243,6 +243,7 @@ class PipelineConfig:
     step1: Step1Config
     step2: Step2Config
     step3: Step3Config
+    events_db_path: str = "log/events.db"
     roi_config: Optional[ROIConfig] = None
 
     @classmethod
@@ -283,6 +284,7 @@ class PipelineConfig:
             input=input_cfg,
             models=models_cfg,
             output_root_path=data['output_root_path'],
+            events_db_path=data.get('events_db_path', 'log/events.db'),
             step1=step1_cfg,
             step2=step2_cfg,
             step3=step3_cfg,
@@ -295,6 +297,6 @@ class PipelineConfig:
 
     def get_db_path(self) -> Path:
         """Get path to events database."""
-        db_dir = Path("log")
-        db_dir.mkdir(exist_ok=True)
-        return db_dir / "events.db"
+        db_path = Path(self.events_db_path)
+        db_path.parent.mkdir(parents=True, exist_ok=True)
+        return db_path

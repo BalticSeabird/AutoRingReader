@@ -1,4 +1,0 @@
-2026-04-16 10:43:49,634 - __main__ - INFO - AutoRingReader Pipeline Orchestrator Starting
-2026-04-16 10:43:49,634 - __main__ - INFO - Batch configuration: config/batch_pipline_test.yaml
-2026-04-16 10:43:49,634 - __main__ - INFO - ⚠️  FORCE REPROCESS MODE ENABLED - will reprocess all videos
-2026-04-16 10:43:49,634 - __main__ - ERROR - Batch YAML file not found: config/batch_pipline_test.yaml

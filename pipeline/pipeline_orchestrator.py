@@ -1,5 +1,6 @@
 """Main orchestrator for the step-based processing pipeline."""
 
+
 import sys
 import logging
 import argparse
@@ -7,10 +8,10 @@ from pathlib import Path
 from datetime import datetime
 from time import time
 
-from pipeline_config import PipelineConfig
-from pipeline_logger import PipelineLogger
-from pipeline_diagnostics import PipelineDiagnostics
-from pipeline_utils import ensure_output_dir, get_video_list, get_available_gpus
+from .pipeline_config import PipelineConfig
+from .pipeline_logger import PipelineLogger
+from .pipeline_diagnostics import PipelineDiagnostics
+from .pipeline_utils import ensure_output_dir, get_video_list, get_available_gpus
 
 
 def setup_logging() -> logging.Logger:
@@ -100,7 +101,7 @@ def run_step1(config: PipelineConfig, logger: PipelineLogger, pipeline_logger: l
     start_time = time()
 
     try:
-        from step1_ring_detection import run_step1_ring_detection
+        from .step1_ring_detection import run_step1_ring_detection
         success = run_step1_ring_detection(config, logger, force_reprocess=force_reprocess)
 
         if success:
@@ -126,7 +127,7 @@ def run_step2(config: PipelineConfig, logger: PipelineLogger, pipeline_logger: l
     start_time = time()
 
     try:
-        from step2_tag_detection import run_step2_tag_detection
+        from .step2_tag_detection import run_step2_tag_detection
         success = run_step2_tag_detection(config, logger, force_reprocess=force_reprocess)
 
         if success:
@@ -152,7 +153,7 @@ def run_step3(config: PipelineConfig, logger: PipelineLogger, pipeline_logger: l
     start_time = time()
 
     try:
-        from step3_text_recognition import run_step3_text_recognition
+        from .step3_text_recognition import run_step3_text_recognition
         success = run_step3_text_recognition(config, logger, force_reprocess=force_reprocess)
 
         if success:
@@ -231,15 +232,9 @@ def main(batch_yaml_path: str, force_reprocess: bool = False):
         # Print combined diagnostics
         diagnostics.print_combined_report()
 
-        # Export diagnostics to JSON and CSV with timestamp suffix
-        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
-        log_dir = Path("log")
-        log_dir.mkdir(exist_ok=True)
-
-        diagnostics_json_path = log_dir / f"diagnostics_{timestamp}.json"
-        diagnostics_csv_path = log_dir / f"diagnostics_{timestamp}.csv"
-        diagnostics.export_json(str(diagnostics_json_path))
-        diagnostics.export_csv(str(diagnostics_csv_path))
+        if not diagnostics.save_final_summary(pipeline_logger):
+            logger.error("Failed to save final pipeline summary")
+            return 1
 
         overall_elapsed = time() - overall_start
         logger.info("")

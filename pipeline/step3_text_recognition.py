@@ -28,10 +28,10 @@ import cv2 as cv
 from PIL import Image
 import traceback
 
-from pipeline_config import PipelineConfig
-from pipeline_logger import PipelineLogger
-from pipeline_utils import get_video_output_dir
-from text_recognition import TextRecognition
+from .pipeline_config import PipelineConfig
+from .pipeline_logger import PipelineLogger
+from .pipeline_utils import get_video_output_dir
+from .text_recognition import TextRecognition
 
 
 logger = logging.getLogger(__name__)

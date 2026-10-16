@@ -1,5 +1,8 @@
 
 **/__pycache__
+log/*
+!log/.gitkeep
+archive/generated/*
 **/.bash_history
 **/.cache/       
 **/.config/
@@ -9,6 +12,10 @@
 **/venv
 **/work
 **/output
+**/out
+**/temp
+**/logs
+**/log
 **/runs
 *.png
 *.jpg
@@ -20,5 +27,6 @@
 *.pt
 *.pyc
 .*.swp
-
+*.db
+*.mp4
 

@@ -89,33 +89,42 @@ class PipelineLogger:
                 )
             """)
 
-            # Final Results (aggregated across all steps)
+            # Final summary (aggregated across all steps)
             cursor.execute("""
-                CREATE TABLE IF NOT EXISTS final_results (
+                CREATE TABLE IF NOT EXISTS final_summary (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     timestamp TEXT DEFAULT CURRENT_TIMESTAMP,
                     video_path TEXT UNIQUE NOT NULL,
                     camera TEXT,
-                    status TEXT DEFAULT 'pending',
-                    final_tag TEXT,
-                    final_tag_count INTEGER,
-                    processing_seconds_total REAL,
-                    step1_seconds REAL,
-                    step2_seconds REAL,
-                    step3_seconds REAL
+                    video_stem TEXT,
+                    step1_status TEXT,
+                    step1_frames_total INTEGER,
+                    step1_frames_processed INTEGER,
+                    step1_ring_detections INTEGER,
+                    step1_ring_conf_mean REAL,
+                    step1_ring_conf_max REAL,
+                    step1_time REAL,
+                    step1_error TEXT,
+                    step2_status TEXT,
+                    step2_ring_crops_count INTEGER,
+                    step2_tags_detected INTEGER,
+                    step2_tag_conf_mean REAL,
+                    step2_tag_conf_max REAL,
+                    step2_time REAL,
+                    step2_error TEXT,
+                    step3_status TEXT,
+                    step3_final_tag TEXT,
+                    step3_ocr_matches INTEGER,
+                    step3_letters_conf REAL,
+                    step3_numbers_conf REAL,
+                    step3_time REAL,
+                    step3_error TEXT
                 )
             """)
 
-            # Video Summary (combined stats from all 3 steps, backward compatible)
-            cursor.execute("""
-                CREATE TABLE IF NOT EXISTS video_summary (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    timestamp TEXT DEFAULT CURRENT_TIMESTAMP,
-                    video_path TEXT UNIQUE NOT NULL,
-                    camera TEXT,
-                    status TEXT DEFAULT 'pending'
-                )
-            """)
+            # Remove schemas from older versions that are no longer used.
+            cursor.execute("DROP TABLE IF EXISTS final_results")
+            cursor.execute("DROP TABLE IF EXISTS video_summary")
 
             conn.commit()
 
@@ -222,33 +231,38 @@ class PipelineLogger:
             self.logger.error(f"✗ Failed to log Step 3 result for {video_path}: {e}")
             return False
 
-    def log_final_result(self, video_path: str, camera: str, stats: Dict[str, Any]) -> bool:
-        """Log final aggregated results."""
+    def replace_final_summary(self, summaries: List[Dict[str, Any]]) -> bool:
+        """Replace the final per-video summary with the current pipeline results."""
         try:
             with sqlite3.connect(self.db_path, timeout=10.0) as conn:
                 cursor = conn.cursor()
-
-                cursor.execute("""
-                    INSERT OR REPLACE INTO final_results
-                    (video_path, camera, status, final_tag, final_tag_count,
-                     processing_seconds_total, step1_seconds, step2_seconds, step3_seconds)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-                """, (
-                    video_path, camera,
-                    stats.get('status', 'success'),
-                    stats.get('final_tag'),
-                    stats.get('final_tag_count'),
-                    stats.get('processing_seconds_total'),
-                    stats.get('step1_seconds'),
-                    stats.get('step2_seconds'),
-                    stats.get('step3_seconds'),
-                ))
+                cursor.execute("DELETE FROM final_summary")
+                columns = (
+                    "video_path, camera, video_stem, "
+                    "step1_status, step1_frames_total, step1_frames_processed, "
+                    "step1_ring_detections, step1_ring_conf_mean, step1_ring_conf_max, "
+                    "step1_time, step1_error, step2_status, step2_ring_crops_count, "
+                    "step2_tags_detected, step2_tag_conf_mean, step2_tag_conf_max, "
+                    "step2_time, step2_error, step3_status, step3_final_tag, "
+                    "step3_ocr_matches, step3_letters_conf, step3_numbers_conf, "
+                    "step3_time, step3_error"
+                )
+                placeholders = ", ".join("?" for _ in columns.split(", "))
+                values = [
+                    tuple(summary.get(column) for column in columns.split(", "))
+                    for summary in summaries
+                ]
+                if values:
+                    cursor.executemany(
+                        f"INSERT INTO final_summary ({columns}) VALUES ({placeholders})",
+                        values,
+                    )
 
                 conn.commit()
-                self.logger.info(f"✓ Logged Final Result: {video_path}")
+                self.logger.info(f"✓ Saved final summary for {len(summaries)} videos")
                 return True
         except Exception as e:
-            self.logger.error(f"✗ Failed to log final result for {video_path}: {e}")
+            self.logger.error(f"✗ Failed to save final summary: {e}")
             return False
 
     def get_pending_videos(self, step: str = "step1", status: str = "pending") -> List[str]:

@@ -20,10 +20,10 @@ import cv2 as cv
 import torch
 import traceback
 
-from pipeline_config import PipelineConfig, ROIConfig
-from pipeline_logger import PipelineLogger
-from pipeline_utils import get_video_list, get_video_output_dir, get_video_info, sample_frames_from_video
-from ring_detector import RingDetector
+from .pipeline_config import PipelineConfig, ROIConfig
+from .pipeline_logger import PipelineLogger
+from .pipeline_utils import get_video_list, get_video_output_dir, get_video_info, sample_frames_from_video
+from .ring_detector import RingDetector
 
 
 logger = logging.getLogger(__name__)

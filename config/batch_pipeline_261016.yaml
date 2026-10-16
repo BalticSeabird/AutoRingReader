@@ -1,0 +1,53 @@
+# Example batch configuration for the step-based pipeline.
+
+input:
+  video_root_path: /mnt/BSP_NAS2_work/ring_reader/test_vids
+  cameras: [FAR3_SCALE, FAR6_SCALE, ROST2_SCALE, FAR3_CUTE, BJORN3TRI3_SCALE, FAR3BONDEN3_SCALE, FAR6BONDEN6_SCALE, TRI5_SCALE]
+  resume: true
+
+models:
+  ring_detector:
+    model_name: ring_detection_nano1818.pt
+    model_root_path: ./models/
+  tag_detector:
+    model_name: tag_detection_nano1347.pt
+    model_root_path: ./models/
+  text_recognition:
+    model_name: clip4str_base16x16_d70bde1f2d.ckpt
+    model_root_path: ./CLIP4STR/models/
+
+output_root_path: /mnt/xdisk/data/work/bsp/ring_read_261016/
+events_db_path: out/OCR_readings261016.db
+
+step1:
+  n_processes_cpu: 16
+  n_processes_gpu: 2
+  gpu_devices: [0, 1]
+  batch_size: 64
+  frame_sample_rate: 1
+  output_format: jpg
+  save_crops: true
+  crop_size: 224
+  conf_threshold: 0.7
+  iou_threshold: 0.7
+  max_det: 1
+
+step2:
+  n_processes_cpu: 16
+  n_processes_gpu: 2
+  gpu_devices: [0, 1]
+  batch_size: 64
+  conf_threshold: 0.5
+  iou_threshold: 0.5
+  max_det: 2
+  tag_height: 96
+  output_format: jpg
+
+step3:
+  n_processes_cpu: 16
+  n_processes_gpu: 2
+  gpu_devices: [0, 1]
+  batch_size: 64
+  conf_threshold: 0.80
+  rotational_validation: true
+  output_format: yaml
