@@ -1,0 +1,78 @@
+# Region of Interest (ROI) masks for ring detection by station, region, and year
+# These polygons are used to filter ring detections to specific areas of interest
+# Format: station -> region -> year -> polygon (list of [x, y] coordinates)
+
+rois:
+  FAR3:
+    cute:
+      default:
+        polygon:
+          - [1318, 726]
+          - [1562.167, 840.833]
+          - [830.167, 1036.833]
+          - [828.833, 707.500]
+    scale:
+      "2023":
+        polygon:
+          - [610, 512]
+          - [821, 1285]
+          - [2357, 957]
+          - [2365, 561]
+          - [2201, 293]
+      "2024":
+        polygon:
+          - [1560, 1354]
+          - [1851, 1067]
+          - [1191, 403]
+          - [461, 879]
+#      "2025":
+#        polygon:
+#          - [1622, 474]
+#          - [1724, 474]
+#          - [1724, 576]
+#          - [1622, 576]
+#      default:  # For other years use 2024 as baselineregion
+#        polygon:
+#          - [1560, 1354]
+#          - [1851, 1067]
+#          - [1191, 403]
+#          - [461, 879]
+#  TRI5:
+#    scale:
+#      default:
+#        polygon:
+#          - [399, 259]
+#          - [614, 259]
+#          - [614, 468]
+#          - [399, 468]
+  FAR6:
+    scale:
+      "2024":
+        polygon:
+          - [1346, 454]
+          - [409, 409]
+          - [191, 1185]
+          - [1235, 1249]
+      "2023":
+        polygon:
+          - [381, 954]
+          - [1637, 341]
+          - [3221, 71]
+          - [3821, 479]
+          - [3668, 1364]
+          - [821, 2093]
+          - [302, 1619]
+  ROST2:
+    scale:
+      default:
+        polygon:
+          - [248, 1144]
+          - [733.500, 1435.500]
+          - [1979.500, 1273.500]
+          - [1051.500, 265.500]
+
+
+# Notes:
+# - Polygons are in image coordinates (pixels)
+# - Year keys are strings ("2025") to ensure correct lookup
+# - Camera names in videos should match station names (e.g., "FAR3_CUTE", "FAR6_SCALE")

@@ -1,16 +1,21 @@
 import argparse
+#import annotations
 import cv2 as cv
 
+#import video_coder
 import ring_detector
 import tag_detector
+#import text_recognition2
 import text_recognition
 
 
+#import cv2
 from dataclasses import astuple
 from datetime import timedelta
 import errno
 from functools import partial
 import logging
+#import mpegCoder
 from multiprocessing import Pool
 import numpy as np
 import os
@@ -20,6 +25,7 @@ import metrics
 import shutil
 
 
+# import pickle
 import sys
 import time
 
@@ -35,21 +41,35 @@ sys.path.append(str(module_path))
 from strhub.data.module import SceneTextDataModule
 from strhub.models.utils import load_from_checkpoint
 
+# sys.path.append(str(module_path))
+# from utils.annotations import open_yaml
+# from utils.logger import Logger
 from annotations import open_yaml
 from logger import Logger
 
 import config
+#from exceptions import mpegCoderDecoder, mpegCoderEncoder
 
 import re
 
 import pandas as pd
 
+#df = pd.read_csv("ocr_valid_240311.csv",sep=";",on_bad_lines='skip')
+#df = pd.read_csv("OCR_Valid241105.txt",sep=";",on_bad_lines='skip')
+df = pd.read_csv("OCR_Valid241105.csv",on_bad_lines='skip')
+
+
+_tf = []
+for fn in df["event"].values.tolist():
+    _tf.append(Path(fn).stem)
+
+
+save_tag_image = True
 
 from shapely import geometry
 
 from dataclasses import dataclass, asdict
 
-save_tag_image = True
 
 @dataclass(frozen=True)
 class ROIS:
@@ -163,8 +183,7 @@ def parse_args():
 
 def _ring_tag_read(
     video_path: Path,
-    #output_rel_path: Path,
-    camera: str,
+    output_rel_path: Path,
     output_root_path: Path,
     ring_detection_model_root_path: Path,
     ring_detection_model_name: str,
@@ -184,6 +203,7 @@ def _ring_tag_read(
     time_begin = time.time()
     logging.info(f"pid: {os.getpid()} | Start prediction on: {video_path}")
 
+    #_video_coder = video_coder.VideoCoder(video_path=video_path)
     cap = cv.VideoCapture(str(video_path))
     _ring_detector = ring_detector.RingDetector(
         model_path=ring_detection_model_root_path.joinpath(ring_detection_model_name),
@@ -212,18 +232,15 @@ def _ring_tag_read(
     # found_tag = False
     _ring_types = config.RingTypes()
 
-    output_rel_path = Path(camera).joinpath(video_path.stem)
     tmp_path = output_root_path.joinpath("tmp", output_rel_path)
-    
     if not tmp_path.exists():
         tmp_path.mkdir(parents=True, exist_ok=False)
 
     try:
         roi = None
-        #cam = output_rel_path.parts[0]
-        if camera in ["FAR6_SCALE", "FAR3_SCALE", "ROST2_SCALE", "FAR3_CUTE"]:
-            #roi = _rois[output_rel_path.parts[0]]   
-            roi = _rois[camera]  
+        cam = output_rel_path.parts[0]
+        if cam in ["FAR6_SCALE", "FAR3_SCALE", "ROST2_SCALE", "FAR3_CUTE"]:
+            roi = _rois[output_rel_path.parts[0]]    
 
 
         # found_tag = False
@@ -240,20 +257,26 @@ def _ring_tag_read(
             #if gop is None:
             #    break
             ret, image = cap.read()
+            image = cv.cvtColor(image, cv.COLOR_BGR2RGB)
+
+            # print(type(ret))
+            # print(type(frame))
+            # sys.exit()
+
             if not ret:
                 print("Can't receive frame (stream end?). Exiting ...")
                 break
-            
-            image = cv.cvtColor(image, cv.COLOR_BGR2RGB)
-            
+
             #for image in gop:
             idx += 1
 
-            bb = _ring_detector.predict_cls(
+            ring_pred = _ring_detector.predict_cls(
                 image, _ring_types.id(_ring_types.METAL_RING)
             )
-            if bb is None:
+            if ring_pred is None:
                 continue
+
+            bb, _ = ring_pred
 
             if bb.ndim == 1:
                 bb=np.expand_dims(bb, axis=0)        
@@ -442,7 +465,8 @@ def _ring_tag_read(
             tmp_path.rename(output_path)
 
         else:
-            shutil.rmtree(tmp_path)    
+            if tmp_path.exists():
+                shutil.rmtree(tmp_path)
 
 
     #except mpegCoderDecoder:
@@ -454,10 +478,12 @@ def _ring_tag_read(
         # print("bb", bb)
         # print("tags", tags)
         # print("s", s)
-    
-    if tmp_path in locals():
-        shutil.rmtree(tmp_path)    
-    
+
+    finally:
+        if cap.isOpened():
+            cap.release()
+        if tmp_path.exists():
+            shutil.rmtree(tmp_path)
 
     time_end = time.time()
     td = timedelta(seconds=time_end - time_begin)
@@ -466,8 +492,7 @@ def _ring_tag_read(
 
 def ring_tag_read(
     video_root_path: Path,
-    #video_rel_paths: list,
-    cameras: list,
+    video_rel_paths: list,
     output_root_path: Path,
     ring_detection_model_root_path: Path,
     ring_detection_model_name: Path,
@@ -475,7 +500,7 @@ def ring_tag_read(
     tag_detection_model_name: Path,
     text_recognition_model_root_path: Path,
     text_recognition_model_name: Path,
-    #video_coder_dump_level: int = config.Defaults.VIDEO_CODER_DUMP_LEVEL,
+    video_coder_dump_level: int = config.Defaults.VIDEO_CODER_DUMP_LEVEL,
     ring_detection_conf: float = 0.7,
     ring_detection_iou: float = 0.7,
     ring_detection_max_det: int = 1,
@@ -485,7 +510,28 @@ def ring_tag_read(
     text_recognition_conf: float = 0.7,
     multiprocessing_n_processes: int = config.Defaults.N_PROCESSES,
 ):
+    # #ddt
+    # dst_root_path = Path("/mnt/xdisk/data/work/bsp/ddt")
+    # res_list = []
+
+    # cameras = (
+    #     "BJORN3TRI3_SCALE",
+    #     "FAR3BONDEN3_SCALE",
+    #     "FAR6BONDEN6_SCALE",
+    #     "FAR6_SCALE",
+    #     "TLZOOM",
+    #     "FAR3_SCALE",
+    # )
+
+    # for cam in cameras:
+    #     cam_path = dst_root_path.joinpath(cam)
+    #     for res_path in cam_path.iterdir():
+    #         if res_path.is_dir():
+    #             res_list.append(res_path.name)
+    #             #print(res_path.name)
+    # #sys.exit()
     
+    #ddt
     remove_and_make_dir(output_root_path,remove=True)   
 
     time_begin = time.time()
@@ -499,7 +545,7 @@ def ring_tag_read(
 
     logging.info(f"Start ring tag reading")
     logging.info(f"Video root path: {video_root_path}")
-    logging.info(f"Cameras: {cameras}")
+    logging.info(f"Video relative paths: {video_rel_paths}")
     logging.info(f"Output root path: {output_root_path}")
     logging.info(f"Ring detection model root path: {ring_detection_model_root_path}")
     logging.info(f"Ring detection model name: {ring_detection_model_name}")
@@ -517,29 +563,63 @@ def ring_tag_read(
         )
 
     try:
+        output_rel_path_list = [
+            output_path.relative_to(output_root_path).parents[0]
+            for output_path in output_root_path.glob("**/*.yaml")
+        ]
 
+        video_file_types = astuple(config.VIDEO_FILE_TYPES())
         video_path_list = []
-       
-        for video_path in video_root_path.glob("**/*.mp4"):
-            video_path_stem = video_path.stem
-            camera = None
-            for ci in cameras: #this is utterly d
-                if video_path_stem.find(ci)>=0:
-                    camera = ci
-                    break
-            if camera is None:
-                logging.warning(f"No camera match for: {video_path}")
-                continue
-            
-            
-            video_path_list.append((video_path, camera))
+        for rel_path in video_rel_paths:
+            video_sub_root_path = video_root_path.joinpath(rel_path)
+            for video_path in video_sub_root_path.glob("**/*"):
+                if video_path.suffix.lower() in video_file_types:
 
-        # video_path_list = video_path_list[0:10]
-        # for vpi in video_path_list:
-        #     print(vpi[0],vpi[1])
-        # sys.exit()    
+                    output_rel_path = video_path.parent.relative_to(
+                        video_root_path
+                    ).joinpath(video_path.stem)
 
-       
+                    # Skip videos with existing detection file
+                    #if output_rel_path in output_rel_path_list:
+                        #logging.info(f"Skip: No detections for: {video_path}")
+                        #print(f"Skip: No detections for: {video_path}")
+                        #continue
+
+                    # output_path = output_root_path.joinpath(output_rel_path)
+                    # video_path_list.append((video_path, output_path))
+                    
+                    #video_stem = "Auklab1_BJORN3TRI3_SCALE_2023-06-02_15.00.00_1685712581_57" # fp, nr 3, 5 insted of *
+                    #video_stem = "Auklab1_BJORN3TRI3_SCALE_2023-06-03_16.00.00_1685802687_120" # ok
+                    #video_stem = "Auklab1_BJORN3TRI3_SCALE_2023-06-07_18.00.00_1686155325_112" #ok  nr 2, 5 or 6?
+                    #video_stem = "Auklab1_FAR3BONDEN3_SCALE_2023-05-31_03.00.00_1685498222_51" #ok
+                    #video_stem = "Auklab1_FAR3_SCALE_2023-06-30_11.00.00_1688115976_120" #fp two equal uniqe counts. Imps second test
+                    #video_stem = "Auklab1_FAR6BONDEN6_SCALE_2023-06-05_04.00.00_1685930729_30" #fp nr 3, 0 instead of 9
+                    #video_stem = "Auklab1_FAR6_SCALE_2023-06-25_07.00.00_1687672106_30" #ok
+                    #video_stem = "Auklab1_TLZOOM_2023-07-15_14.00.00_1689425015_43" # ok
+                    #video_stem = "Auklab1_FAR6_SCALE_2023-07-07_06.00.00_1688702421_43" # ok
+                    #fn? Test with conf 0.96
+                    #video_stem = "Auklab1_FAR3BONDEN3_SCALE_2023-06-16_08.00.00_1686896563_80" #ok
+                    #video_stem = "Auklab1_FAR3_SCALE_2023-07-02_15.00.00_1688306120_90" #fn
+                    #video_stem = "Auklab1_FAR6BONDEN6_SCALE_2023-06-26_08.00.00_1687759218_120"
+                    #video_stem = "Auklab1_FAR6_SCALE_2023-07-04_10.00.00_1688459644_27"
+                    #video_stem = "Auklab1_TLZOOM_2023-07-18_13.00.00_1689680521_120"
+                    #video_stem = "Auklab1_FAR3BONDEN3_SCALE_2023-06-07_20.00.00_1686163820_120"
+                    #if video_path.stem != video_stem:
+                    if video_path.stem not in _tf:
+                        continue
+                    #ddt
+                    #if video_path.stem not in res_list:
+                    #    print(video_path.stem)
+                    video_path_list.append((video_path, output_rel_path))
+               
+        #for vpi in video_path_list:
+        #    print(vpi[0].stem)
+        #print(len(video_path_list))    
+        #sys.exit()    
+        #video_path_list = [video_path_list[17],]
+
+        #video_coder.VideoCoder.set_global_dumplevel(video_coder_dump_level)
+
         tmp_root_path = output_root_path.joinpath("tmp")
         if tmp_root_path.exists():
             shutil.rmtree(tmp_root_path)
@@ -565,7 +645,7 @@ def ring_tag_read(
                     text_recognition_conf=text_recognition_conf,
                 ),
                 video_path_list,
-                #video_path_list[0:1],
+                # video_path_list[0:2],
             )
 
     # KeyboardInterrupt
@@ -595,8 +675,7 @@ def main() -> int:
 
         ring_tag_read(
             video_root_path=Path(batch_dict["input"]["video_root_path"]),
-            #video_rel_paths=batch_dict["input"]["video_rel_paths"],
-            cameras=batch_dict["input"]["cameras"],
+            video_rel_paths=batch_dict["input"]["video_rel_paths"],
             output_root_path=Path(batch_dict["output_root_path"]),
             ring_detection_model_root_path=Path(ring_detection_dict["model_root_path"]),
             ring_detection_model_name=ring_detection_dict["model_name"],
@@ -606,7 +685,7 @@ def main() -> int:
                 text_recognition_dict["model_root_path"]
             ),
             text_recognition_model_name=text_recognition_dict["model_name"],
-            #video_coder_dump_level=batch_dict["video_coder"]["dump_level"],
+            video_coder_dump_level=batch_dict["video_coder"]["dump_level"],
             ring_detection_conf=ring_detection_dict["conf"],
             ring_detection_iou=ring_detection_dict["iou"],
             ring_detection_max_det=ring_detection_dict["max_det"],
